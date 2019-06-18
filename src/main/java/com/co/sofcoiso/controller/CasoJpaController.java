@@ -15,7 +15,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.co.sofcoiso.modelo.CasoAcciones;
-import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,11 +54,6 @@ public class CasoJpaController implements Serializable {
                 casoAcciones = em.getReference(casoAcciones.getClass(), casoAcciones.getCasoCodigocaso());
                 caso.setCasoAcciones(casoAcciones);
             }
-            Persona personaCedula = caso.getPersonaCedula();
-            if (personaCedula != null) {
-                personaCedula = em.getReference(personaCedula.getClass(), personaCedula.getCedula());
-                caso.setPersonaCedula(personaCedula);
-            }
             Collection<TipoCaso> attachedTipoCasoCollection = new ArrayList<TipoCaso>();
             for (TipoCaso tipoCasoCollectionTipoCasoToAttach : caso.getTipoCasoCollection()) {
                 tipoCasoCollectionTipoCasoToAttach = em.getReference(tipoCasoCollectionTipoCasoToAttach.getClass(), tipoCasoCollectionTipoCasoToAttach.getCodigoTipoCaso());
@@ -81,10 +75,6 @@ public class CasoJpaController implements Serializable {
                 }
                 casoAcciones.setCaso(caso);
                 casoAcciones = em.merge(casoAcciones);
-            }
-            if (personaCedula != null) {
-                personaCedula.getCasoCollection().add(caso);
-                personaCedula = em.merge(personaCedula);
             }
             for (TipoCaso tipoCasoCollectionTipoCaso : caso.getTipoCasoCollection()) {
                 tipoCasoCollectionTipoCaso.getCasoCollection().add(caso);
@@ -115,8 +105,6 @@ public class CasoJpaController implements Serializable {
             Caso persistentCaso = em.find(Caso.class, caso.getCodigocaso());
             CasoAcciones casoAccionesOld = persistentCaso.getCasoAcciones();
             CasoAcciones casoAccionesNew = caso.getCasoAcciones();
-            Persona personaCedulaOld = persistentCaso.getPersonaCedula();
-            Persona personaCedulaNew = caso.getPersonaCedula();
             Collection<TipoCaso> tipoCasoCollectionOld = persistentCaso.getTipoCasoCollection();
             Collection<TipoCaso> tipoCasoCollectionNew = caso.getTipoCasoCollection();
             Collection<EstadoCaso> estadoCasoCollectionOld = persistentCaso.getEstadoCasoCollection();
@@ -134,10 +122,6 @@ public class CasoJpaController implements Serializable {
             if (casoAccionesNew != null) {
                 casoAccionesNew = em.getReference(casoAccionesNew.getClass(), casoAccionesNew.getCasoCodigocaso());
                 caso.setCasoAcciones(casoAccionesNew);
-            }
-            if (personaCedulaNew != null) {
-                personaCedulaNew = em.getReference(personaCedulaNew.getClass(), personaCedulaNew.getCedula());
-                caso.setPersonaCedula(personaCedulaNew);
             }
             Collection<TipoCaso> attachedTipoCasoCollectionNew = new ArrayList<TipoCaso>();
             for (TipoCaso tipoCasoCollectionNewTipoCasoToAttach : tipoCasoCollectionNew) {
@@ -162,14 +146,6 @@ public class CasoJpaController implements Serializable {
                 }
                 casoAccionesNew.setCaso(caso);
                 casoAccionesNew = em.merge(casoAccionesNew);
-            }
-            if (personaCedulaOld != null && !personaCedulaOld.equals(personaCedulaNew)) {
-                personaCedulaOld.getCasoCollection().remove(caso);
-                personaCedulaOld = em.merge(personaCedulaOld);
-            }
-            if (personaCedulaNew != null && !personaCedulaNew.equals(personaCedulaOld)) {
-                personaCedulaNew.getCasoCollection().add(caso);
-                personaCedulaNew = em.merge(personaCedulaNew);
             }
             for (TipoCaso tipoCasoCollectionOldTipoCaso : tipoCasoCollectionOld) {
                 if (!tipoCasoCollectionNew.contains(tipoCasoCollectionOldTipoCaso)) {
@@ -234,11 +210,6 @@ public class CasoJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Persona personaCedula = caso.getPersonaCedula();
-            if (personaCedula != null) {
-                personaCedula.getCasoCollection().remove(caso);
-                personaCedula = em.merge(personaCedula);
             }
             Collection<TipoCaso> tipoCasoCollection = caso.getTipoCasoCollection();
             for (TipoCaso tipoCasoCollectionTipoCaso : tipoCasoCollection) {

@@ -5,7 +5,6 @@
  */
 package com.co.sofcoiso.controller;
 
-import com.co.sofcoiso.controller.exceptions.IllegalOrphanException;
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
 import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -16,10 +15,7 @@ import javax.persistence.criteria.Root;
 import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Eps;
-import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.Persona;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,9 +36,6 @@ public class PersonaJpaController implements Serializable {
     }
 
     public void create(Persona persona) throws PreexistingEntityException, Exception {
-        if (persona.getCasoCollection() == null) {
-            persona.setCasoCollection(new ArrayList<Caso>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -62,12 +55,6 @@ public class PersonaJpaController implements Serializable {
                 epsCodigoeps = em.getReference(epsCodigoeps.getClass(), epsCodigoeps.getCodigoeps());
                 persona.setEpsCodigoeps(epsCodigoeps);
             }
-            Collection<Caso> attachedCasoCollection = new ArrayList<Caso>();
-            for (Caso casoCollectionCasoToAttach : persona.getCasoCollection()) {
-                casoCollectionCasoToAttach = em.getReference(casoCollectionCasoToAttach.getClass(), casoCollectionCasoToAttach.getCodigocaso());
-                attachedCasoCollection.add(casoCollectionCasoToAttach);
-            }
-            persona.setCasoCollection(attachedCasoCollection);
             em.persist(persona);
             if (afpCodigoafp != null) {
                 afpCodigoafp.getPersonaCollection().add(persona);
@@ -80,15 +67,6 @@ public class PersonaJpaController implements Serializable {
             if (epsCodigoeps != null) {
                 epsCodigoeps.getPersonaCollection().add(persona);
                 epsCodigoeps = em.merge(epsCodigoeps);
-            }
-            for (Caso casoCollectionCaso : persona.getCasoCollection()) {
-                Persona oldPersonaCedulaOfCasoCollectionCaso = casoCollectionCaso.getPersonaCedula();
-                casoCollectionCaso.setPersonaCedula(persona);
-                casoCollectionCaso = em.merge(casoCollectionCaso);
-                if (oldPersonaCedulaOfCasoCollectionCaso != null) {
-                    oldPersonaCedulaOfCasoCollectionCaso.getCasoCollection().remove(casoCollectionCaso);
-                    oldPersonaCedulaOfCasoCollectionCaso = em.merge(oldPersonaCedulaOfCasoCollectionCaso);
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -103,7 +81,7 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
-    public void edit(Persona persona) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Persona persona) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -115,20 +93,6 @@ public class PersonaJpaController implements Serializable {
             Arl arlCodigoarlNew = persona.getArlCodigoarl();
             Eps epsCodigoepsOld = persistentPersona.getEpsCodigoeps();
             Eps epsCodigoepsNew = persona.getEpsCodigoeps();
-            Collection<Caso> casoCollectionOld = persistentPersona.getCasoCollection();
-            Collection<Caso> casoCollectionNew = persona.getCasoCollection();
-            List<String> illegalOrphanMessages = null;
-            for (Caso casoCollectionOldCaso : casoCollectionOld) {
-                if (!casoCollectionNew.contains(casoCollectionOldCaso)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Caso " + casoCollectionOldCaso + " since its personaCedula field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             if (afpCodigoafpNew != null) {
                 afpCodigoafpNew = em.getReference(afpCodigoafpNew.getClass(), afpCodigoafpNew.getCodigoafp());
                 persona.setAfpCodigoafp(afpCodigoafpNew);
@@ -141,13 +105,6 @@ public class PersonaJpaController implements Serializable {
                 epsCodigoepsNew = em.getReference(epsCodigoepsNew.getClass(), epsCodigoepsNew.getCodigoeps());
                 persona.setEpsCodigoeps(epsCodigoepsNew);
             }
-            Collection<Caso> attachedCasoCollectionNew = new ArrayList<Caso>();
-            for (Caso casoCollectionNewCasoToAttach : casoCollectionNew) {
-                casoCollectionNewCasoToAttach = em.getReference(casoCollectionNewCasoToAttach.getClass(), casoCollectionNewCasoToAttach.getCodigocaso());
-                attachedCasoCollectionNew.add(casoCollectionNewCasoToAttach);
-            }
-            casoCollectionNew = attachedCasoCollectionNew;
-            persona.setCasoCollection(casoCollectionNew);
             persona = em.merge(persona);
             if (afpCodigoafpOld != null && !afpCodigoafpOld.equals(afpCodigoafpNew)) {
                 afpCodigoafpOld.getPersonaCollection().remove(persona);
@@ -173,17 +130,6 @@ public class PersonaJpaController implements Serializable {
                 epsCodigoepsNew.getPersonaCollection().add(persona);
                 epsCodigoepsNew = em.merge(epsCodigoepsNew);
             }
-            for (Caso casoCollectionNewCaso : casoCollectionNew) {
-                if (!casoCollectionOld.contains(casoCollectionNewCaso)) {
-                    Persona oldPersonaCedulaOfCasoCollectionNewCaso = casoCollectionNewCaso.getPersonaCedula();
-                    casoCollectionNewCaso.setPersonaCedula(persona);
-                    casoCollectionNewCaso = em.merge(casoCollectionNewCaso);
-                    if (oldPersonaCedulaOfCasoCollectionNewCaso != null && !oldPersonaCedulaOfCasoCollectionNewCaso.equals(persona)) {
-                        oldPersonaCedulaOfCasoCollectionNewCaso.getCasoCollection().remove(casoCollectionNewCaso);
-                        oldPersonaCedulaOfCasoCollectionNewCaso = em.merge(oldPersonaCedulaOfCasoCollectionNewCaso);
-                    }
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -201,7 +147,7 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -212,17 +158,6 @@ public class PersonaJpaController implements Serializable {
                 persona.getCedula();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The persona with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            Collection<Caso> casoCollectionOrphanCheck = persona.getCasoCollection();
-            for (Caso casoCollectionOrphanCheckCaso : casoCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Caso " + casoCollectionOrphanCheckCaso + " in its casoCollection field has a non-nullable personaCedula field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Afp afpCodigoafp = persona.getAfpCodigoafp();
             if (afpCodigoafp != null) {
@@ -292,6 +227,27 @@ public class PersonaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+     public String  crear(Persona personas){
+        String respuesta = null;
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(personas);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findPersona(personas.getCedula()) != null) {
+                 respuesta = "Persona ya existe";
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+            return respuesta;
     }
     
 }

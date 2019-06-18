@@ -6,9 +6,7 @@
 package com.co.sofcoiso.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,7 +37,8 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Persona.findByAntiguedadEmpresa", query = "SELECT p FROM Persona p WHERE p.antiguedadEmpresa = :antiguedadEmpresa")
     , @NamedQuery(name = "Persona.findByCargo", query = "SELECT p FROM Persona p WHERE p.cargo = :cargo")
     , @NamedQuery(name = "Persona.findByFechaClinica", query = "SELECT p FROM Persona p WHERE p.fechaClinica = :fechaClinica")
-    , @NamedQuery(name = "Persona.findByRecomendado", query = "SELECT p FROM Persona p WHERE p.recomendado = :recomendado")})
+    , @NamedQuery(name = "Persona.findByRecomendado", query = "SELECT p FROM Persona p WHERE p.recomendado = :recomendado")
+    , @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")})
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -87,17 +85,18 @@ public class Persona implements Serializable {
     private String fechaClinica;
     @Column(name = "recomendado")
     private Integer recomendado;
-    @JoinColumn(name = "afp _codigoafp", referencedColumnName = "codigoafp")
+    @Size(max = 10)
+    @Column(name = "telefono")
+    private String telefono;
+    @JoinColumn(name = "codigoafp", referencedColumnName = "codigoafp")
     @ManyToOne(optional = false)
     private Afp afpCodigoafp;
-    @JoinColumn(name = "arl _codigoarl", referencedColumnName = "codigoarl")
+    @JoinColumn(name = "codigoarl", referencedColumnName = "codigoarl")
     @ManyToOne(optional = false)
     private Arl arlCodigoarl;
-    @JoinColumn(name = "eps_codigoeps", referencedColumnName = "codigoeps")
+    @JoinColumn(name = "codigoeps", referencedColumnName = "codigoeps")
     @ManyToOne(optional = false)
     private Eps epsCodigoeps;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaCedula")
-    private Collection<Caso> casoCollection;
 
     public Persona() {
     }
@@ -111,6 +110,29 @@ public class Persona implements Serializable {
         this.nombre = nombre;
         this.apellidoUno = apellidoUno;
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
+            String fechaCumpleaños, String edad, String empresa, Eps eps, Arl arl, Afp codigoafp, String fechaClinica,
+            String antiguedad, String recomendado, String telefono, String cargo) {
+
+        this.cedula = Integer.parseInt(cedula);
+        this.nombre = nombre;
+        this.apellidoUno = apellidoUno;
+        this.apellidoDos = apellidoDos;
+        this.genero = genero;
+        this.fechaNacimiento = fechaCumpleaños;
+        this.edad = edad;
+        this.empresa = empresa;
+        this.antiguedadEmpresa = antiguedad;
+        this.telefono = telefono;
+        this.epsCodigoeps = eps;
+        this.arlCodigoarl = arl;
+        this.afpCodigoafp = codigoafp;
+        this.cargo = cargo;
+        this.fechaClinica = fechaClinica;
+        this.recomendado = Integer.parseInt(recomendado);
+
     }
 
     public Integer getCedula() {
@@ -209,6 +231,14 @@ public class Persona implements Serializable {
         this.recomendado = recomendado;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     public Afp getAfpCodigoafp() {
         return afpCodigoafp;
     }
@@ -231,14 +261,6 @@ public class Persona implements Serializable {
 
     public void setEpsCodigoeps(Eps epsCodigoeps) {
         this.epsCodigoeps = epsCodigoeps;
-    }
-
-    public Collection<Caso> getCasoCollection() {
-        return casoCollection;
-    }
-
-    public void setCasoCollection(Collection<Caso> casoCollection) {
-        this.casoCollection = casoCollection;
     }
 
     @Override
@@ -265,5 +287,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "com.co.sofcoiso.modelo.Persona[ cedula=" + cedula + " ]";
     }
-    
+
 }
