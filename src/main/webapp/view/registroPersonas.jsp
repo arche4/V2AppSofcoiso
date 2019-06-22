@@ -239,10 +239,10 @@
                                                             <td><c:out value="${personas.getEmpresa()}"/></td>
                                                             <td><c:out value="${personas.getAntiguedadEmpresa()}"/></td>
                                                             <td><c:out value="${personas.getCargo()}"/></td>
-                                                              <td><c:out value="${personas.getFechaClinica()}"/></td>
-                                                            <td><c:out value="${personas.getAfpCodigoafp().getNombre()}"/></td>
-                                                            <td><c:out value="${personas.getArlCodigoarl().getNombre()}"/></td>
-                                                            <td><c:out value="${personas.getEpsCodigoeps().getNombre()}"/></td>
+                                                            <td><c:out value="${personas.getFechaClinica()}"/></td>
+                                                            <td><c:out value="${personas.getCodigoafp().getNombre()}"/></td>
+                                                            <td><c:out value="${personas.getCodigoarl().getNombre()}"/></td>
+                                                            <td><c:out value="${personas.getCodigoeps().getNombre()}"/></td>
                                                             <td><c:out value="${personas.getRecomendado()}"/></td>
                                                             
                                                         </tr>

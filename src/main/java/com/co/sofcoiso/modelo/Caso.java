@@ -6,15 +6,12 @@
 package com.co.sofcoiso.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -54,7 +51,7 @@ public class Caso implements Serializable {
     @Column(name = "fecha_inicio_afectacion")
     private String fechaInicioAfectacion;
     @Size(max = 10)
-    @Column(name = " pcl")
+    @Column(name = "pcl")
     private String pcl;
     @Size(max = 20)
     @Column(name = "parte_afectada")
@@ -72,21 +69,17 @@ public class Caso implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "asignado")
     private String asignado;
-    @JoinTable(name = "caso_tipo", joinColumns = {
-        @JoinColumn(name = "caso_codigocaso", referencedColumnName = "codigocaso")}, inverseJoinColumns = {
-        @JoinColumn(name = "tipo_caso_codigo_tipo_caso", referencedColumnName = "codigo_tipo_caso")})
-    @ManyToMany
-    private Collection<TipoCaso> tipoCasoCollection;
-    @JoinTable(name = "caso_estado", joinColumns = {
-        @JoinColumn(name = "caso_codigocaso", referencedColumnName = "codigocaso")}, inverseJoinColumns = {
-        @JoinColumn(name = "estado_caso_codigoestado", referencedColumnName = "codigoestado")})
-    @ManyToMany
-    private Collection<EstadoCaso> estadoCasoCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "caso")
     private CasoAcciones casoAcciones;
+    @JoinColumn(name = "estado_caso_codigoestado", referencedColumnName = "codigoestado")
+    @ManyToOne(optional = false)
+    private EstadoCaso estadoCasoCodigoestado;
     @JoinColumn(name = "persona_cedula", referencedColumnName = "cedula")
     @ManyToOne(optional = false)
     private Persona personaCedula;
+    @JoinColumn(name = "tipo_caso_codigo_tipo_caso", referencedColumnName = "codigo_tipo_caso")
+    @ManyToOne(optional = false)
+    private TipoCaso tipoCasoCodigoTipoCaso;
 
     public Caso() {
     }
@@ -100,6 +93,25 @@ public class Caso implements Serializable {
         this.creado = creado;
         this.asignado = asignado;
     }
+    
+    public Caso(Integer codigoCaso, String textarea, String fechaAfectacion,String pcl,
+            String parteAfectada, String tiempoInca, String creado, 
+            Persona per, 
+            String asignado,
+            EstadoCaso estadocaso, TipoCaso tipo) {
+        this.codigocaso = codigoCaso;
+        this.descripcionCaso  = textarea;
+        this.fechaInicioAfectacion = fechaAfectacion;
+        this.pcl = pcl;
+        this.parteAfectada = parteAfectada;
+        this.tiempoIncapacidad = tiempoInca;
+        this.creado = creado;
+        this.personaCedula = per;
+        this.asignado = asignado;
+        this.estadoCasoCodigoestado = estadocaso;
+        this.tipoCasoCodigoTipoCaso = tipo;
+    }
+    
 
     public Integer getCodigocaso() {
         return codigocaso;
@@ -165,22 +177,6 @@ public class Caso implements Serializable {
         this.asignado = asignado;
     }
 
-    public Collection<TipoCaso> getTipoCasoCollection() {
-        return tipoCasoCollection;
-    }
-
-    public void setTipoCasoCollection(Collection<TipoCaso> tipoCasoCollection) {
-        this.tipoCasoCollection = tipoCasoCollection;
-    }
-
-    public Collection<EstadoCaso> getEstadoCasoCollection() {
-        return estadoCasoCollection;
-    }
-
-    public void setEstadoCasoCollection(Collection<EstadoCaso> estadoCasoCollection) {
-        this.estadoCasoCollection = estadoCasoCollection;
-    }
-
     public CasoAcciones getCasoAcciones() {
         return casoAcciones;
     }
@@ -189,12 +185,28 @@ public class Caso implements Serializable {
         this.casoAcciones = casoAcciones;
     }
 
+    public EstadoCaso getEstadoCasoCodigoestado() {
+        return estadoCasoCodigoestado;
+    }
+
+    public void setEstadoCasoCodigoestado(EstadoCaso estadoCasoCodigoestado) {
+        this.estadoCasoCodigoestado = estadoCasoCodigoestado;
+    }
+
     public Persona getPersonaCedula() {
         return personaCedula;
     }
 
     public void setPersonaCedula(Persona personaCedula) {
         this.personaCedula = personaCedula;
+    }
+
+    public TipoCaso getTipoCasoCodigoTipoCaso() {
+        return tipoCasoCodigoTipoCaso;
+    }
+
+    public void setTipoCasoCodigoTipoCaso(TipoCaso tipoCasoCodigoTipoCaso) {
+        this.tipoCasoCodigoTipoCaso = tipoCasoCodigoTipoCaso;
     }
 
     @Override

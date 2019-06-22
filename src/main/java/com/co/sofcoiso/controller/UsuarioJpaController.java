@@ -140,8 +140,7 @@ public class UsuarioJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public Usuario findUsuarioClave(String cedula, String Clave) {
+       public Usuario findUsuarioClave(String cedula, String Clave) {
         EntityManager em = getEntityManager();
         Usuario usuario = null;
         try {

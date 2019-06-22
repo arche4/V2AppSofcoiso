@@ -6,7 +6,9 @@
 package com.co.sofcoiso.modelo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -49,7 +52,7 @@ public class Persona implements Serializable {
     private Integer cedula;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 30)
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
@@ -63,21 +66,19 @@ public class Persona implements Serializable {
     @Size(max = 2)
     @Column(name = "genero")
     private String genero;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "fecha_nacimiento")
     private String fechaNacimiento;
     @Size(max = 2)
     @Column(name = "edad")
     private String edad;
-    @Size(max = 30)
+    @Size(max = 50)
     @Column(name = "empresa")
     private String empresa;
     @Size(max = 2)
     @Column(name = "antiguedad_empresa")
     private String antiguedadEmpresa;
-    @Size(max = 20)
+    @Size(max = 50)
     @Column(name = "cargo")
     private String cargo;
     @Size(max = 20)
@@ -90,13 +91,15 @@ public class Persona implements Serializable {
     private String telefono;
     @JoinColumn(name = "codigoafp", referencedColumnName = "codigoafp")
     @ManyToOne(optional = false)
-    private Afp afpCodigoafp;
+    private Afp codigoafp;
     @JoinColumn(name = "codigoarl", referencedColumnName = "codigoarl")
     @ManyToOne(optional = false)
-    private Arl arlCodigoarl;
+    private Arl codigoarl;
     @JoinColumn(name = "codigoeps", referencedColumnName = "codigoeps")
     @ManyToOne(optional = false)
-    private Eps epsCodigoeps;
+    private Eps codigoeps;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaCedula")
+    private Collection<Caso> casoCollection;
 
     public Persona() {
     }
@@ -105,14 +108,13 @@ public class Persona implements Serializable {
         this.cedula = cedula;
     }
 
-    public Persona(Integer cedula, String nombre, String apellidoUno, String fechaNacimiento) {
+    public Persona(Integer cedula, String nombre, String apellidoUno) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellidoUno = apellidoUno;
-        this.fechaNacimiento = fechaNacimiento;
     }
-
-    public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
+    
+     public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
             String fechaCumpleaños, String edad, String empresa, Eps eps, Arl arl, Afp codigoafp, String fechaClinica,
             String antiguedad, String recomendado, String telefono, String cargo) {
 
@@ -126,9 +128,9 @@ public class Persona implements Serializable {
         this.empresa = empresa;
         this.antiguedadEmpresa = antiguedad;
         this.telefono = telefono;
-        this.epsCodigoeps = eps;
-        this.arlCodigoarl = arl;
-        this.afpCodigoafp = codigoafp;
+        this.codigoeps = eps;
+        this.codigoarl = arl;
+        this.codigoafp = codigoafp;
         this.cargo = cargo;
         this.fechaClinica = fechaClinica;
         this.recomendado = Integer.parseInt(recomendado);
@@ -239,28 +241,36 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
 
-    public Afp getAfpCodigoafp() {
-        return afpCodigoafp;
+    public Afp getCodigoafp() {
+        return codigoafp;
     }
 
-    public void setAfpCodigoafp(Afp afpCodigoafp) {
-        this.afpCodigoafp = afpCodigoafp;
+    public void setCodigoafp(Afp codigoafp) {
+        this.codigoafp = codigoafp;
     }
 
-    public Arl getArlCodigoarl() {
-        return arlCodigoarl;
+    public Arl getCodigoarl() {
+        return codigoarl;
     }
 
-    public void setArlCodigoarl(Arl arlCodigoarl) {
-        this.arlCodigoarl = arlCodigoarl;
+    public void setCodigoarl(Arl codigoarl) {
+        this.codigoarl = codigoarl;
     }
 
-    public Eps getEpsCodigoeps() {
-        return epsCodigoeps;
+    public Eps getCodigoeps() {
+        return codigoeps;
     }
 
-    public void setEpsCodigoeps(Eps epsCodigoeps) {
-        this.epsCodigoeps = epsCodigoeps;
+    public void setCodigoeps(Eps codigoeps) {
+        this.codigoeps = codigoeps;
+    }
+
+    public Collection<Caso> getCasoCollection() {
+        return casoCollection;
+    }
+
+    public void setCasoCollection(Collection<Caso> casoCollection) {
+        this.casoCollection = casoCollection;
     }
 
     @Override
@@ -287,5 +297,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "com.co.sofcoiso.modelo.Persona[ cedula=" + cedula + " ]";
     }
-
+    
 }

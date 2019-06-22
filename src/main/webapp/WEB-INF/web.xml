@@ -9,6 +9,10 @@
         <servlet-name>PersonaServlet</servlet-name>
         <servlet-class>com.co.sofcoiso.Servlet.PersonaServlet</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>CasoServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.CasoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>usuarioLogin</servlet-name>
         <url-pattern>/usuarioLogin</url-pattern>
@@ -16,6 +20,10 @@
     <servlet-mapping>
         <servlet-name>PersonaServlet</servlet-name>
         <url-pattern>/PersonaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CasoServlet</servlet-name>
+        <url-pattern>/CasoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

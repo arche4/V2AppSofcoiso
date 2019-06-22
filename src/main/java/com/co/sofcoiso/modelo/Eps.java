@@ -43,7 +43,7 @@ public class Eps implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "epsCodigoeps")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoeps")
     private Collection<Persona> personaCollection;
 
     public Eps() {

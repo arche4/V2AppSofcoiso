@@ -22,7 +22,9 @@ import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.Eps;
+import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Persona;
+import com.co.sofcoiso.modelo.TipoCaso;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -62,6 +64,8 @@ public class usuarioLogin extends HttpServlet {
         AfpJpaController afp = new AfpJpaController(JPAFactory.getFACTORY());
         PersonaJpaController per = new PersonaJpaController(JPAFactory.getFACTORY());
         CasoJpaController caso = new CasoJpaController(JPAFactory.getFACTORY());
+        EstadoCasoJpaController estado = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        TipoCasoJpaController tipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
 
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
         String Mensaje = "";
@@ -86,6 +90,11 @@ public class usuarioLogin extends HttpServlet {
         session.setAttribute("Persona", ListPersona);
         List<Caso> listCaso = caso.findCasoEntities();
         session.setAttribute("Caso", listCaso);
+        List<EstadoCaso> ListEstado = estado.findEstadoCasoEntities();
+        session.setAttribute("Estado", ListEstado);
+        List<TipoCaso> ListTipo = tipo.findTipoCasoEntities();
+        session.setAttribute("Tipo", ListTipo);
+        
         rd.forward(request, response);
 
     }

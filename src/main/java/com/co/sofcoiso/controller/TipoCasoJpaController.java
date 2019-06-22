@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.controller;
 
+import com.co.sofcoiso.controller.exceptions.IllegalOrphanException;
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
 import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -51,8 +52,13 @@ public class TipoCasoJpaController implements Serializable {
             tipoCaso.setCasoCollection(attachedCasoCollection);
             em.persist(tipoCaso);
             for (Caso casoCollectionCaso : tipoCaso.getCasoCollection()) {
-                casoCollectionCaso.getTipoCasoCollection().add(tipoCaso);
+                TipoCaso oldTipoCasoCodigoTipoCasoOfCasoCollectionCaso = casoCollectionCaso.getTipoCasoCodigoTipoCaso();
+                casoCollectionCaso.setTipoCasoCodigoTipoCaso(tipoCaso);
                 casoCollectionCaso = em.merge(casoCollectionCaso);
+                if (oldTipoCasoCodigoTipoCasoOfCasoCollectionCaso != null) {
+                    oldTipoCasoCodigoTipoCasoOfCasoCollectionCaso.getCasoCollection().remove(casoCollectionCaso);
+                    oldTipoCasoCodigoTipoCasoOfCasoCollectionCaso = em.merge(oldTipoCasoCodigoTipoCasoOfCasoCollectionCaso);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -67,7 +73,7 @@ public class TipoCasoJpaController implements Serializable {
         }
     }
 
-    public void edit(TipoCaso tipoCaso) throws NonexistentEntityException, Exception {
+    public void edit(TipoCaso tipoCaso) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -75,6 +81,18 @@ public class TipoCasoJpaController implements Serializable {
             TipoCaso persistentTipoCaso = em.find(TipoCaso.class, tipoCaso.getCodigoTipoCaso());
             Collection<Caso> casoCollectionOld = persistentTipoCaso.getCasoCollection();
             Collection<Caso> casoCollectionNew = tipoCaso.getCasoCollection();
+            List<String> illegalOrphanMessages = null;
+            for (Caso casoCollectionOldCaso : casoCollectionOld) {
+                if (!casoCollectionNew.contains(casoCollectionOldCaso)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Caso " + casoCollectionOldCaso + " since its tipoCasoCodigoTipoCaso field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             Collection<Caso> attachedCasoCollectionNew = new ArrayList<Caso>();
             for (Caso casoCollectionNewCasoToAttach : casoCollectionNew) {
                 casoCollectionNewCasoToAttach = em.getReference(casoCollectionNewCasoToAttach.getClass(), casoCollectionNewCasoToAttach.getCodigocaso());
@@ -83,16 +101,15 @@ public class TipoCasoJpaController implements Serializable {
             casoCollectionNew = attachedCasoCollectionNew;
             tipoCaso.setCasoCollection(casoCollectionNew);
             tipoCaso = em.merge(tipoCaso);
-            for (Caso casoCollectionOldCaso : casoCollectionOld) {
-                if (!casoCollectionNew.contains(casoCollectionOldCaso)) {
-                    casoCollectionOldCaso.getTipoCasoCollection().remove(tipoCaso);
-                    casoCollectionOldCaso = em.merge(casoCollectionOldCaso);
-                }
-            }
             for (Caso casoCollectionNewCaso : casoCollectionNew) {
                 if (!casoCollectionOld.contains(casoCollectionNewCaso)) {
-                    casoCollectionNewCaso.getTipoCasoCollection().add(tipoCaso);
+                    TipoCaso oldTipoCasoCodigoTipoCasoOfCasoCollectionNewCaso = casoCollectionNewCaso.getTipoCasoCodigoTipoCaso();
+                    casoCollectionNewCaso.setTipoCasoCodigoTipoCaso(tipoCaso);
                     casoCollectionNewCaso = em.merge(casoCollectionNewCaso);
+                    if (oldTipoCasoCodigoTipoCasoOfCasoCollectionNewCaso != null && !oldTipoCasoCodigoTipoCasoOfCasoCollectionNewCaso.equals(tipoCaso)) {
+                        oldTipoCasoCodigoTipoCasoOfCasoCollectionNewCaso.getCasoCollection().remove(casoCollectionNewCaso);
+                        oldTipoCasoCodigoTipoCasoOfCasoCollectionNewCaso = em.merge(oldTipoCasoCodigoTipoCasoOfCasoCollectionNewCaso);
+                    }
                 }
             }
             em.getTransaction().commit();
@@ -112,7 +129,7 @@ public class TipoCasoJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(String id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -124,10 +141,16 @@ public class TipoCasoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tipoCaso with id " + id + " no longer exists.", enfe);
             }
-            Collection<Caso> casoCollection = tipoCaso.getCasoCollection();
-            for (Caso casoCollectionCaso : casoCollection) {
-                casoCollectionCaso.getTipoCasoCollection().remove(tipoCaso);
-                casoCollectionCaso = em.merge(casoCollectionCaso);
+            List<String> illegalOrphanMessages = null;
+            Collection<Caso> casoCollectionOrphanCheck = tipoCaso.getCasoCollection();
+            for (Caso casoCollectionOrphanCheckCaso : casoCollectionOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This TipoCaso (" + tipoCaso + ") cannot be destroyed since the Caso " + casoCollectionOrphanCheckCaso + " in its casoCollection field has a non-nullable tipoCasoCodigoTipoCaso field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(tipoCaso);
             em.getTransaction().commit();

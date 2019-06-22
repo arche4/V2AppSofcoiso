@@ -8,12 +8,13 @@ package com.co.sofcoiso.modelo;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,13 +40,13 @@ public class EstadoCaso implements Serializable {
     private Integer codigoestado;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 40)
     @Column(name = "nombre_estado")
     private String nombreEstado;
     @Size(max = 50)
     @Column(name = "descripcionestado")
     private String descripcionestado;
-    @ManyToMany(mappedBy = "estadoCasoCollection")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estadoCasoCodigoestado")
     private Collection<Caso> casoCollection;
 
     public EstadoCaso() {
@@ -57,6 +58,10 @@ public class EstadoCaso implements Serializable {
 
     public EstadoCaso(Integer codigoestado, String nombreEstado) {
         this.codigoestado = codigoestado;
+        this.nombreEstado = nombreEstado;
+    }
+    
+     public EstadoCaso(String nombreEstado) {
         this.nombreEstado = nombreEstado;
     }
 

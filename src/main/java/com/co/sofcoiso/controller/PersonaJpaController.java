@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.controller;
 
+import com.co.sofcoiso.controller.exceptions.IllegalOrphanException;
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
 import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -15,7 +16,10 @@ import javax.persistence.criteria.Root;
 import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Eps;
+import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.Persona;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,37 +40,55 @@ public class PersonaJpaController implements Serializable {
     }
 
     public void create(Persona persona) throws PreexistingEntityException, Exception {
+        if (persona.getCasoCollection() == null) {
+            persona.setCasoCollection(new ArrayList<Caso>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Afp afpCodigoafp = persona.getAfpCodigoafp();
-            if (afpCodigoafp != null) {
-                afpCodigoafp = em.getReference(afpCodigoafp.getClass(), afpCodigoafp.getCodigoafp());
-                persona.setAfpCodigoafp(afpCodigoafp);
+            Afp codigoafp = persona.getCodigoafp();
+            if (codigoafp != null) {
+                codigoafp = em.getReference(codigoafp.getClass(), codigoafp.getCodigoafp());
+                persona.setCodigoafp(codigoafp);
             }
-            Arl arlCodigoarl = persona.getArlCodigoarl();
-            if (arlCodigoarl != null) {
-                arlCodigoarl = em.getReference(arlCodigoarl.getClass(), arlCodigoarl.getCodigoarl());
-                persona.setArlCodigoarl(arlCodigoarl);
+            Arl codigoarl = persona.getCodigoarl();
+            if (codigoarl != null) {
+                codigoarl = em.getReference(codigoarl.getClass(), codigoarl.getCodigoarl());
+                persona.setCodigoarl(codigoarl);
             }
-            Eps epsCodigoeps = persona.getEpsCodigoeps();
-            if (epsCodigoeps != null) {
-                epsCodigoeps = em.getReference(epsCodigoeps.getClass(), epsCodigoeps.getCodigoeps());
-                persona.setEpsCodigoeps(epsCodigoeps);
+            Eps codigoeps = persona.getCodigoeps();
+            if (codigoeps != null) {
+                codigoeps = em.getReference(codigoeps.getClass(), codigoeps.getCodigoeps());
+                persona.setCodigoeps(codigoeps);
             }
+            Collection<Caso> attachedCasoCollection = new ArrayList<Caso>();
+            for (Caso casoCollectionCasoToAttach : persona.getCasoCollection()) {
+                casoCollectionCasoToAttach = em.getReference(casoCollectionCasoToAttach.getClass(), casoCollectionCasoToAttach.getCodigocaso());
+                attachedCasoCollection.add(casoCollectionCasoToAttach);
+            }
+            persona.setCasoCollection(attachedCasoCollection);
             em.persist(persona);
-            if (afpCodigoafp != null) {
-                afpCodigoafp.getPersonaCollection().add(persona);
-                afpCodigoafp = em.merge(afpCodigoafp);
+            if (codigoafp != null) {
+                codigoafp.getPersonaCollection().add(persona);
+                codigoafp = em.merge(codigoafp);
             }
-            if (arlCodigoarl != null) {
-                arlCodigoarl.getPersonaCollection().add(persona);
-                arlCodigoarl = em.merge(arlCodigoarl);
+            if (codigoarl != null) {
+                codigoarl.getPersonaCollection().add(persona);
+                codigoarl = em.merge(codigoarl);
             }
-            if (epsCodigoeps != null) {
-                epsCodigoeps.getPersonaCollection().add(persona);
-                epsCodigoeps = em.merge(epsCodigoeps);
+            if (codigoeps != null) {
+                codigoeps.getPersonaCollection().add(persona);
+                codigoeps = em.merge(codigoeps);
+            }
+            for (Caso casoCollectionCaso : persona.getCasoCollection()) {
+                Persona oldPersonaCedulaOfCasoCollectionCaso = casoCollectionCaso.getPersonaCedula();
+                casoCollectionCaso.setPersonaCedula(persona);
+                casoCollectionCaso = em.merge(casoCollectionCaso);
+                if (oldPersonaCedulaOfCasoCollectionCaso != null) {
+                    oldPersonaCedulaOfCasoCollectionCaso.getCasoCollection().remove(casoCollectionCaso);
+                    oldPersonaCedulaOfCasoCollectionCaso = em.merge(oldPersonaCedulaOfCasoCollectionCaso);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -81,54 +103,86 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
-    public void edit(Persona persona) throws NonexistentEntityException, Exception {
+    public void edit(Persona persona) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Persona persistentPersona = em.find(Persona.class, persona.getCedula());
-            Afp afpCodigoafpOld = persistentPersona.getAfpCodigoafp();
-            Afp afpCodigoafpNew = persona.getAfpCodigoafp();
-            Arl arlCodigoarlOld = persistentPersona.getArlCodigoarl();
-            Arl arlCodigoarlNew = persona.getArlCodigoarl();
-            Eps epsCodigoepsOld = persistentPersona.getEpsCodigoeps();
-            Eps epsCodigoepsNew = persona.getEpsCodigoeps();
-            if (afpCodigoafpNew != null) {
-                afpCodigoafpNew = em.getReference(afpCodigoafpNew.getClass(), afpCodigoafpNew.getCodigoafp());
-                persona.setAfpCodigoafp(afpCodigoafpNew);
+            Afp codigoafpOld = persistentPersona.getCodigoafp();
+            Afp codigoafpNew = persona.getCodigoafp();
+            Arl codigoarlOld = persistentPersona.getCodigoarl();
+            Arl codigoarlNew = persona.getCodigoarl();
+            Eps codigoepsOld = persistentPersona.getCodigoeps();
+            Eps codigoepsNew = persona.getCodigoeps();
+            Collection<Caso> casoCollectionOld = persistentPersona.getCasoCollection();
+            Collection<Caso> casoCollectionNew = persona.getCasoCollection();
+            List<String> illegalOrphanMessages = null;
+            for (Caso casoCollectionOldCaso : casoCollectionOld) {
+                if (!casoCollectionNew.contains(casoCollectionOldCaso)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Caso " + casoCollectionOldCaso + " since its personaCedula field is not nullable.");
+                }
             }
-            if (arlCodigoarlNew != null) {
-                arlCodigoarlNew = em.getReference(arlCodigoarlNew.getClass(), arlCodigoarlNew.getCodigoarl());
-                persona.setArlCodigoarl(arlCodigoarlNew);
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (epsCodigoepsNew != null) {
-                epsCodigoepsNew = em.getReference(epsCodigoepsNew.getClass(), epsCodigoepsNew.getCodigoeps());
-                persona.setEpsCodigoeps(epsCodigoepsNew);
+            if (codigoafpNew != null) {
+                codigoafpNew = em.getReference(codigoafpNew.getClass(), codigoafpNew.getCodigoafp());
+                persona.setCodigoafp(codigoafpNew);
             }
+            if (codigoarlNew != null) {
+                codigoarlNew = em.getReference(codigoarlNew.getClass(), codigoarlNew.getCodigoarl());
+                persona.setCodigoarl(codigoarlNew);
+            }
+            if (codigoepsNew != null) {
+                codigoepsNew = em.getReference(codigoepsNew.getClass(), codigoepsNew.getCodigoeps());
+                persona.setCodigoeps(codigoepsNew);
+            }
+            Collection<Caso> attachedCasoCollectionNew = new ArrayList<Caso>();
+            for (Caso casoCollectionNewCasoToAttach : casoCollectionNew) {
+                casoCollectionNewCasoToAttach = em.getReference(casoCollectionNewCasoToAttach.getClass(), casoCollectionNewCasoToAttach.getCodigocaso());
+                attachedCasoCollectionNew.add(casoCollectionNewCasoToAttach);
+            }
+            casoCollectionNew = attachedCasoCollectionNew;
+            persona.setCasoCollection(casoCollectionNew);
             persona = em.merge(persona);
-            if (afpCodigoafpOld != null && !afpCodigoafpOld.equals(afpCodigoafpNew)) {
-                afpCodigoafpOld.getPersonaCollection().remove(persona);
-                afpCodigoafpOld = em.merge(afpCodigoafpOld);
+            if (codigoafpOld != null && !codigoafpOld.equals(codigoafpNew)) {
+                codigoafpOld.getPersonaCollection().remove(persona);
+                codigoafpOld = em.merge(codigoafpOld);
             }
-            if (afpCodigoafpNew != null && !afpCodigoafpNew.equals(afpCodigoafpOld)) {
-                afpCodigoafpNew.getPersonaCollection().add(persona);
-                afpCodigoafpNew = em.merge(afpCodigoafpNew);
+            if (codigoafpNew != null && !codigoafpNew.equals(codigoafpOld)) {
+                codigoafpNew.getPersonaCollection().add(persona);
+                codigoafpNew = em.merge(codigoafpNew);
             }
-            if (arlCodigoarlOld != null && !arlCodigoarlOld.equals(arlCodigoarlNew)) {
-                arlCodigoarlOld.getPersonaCollection().remove(persona);
-                arlCodigoarlOld = em.merge(arlCodigoarlOld);
+            if (codigoarlOld != null && !codigoarlOld.equals(codigoarlNew)) {
+                codigoarlOld.getPersonaCollection().remove(persona);
+                codigoarlOld = em.merge(codigoarlOld);
             }
-            if (arlCodigoarlNew != null && !arlCodigoarlNew.equals(arlCodigoarlOld)) {
-                arlCodigoarlNew.getPersonaCollection().add(persona);
-                arlCodigoarlNew = em.merge(arlCodigoarlNew);
+            if (codigoarlNew != null && !codigoarlNew.equals(codigoarlOld)) {
+                codigoarlNew.getPersonaCollection().add(persona);
+                codigoarlNew = em.merge(codigoarlNew);
             }
-            if (epsCodigoepsOld != null && !epsCodigoepsOld.equals(epsCodigoepsNew)) {
-                epsCodigoepsOld.getPersonaCollection().remove(persona);
-                epsCodigoepsOld = em.merge(epsCodigoepsOld);
+            if (codigoepsOld != null && !codigoepsOld.equals(codigoepsNew)) {
+                codigoepsOld.getPersonaCollection().remove(persona);
+                codigoepsOld = em.merge(codigoepsOld);
             }
-            if (epsCodigoepsNew != null && !epsCodigoepsNew.equals(epsCodigoepsOld)) {
-                epsCodigoepsNew.getPersonaCollection().add(persona);
-                epsCodigoepsNew = em.merge(epsCodigoepsNew);
+            if (codigoepsNew != null && !codigoepsNew.equals(codigoepsOld)) {
+                codigoepsNew.getPersonaCollection().add(persona);
+                codigoepsNew = em.merge(codigoepsNew);
+            }
+            for (Caso casoCollectionNewCaso : casoCollectionNew) {
+                if (!casoCollectionOld.contains(casoCollectionNewCaso)) {
+                    Persona oldPersonaCedulaOfCasoCollectionNewCaso = casoCollectionNewCaso.getPersonaCedula();
+                    casoCollectionNewCaso.setPersonaCedula(persona);
+                    casoCollectionNewCaso = em.merge(casoCollectionNewCaso);
+                    if (oldPersonaCedulaOfCasoCollectionNewCaso != null && !oldPersonaCedulaOfCasoCollectionNewCaso.equals(persona)) {
+                        oldPersonaCedulaOfCasoCollectionNewCaso.getCasoCollection().remove(casoCollectionNewCaso);
+                        oldPersonaCedulaOfCasoCollectionNewCaso = em.merge(oldPersonaCedulaOfCasoCollectionNewCaso);
+                    }
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -147,7 +201,7 @@ public class PersonaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -159,20 +213,31 @@ public class PersonaJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The persona with id " + id + " no longer exists.", enfe);
             }
-            Afp afpCodigoafp = persona.getAfpCodigoafp();
-            if (afpCodigoafp != null) {
-                afpCodigoafp.getPersonaCollection().remove(persona);
-                afpCodigoafp = em.merge(afpCodigoafp);
+            List<String> illegalOrphanMessages = null;
+            Collection<Caso> casoCollectionOrphanCheck = persona.getCasoCollection();
+            for (Caso casoCollectionOrphanCheckCaso : casoCollectionOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Caso " + casoCollectionOrphanCheckCaso + " in its casoCollection field has a non-nullable personaCedula field.");
             }
-            Arl arlCodigoarl = persona.getArlCodigoarl();
-            if (arlCodigoarl != null) {
-                arlCodigoarl.getPersonaCollection().remove(persona);
-                arlCodigoarl = em.merge(arlCodigoarl);
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Eps epsCodigoeps = persona.getEpsCodigoeps();
-            if (epsCodigoeps != null) {
-                epsCodigoeps.getPersonaCollection().remove(persona);
-                epsCodigoeps = em.merge(epsCodigoeps);
+            Afp codigoafp = persona.getCodigoafp();
+            if (codigoafp != null) {
+                codigoafp.getPersonaCollection().remove(persona);
+                codigoafp = em.merge(codigoafp);
+            }
+            Arl codigoarl = persona.getCodigoarl();
+            if (codigoarl != null) {
+                codigoarl.getPersonaCollection().remove(persona);
+                codigoarl = em.merge(codigoarl);
+            }
+            Eps codigoeps = persona.getCodigoeps();
+            if (codigoeps != null) {
+                codigoeps.getPersonaCollection().remove(persona);
+                codigoeps = em.merge(codigoeps);
             }
             em.remove(persona);
             em.getTransaction().commit();
