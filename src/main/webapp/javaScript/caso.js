@@ -26,3 +26,11 @@ function validar() {
     }
 }
 
+
+function cambiarEstado() {
+    
+}
+
+function asignar() {
+    
+}

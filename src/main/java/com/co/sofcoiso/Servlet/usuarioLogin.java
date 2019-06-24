@@ -11,6 +11,7 @@ import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.CitasPersonaJpaController;
 import com.co.sofcoiso.controller.EpsJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
+import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.controller.FormacionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.controller.PersonaasistenteJpaController;
@@ -23,6 +24,7 @@ import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.Eps;
 import com.co.sofcoiso.modelo.EstadoCaso;
+import com.co.sofcoiso.modelo.Flujocaso;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import java.io.IOException;
@@ -66,7 +68,8 @@ public class usuarioLogin extends HttpServlet {
         CasoJpaController caso = new CasoJpaController(JPAFactory.getFACTORY());
         EstadoCasoJpaController estado = new EstadoCasoJpaController(JPAFactory.getFACTORY());
         TipoCasoJpaController tipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
-
+        FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
+        
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
         String Mensaje = "";
         if (usuario == null) {
@@ -94,7 +97,10 @@ public class usuarioLogin extends HttpServlet {
         session.setAttribute("Estado", ListEstado);
         List<TipoCaso> ListTipo = tipo.findTipoCasoEntities();
         session.setAttribute("Tipo", ListTipo);
-        
+        List<Flujocaso> flujoList;
+        flujoList = jpaflujoCaso.findFlujocasoEntities();
+        session.setAttribute("flujoList", flujoList);
+
         rd.forward(request, response);
 
     }

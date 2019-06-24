@@ -5,24 +5,36 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.controller.FlujocasoJpaController;
+import com.co.sofcoiso.clases.caso;
 import com.co.sofcoiso.controller.CasoAccionesJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
+import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
+import com.co.sofcoiso.controller.TipoCasoJpaController;
+import com.co.sofcoiso.controller.UsuarioJpaController;
 import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.Caso_;
 import com.co.sofcoiso.modelo.EstadoCaso;
+import com.co.sofcoiso.modelo.EstadoCaso_;
+import com.co.sofcoiso.modelo.Flujocaso;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.modelo.Usuario;
 import com.co.sofcoiso.modelo.Usuario_;
 import com.co.sofcoiso.util.JPAFactory;
+import com.sun.javafx.animation.TickCalculation;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,6 +65,10 @@ public class CasoServlet extends HttpServlet {
         RequestDispatcher rd = null;
         CasoJpaController jpaCaso = new CasoJpaController(JPAFactory.getFACTORY());
         PersonaJpaController jpaperson = new PersonaJpaController(JPAFactory.getFACTORY());
+        EstadoCasoJpaController jpaEstado = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        TipoCasoJpaController jpaTipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
+        FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
+        UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
         String mensaje = "";
 
         String accion = request.getParameter("accion");
@@ -63,38 +79,78 @@ public class CasoServlet extends HttpServlet {
         String textarea = request.getParameter("textarea");
         String creado = request.getParameter("creado");
         String tiempoInca = request.getParameter("tiempoInca");
+        String editar = request.getParameter("editar");
+        String hora_actual,estadoCaso, fecha_creacion, fecha;
+        Date date;
         Caso caso;
         EstadoCaso estadocaso;
         TipoCaso tipo;
-        List<Usuario> usuarioList;
+
         if (accion != null && !accion.equals("")) {
             switch (accion) {
                 case "crear":
                     //Creamos codigo del caso.
-                    Integer codigoCaso;
-                    Random numAleatorio = new Random();
-                    int valorDado = numAleatorio.nextInt(1000) + 1;
-                    codigoCaso = valorDado;
+                    Integer codigoCaso = Integer.parseInt(persona);
                     Persona per = new Persona(Integer.parseInt(persona));
 
                     //Por ser primera vez el Estado del caso sera Emitida
                     estadocaso = new EstadoCaso(101);
                     tipo = new TipoCaso(Tipo);
                     Caso crearCaso = new Caso(codigoCaso, textarea, fechaAfectacion, pcl, "", tiempoInca, creado, per, creado, estadocaso, tipo);
+                    
                     try {
-                        mensaje = jpaCaso.crear(crearCaso);
-                    } catch (Exception e) {
+                     mensaje = jpaCaso.crear(crearCaso);
+                    
+                    //creamos el flujo del caso.
+                    caso casoFlujo = new caso();
+                 
+                    String fechaActual = casoFlujo.obtenerFechaActual();
+                    hora_actual = casoFlujo.obtenerHoraActual();
+
+                    
+                    SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+                    SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+                    date = formatterFecha.parse(fechaActual);
+                    fecha = formatterFecha2.format(date);
+                    
+                    estadoCaso = "101";
+                    fecha_creacion = fechaActual + " " + hora_actual;
+
+                    Flujocaso flujoCaso = new Flujocaso(codigoCaso, estadoCaso, creado, fecha_creacion, fecha_creacion);
+                    
+                        jpaflujoCaso.create(flujoCaso);
+                    } catch (Exception ex) {
+                         Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
                     List<Persona> listPersonas;
                     listPersonas = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", listPersonas);
                     List<Caso> listCaso;
                     listCaso = jpaCaso.findCasoEntities();
                     session.setAttribute("Caso", listCaso);
-                    rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
+                    List<EstadoCaso> listEstado;
+                    listEstado = jpaEstado.findEstadoCasoEntities();
+                    session.setAttribute("Estado", listEstado);
+                    List<TipoCaso> listTipo;
+                    listTipo = jpaTipo.findTipoCasoEntities();
+                    session.setAttribute("Tipo", listTipo);
+                    List<Usuario> usuarioList;
+                    usuarioList = jpaUsuario.findUsuarioEntities();
+                    session.setAttribute("Usuario", usuarioList);
+                    session.setAttribute("codigoCaso", codigoCaso);
+                    List<Flujocaso> flujoList;
+                    flujoList = jpaflujoCaso.findFlujocasoEntities();
+                    session.setAttribute("flujoList", flujoList);
+                    rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
                     break;
 
             }
+        }
+
+        if (editar != null && !editar.equals("")) {
+            session.setAttribute("codigoCaso", editar);
+            rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
         }
 
         rd.forward(request, response);

@@ -107,18 +107,6 @@
                                 <p>Formaciones</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="./rtl.html">
-                                <i class="material-icons">language</i>
-                                <p>RTL Support</p>
-                            </a>
-                        </li>
-                        <li class="nav-item active-pro ">
-                            <a class="nav-link" href="./upgrade.html">
-                                <i class="material-icons">unarchive</i>
-                                <p>Upgrade to PRO</p>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -198,13 +186,13 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Accion</th>
-                                                        <th scope="col">Codigo</th>
+                                                        <th scope="col">Codigo Caso</th>
                                                         <th scope="col">Cedula</th>
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">Apellido</th>
                                                         <th scope="col">Tipo</th>
                                                         <th scope="col">Estado</th>
-                                                        <th scope="col">Asignado</th>
+                                                      
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -212,14 +200,16 @@
                                                         <tr>
                                                             <td>
                                                                 <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
-                                                                    <button name="ver" value="${personas.getCodigocaso()}" type="submit" class="btn btn-primary">Ver</button>
+                                                                    <button name="editar" value="${Caso.getCodigocaso()}" type="submit" class="btn btn-primary">Ver</button>
                                                                 </form>
                                                             </td> 
                                                             <td><c:out value="${Caso.getCodigocaso()}"/></td>
-                                                            <td><c:out value="${Caso.getPersonaCedula()}"/></td>
+                                                            <td><c:out value="${Caso.getPersonaCedula().getCedula()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getNombre()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getApellidoUno()}"/></td>
-                                                            <td><c:out value="${Caso.getAsignado()}"/></td>
+                                                            <td><c:out value="${Caso.getTipoCasoCodigoTipoCaso().getNombreTipoCaso()}"/></td>
+                                                            <td><c:out value="${Caso.getEstadoCasoCodigoestado().getNombreEstado()}"/></td>
+                                                            
 
                                                         </tr>
                                                     </c:forEach>
@@ -267,8 +257,8 @@
                                         </div>
                                          <div class="form-group">
                                             <label for="Tipo">Creado Por</label>
-                                             <input  name="creado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getCedulaUsuario()}"/>">
-                                            <input  name="" disabled  class="form-control" type="text" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/>">
+                                             <input  name="creado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                            <input  name="" disabled  class="form-control" type="text" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
                                         </div>
                                        
                                         <div class="form-group">
