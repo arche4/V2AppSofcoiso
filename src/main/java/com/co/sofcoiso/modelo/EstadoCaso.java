@@ -60,10 +60,6 @@ public class EstadoCaso implements Serializable {
         this.codigoestado = codigoestado;
         this.nombreEstado = nombreEstado;
     }
-    
-     public EstadoCaso(String nombreEstado) {
-        this.nombreEstado = nombreEstado;
-    }
 
     public Integer getCodigoestado() {
         return codigoestado;

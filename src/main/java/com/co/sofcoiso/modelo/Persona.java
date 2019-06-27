@@ -114,7 +114,7 @@ public class Persona implements Serializable {
         this.apellidoUno = apellidoUno;
     }
     
-     public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
+      public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
             String fechaCumpleaños, String edad, String empresa, Eps eps, Arl arl, Afp codigoafp, String fechaClinica,
             String antiguedad, String recomendado, String telefono, String cargo) {
 
@@ -136,7 +136,6 @@ public class Persona implements Serializable {
         this.recomendado = Integer.parseInt(recomendado);
 
     }
-
     public Integer getCedula() {
         return cedula;
     }

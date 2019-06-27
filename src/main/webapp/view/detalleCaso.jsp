@@ -29,7 +29,7 @@
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-
+        <link href="${pageContext.servletContext.contextPath}/javaScript/detalleCaso.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="">
@@ -218,10 +218,9 @@
                                                 <div id="details-module" class="module toggle-wrap">
                                                     <div id="details-module_heading" class="mod-header">
                                                         <ul class="ops"></ul>
-                                                        <h2 class="toggle-title">Detalles</h2>
+                                                        <h3 class="toggle-title">Detalles</h3>
                                                     </div>
                                                     <div class="mod-content">
-
                                                         <ul id="issuedetails" class="property-list two-cols">
                                                             <li class="item">
                                                                 <div class="wrap">
@@ -267,14 +266,18 @@
                                                                 <div class="wrap">
                                                                     <strong class="name">Fecha Incio de Afectacion</strong>
                                                                     <span id="status-val" class="value">
-                                                                         <c:out value='${caso.getFechaInicioAfectacion()}'/>
+                                                                        <c:out value='${caso.getFechaInicioAfectacion()}'/>
                                                                     </span>
                                                                 </div>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div id="descriptionmodule" class="module toggle-wrap"><div id="descriptionmodule_heading" class="mod-header"><ul class="ops"></ul><h2 class="toggle-title">Descripción</h2></div><div class="mod-content"><div id="description-val" class="field-ignore-highlight editable-field inactive" title="Haga clic para editar">
+                                                <div id="descriptionmodule" class="module toggle-wrap"><div id="descriptionmodule_heading" class="mod-header"><ul class="ops"></ul>
+                                                        <h3 class="toggle-title">Descripción</h3>
+                                                    </div>
+                                                    <div class="mod-content">
+                                                        <div id="description-val" class="field-ignore-highlight editable-field inactive" title="Haga clic para editar">
                                                             <div class="user-content-block je-not-empty">
                                                                 <p> <c:out value='${caso.getDescripcionCaso()}'/></p>
                                                             </div>
@@ -286,9 +289,15 @@
                                     </c:forEach>
                                     <div id="dnd-metadata" class="module toggle-wrap">
                                         <div id="dnd-metadata_heading" class="mod-header">
-                                            <ul class="ops"></ul><h2 class="toggle-title">Adjuntos</h2>
+                                            <ul class="ops"></ul><h3 class="toggle-title">Adjuntos</h3>
+                                            <form action="#">
+                                                <div class="input-file-container">  
+                                                    <input class="input-file" id="my-file" type="file">
+                                                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                                                </div>
+                                                <p class="file-return"></p>
+                                            </form>
                                         </div>
-
                                     </div>
                                 </div>             
                                 <div id="viewissuesidebar" class="aui-item issue-side-column" style="width: 35%;padding-left: 30px;
@@ -299,7 +308,7 @@
                                                 <div id="peoplemodule" class="module toggle-wrap">
                                                     <div id="peoplemodule_heading" class="mod-header">
                                                         <ul class="ops"></ul>
-                                                        <h2 class="toggle-title">Personas</h2>
+                                                        <h3 class="toggle-title">Personas</h3>
                                                     </div>
                                                     <div class="mod-content">
                                                         <ul class="item-details" id="peopledetails">
@@ -330,7 +339,7 @@
                                     </c:forEach>
                                     <div id="datesmodule" class="module toggle-wrap">
                                         <div id="datesmodule_heading" class="mod-header">
-                                            <h2 class="toggle-title">Fechas</h2>
+                                            <h3 class="toggle-title">Fechas</h3>
                                         </div>
                                         <c:forEach var="flujoList" items="${sessionScope.flujoList}">
                                             <c:choose>
@@ -338,7 +347,6 @@
                                                     <div class="mod-content">
                                                         <ul class="item-details">
                                                             <li>
-                                                                
                                                                 <dl class="dates">
                                                                     <dt>Creada:</dt>
                                                                     <c:out value='${flujoList.getFechaCreacion()}' />
@@ -371,7 +379,7 @@
 
         <div class="modal fade" id="cambiarEstado">
             <div class="modal-dialog">
-                <div class="modal-content" style="padding:40px 50px; width: 750px;">
+                <div class="modal-content" style="padding:60px 50px;">
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Cambiar Estado</h4>
@@ -382,28 +390,27 @@
                             <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
                                 <form method="post" name="cambiarEstado" id="Caso" action="">
                                     <div class="form-group">
-                                        <div class="form-group col-md-6">
-                                            <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
-                                            <input  name="" disabled  class="form-control" type="text" value="<c:out value='${Caso.getCodigocaso()}' />">
-                                        </div>
+                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
+                                        <input  name="usuario" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
                                     </div>
                                     <div class="form-group">
-                                        <label for="persona">Estado</label>
-                                        <select name="persona" id="persona" class="form-control-sm form-control">
+                                        <select name="Estado" id="Estado" class="form-control-sm form-control">
                                             <option value="">Estado</option>
                                             <c:forEach var="Estado" items="${sessionScope.Estado}">
                                                 <option value="${Estado.getCodigoestado()}"><c:out value="${Estado.getNombreEstado()}"/></option>
                                             </c:forEach>
                                         </select>
                                     </div>
+                                    <label class="file">
+                                        <input type="file" id="file" name="file" aria-label="File browser example">
+                                        <span class="file-custom"></span>
+                                    </label>
                                     <div class="form-group"> 
-                                        <label for="comentario">Deje aquí sus comentarios</label>
-                                        <textarea class="form-control" rows="5" id="comentarios" value="comentarios"></textarea>
+                                        <textarea class="form-control" rows="5" id="comentarios" name="comentarios" value="comentarios"></textarea>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button name="accion" value="cambiarEstado" type="submit" class="btn btn-success" onclick="return cambiarEstado()">Guardar</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                    </div>
+                                    <button name="cambiarEstado" value="cambiarEstado" type="submit" class="btn btn-success" onclick="return cambiarEstado()">Guardar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                 </form>
                             </c:when>
                         </c:choose>
@@ -413,7 +420,7 @@
         </div>
         <div class="modal fade" id="Asignar">
             <div class="modal-dialog">
-                <div class="modal-content" style="padding:40px 50px; width: 750px;">
+                <div class="modal-content" style="padding:60px 50px;">
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Asignar</h4>
@@ -427,6 +434,7 @@
                                         <div class="form-group col-md-6">
                                             <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
                                             <input  name="" disabled  class="form-control" type="text" value="<c:out value='${Caso.getCodigocaso()}' />">
+
                                         </div>
                                     </div>
                                     <div class="form-group">

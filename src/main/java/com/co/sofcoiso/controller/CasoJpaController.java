@@ -5,7 +5,6 @@
  */
 package com.co.sofcoiso.controller;
 
-import com.co.sofcoiso.controller.exceptions.IllegalOrphanException;
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
 import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import com.co.sofcoiso.modelo.Caso;
@@ -14,11 +13,9 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.co.sofcoiso.modelo.CasoAcciones;
 import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,11 +40,6 @@ public class CasoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            CasoAcciones casoAcciones = caso.getCasoAcciones();
-            if (casoAcciones != null) {
-                casoAcciones = em.getReference(casoAcciones.getClass(), casoAcciones.getCasoCodigocaso());
-                caso.setCasoAcciones(casoAcciones);
-            }
             EstadoCaso estadoCasoCodigoestado = caso.getEstadoCasoCodigoestado();
             if (estadoCasoCodigoestado != null) {
                 estadoCasoCodigoestado = em.getReference(estadoCasoCodigoestado.getClass(), estadoCasoCodigoestado.getCodigoestado());
@@ -64,15 +56,6 @@ public class CasoJpaController implements Serializable {
                 caso.setTipoCasoCodigoTipoCaso(tipoCasoCodigoTipoCaso);
             }
             em.persist(caso);
-            if (casoAcciones != null) {
-                Caso oldCasoOfCasoAcciones = casoAcciones.getCaso();
-                if (oldCasoOfCasoAcciones != null) {
-                    oldCasoOfCasoAcciones.setCasoAcciones(null);
-                    oldCasoOfCasoAcciones = em.merge(oldCasoOfCasoAcciones);
-                }
-                casoAcciones.setCaso(caso);
-                casoAcciones = em.merge(casoAcciones);
-            }
             if (estadoCasoCodigoestado != null) {
                 estadoCasoCodigoestado.getCasoCollection().add(caso);
                 estadoCasoCodigoestado = em.merge(estadoCasoCodigoestado);
@@ -98,34 +81,18 @@ public class CasoJpaController implements Serializable {
         }
     }
 
-    public void edit(Caso caso) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Caso caso) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Caso persistentCaso = em.find(Caso.class, caso.getCodigocaso());
-            CasoAcciones casoAccionesOld = persistentCaso.getCasoAcciones();
-            CasoAcciones casoAccionesNew = caso.getCasoAcciones();
             EstadoCaso estadoCasoCodigoestadoOld = persistentCaso.getEstadoCasoCodigoestado();
             EstadoCaso estadoCasoCodigoestadoNew = caso.getEstadoCasoCodigoestado();
             Persona personaCedulaOld = persistentCaso.getPersonaCedula();
             Persona personaCedulaNew = caso.getPersonaCedula();
             TipoCaso tipoCasoCodigoTipoCasoOld = persistentCaso.getTipoCasoCodigoTipoCaso();
             TipoCaso tipoCasoCodigoTipoCasoNew = caso.getTipoCasoCodigoTipoCaso();
-            List<String> illegalOrphanMessages = null;
-            if (casoAccionesOld != null && !casoAccionesOld.equals(casoAccionesNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("You must retain CasoAcciones " + casoAccionesOld + " since its caso field is not nullable.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            if (casoAccionesNew != null) {
-                casoAccionesNew = em.getReference(casoAccionesNew.getClass(), casoAccionesNew.getCasoCodigocaso());
-                caso.setCasoAcciones(casoAccionesNew);
-            }
             if (estadoCasoCodigoestadoNew != null) {
                 estadoCasoCodigoestadoNew = em.getReference(estadoCasoCodigoestadoNew.getClass(), estadoCasoCodigoestadoNew.getCodigoestado());
                 caso.setEstadoCasoCodigoestado(estadoCasoCodigoestadoNew);
@@ -139,15 +106,6 @@ public class CasoJpaController implements Serializable {
                 caso.setTipoCasoCodigoTipoCaso(tipoCasoCodigoTipoCasoNew);
             }
             caso = em.merge(caso);
-            if (casoAccionesNew != null && !casoAccionesNew.equals(casoAccionesOld)) {
-                Caso oldCasoOfCasoAcciones = casoAccionesNew.getCaso();
-                if (oldCasoOfCasoAcciones != null) {
-                    oldCasoOfCasoAcciones.setCasoAcciones(null);
-                    oldCasoOfCasoAcciones = em.merge(oldCasoOfCasoAcciones);
-                }
-                casoAccionesNew.setCaso(caso);
-                casoAccionesNew = em.merge(casoAccionesNew);
-            }
             if (estadoCasoCodigoestadoOld != null && !estadoCasoCodigoestadoOld.equals(estadoCasoCodigoestadoNew)) {
                 estadoCasoCodigoestadoOld.getCasoCollection().remove(caso);
                 estadoCasoCodigoestadoOld = em.merge(estadoCasoCodigoestadoOld);
@@ -189,7 +147,7 @@ public class CasoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -200,17 +158,6 @@ public class CasoJpaController implements Serializable {
                 caso.getCodigocaso();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The caso with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            CasoAcciones casoAccionesOrphanCheck = caso.getCasoAcciones();
-            if (casoAccionesOrphanCheck != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Caso (" + caso + ") cannot be destroyed since the CasoAcciones " + casoAccionesOrphanCheck + " in its casoAcciones field has a non-nullable caso field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             EstadoCaso estadoCasoCodigoestado = caso.getEstadoCasoCodigoestado();
             if (estadoCasoCodigoestado != null) {
@@ -281,8 +228,8 @@ public class CasoJpaController implements Serializable {
             em.close();
         }
     }
-    
-    public String  crear(Caso caso){
+
+    public String crear(Caso caso) {
         String respuesta = null;
         EntityManager em = null;
         try {
@@ -292,7 +239,7 @@ public class CasoJpaController implements Serializable {
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findCaso(caso.getCodigocaso()) != null) {
-                 respuesta = "Caso ya existe";
+                respuesta = "Caso ya existe";
             }
             throw ex;
         } finally {
@@ -300,7 +247,32 @@ public class CasoJpaController implements Serializable {
                 em.close();
             }
         }
-            return respuesta;
+        return respuesta;
     }
-    
+
+    public String cambiarEstado(Caso caso)  {
+        EntityManager em = null;
+        String respuesta = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            caso = em.merge(caso);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = caso.getCodigocaso();
+                if (findCaso(id) == null) {
+                    respuesta = "Caso no existe";
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+          return respuesta;
+    }
+
 }

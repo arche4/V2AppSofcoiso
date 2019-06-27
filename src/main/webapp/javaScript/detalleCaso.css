@@ -1,0 +1,26 @@
+
+body {
+  font-family: "Open sans", "Segoe UI", "Segoe WP", Helvetica, Arial, sans-serif;
+  color: #7F8C9A;
+  background: #FCFDFD;
+}
+h1{
+  margin-bottom: 5px;
+  font-weight: normal;
+  text-align: center;
+  color:#aaa;
+}
+h2 {
+  margin: 5px 0 2em;
+  color: #7F8C9A;
+}
+
+
+body {
+  margin: 0;
+  padding: 2rem 1.5rem;
+  font: 1rem/1.5 "PT Sans", Arial, sans-serif;
+  color: #5a5a5a;
+}
+
+

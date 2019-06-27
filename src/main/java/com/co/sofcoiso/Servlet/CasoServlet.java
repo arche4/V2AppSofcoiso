@@ -7,24 +7,21 @@ package com.co.sofcoiso.Servlet;
 
 import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.clases.caso;
-import com.co.sofcoiso.controller.CasoAccionesJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.controller.TipoCasoJpaController;
 import com.co.sofcoiso.controller.UsuarioJpaController;
+import com.co.sofcoiso.modelo.AccionesCaso;
 import com.co.sofcoiso.modelo.Caso;
-import com.co.sofcoiso.modelo.Caso_;
 import com.co.sofcoiso.modelo.EstadoCaso;
-import com.co.sofcoiso.modelo.EstadoCaso_;
 import com.co.sofcoiso.modelo.Flujocaso;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.modelo.Usuario;
-import com.co.sofcoiso.modelo.Usuario_;
 import com.co.sofcoiso.util.JPAFactory;
-import com.sun.javafx.animation.TickCalculation;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -35,6 +32,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,6 +40,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -69,6 +68,7 @@ public class CasoServlet extends HttpServlet {
         TipoCasoJpaController jpaTipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
         FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
+
         String mensaje = "";
 
         String accion = request.getParameter("accion");
@@ -80,7 +80,14 @@ public class CasoServlet extends HttpServlet {
         String creado = request.getParameter("creado");
         String tiempoInca = request.getParameter("tiempoInca");
         String editar = request.getParameter("editar");
-        String hora_actual,estadoCaso, fecha_creacion, fecha;
+        String hora_actual, estadoCaso, fecha_creacion, fecha;
+        String cambiarEstado = request.getParameter("cambiarEstado");
+        String usuario = request.getParameter("usuario");
+        String Estado = request.getParameter("Estado");
+        String casoCodigo = request.getParameter("Estado");
+        Part filePart = request.getPart("file");
+        String comentarios = request.getParameter("comentarios");
+
         Date date;
         Caso caso;
         EstadoCaso estadocaso;
@@ -97,30 +104,29 @@ public class CasoServlet extends HttpServlet {
                     estadocaso = new EstadoCaso(101);
                     tipo = new TipoCaso(Tipo);
                     Caso crearCaso = new Caso(codigoCaso, textarea, fechaAfectacion, pcl, "", tiempoInca, creado, per, creado, estadocaso, tipo);
-                    
+
                     try {
-                     mensaje = jpaCaso.crear(crearCaso);
-                    
-                    //creamos el flujo del caso.
-                    caso casoFlujo = new caso();
-                 
-                    String fechaActual = casoFlujo.obtenerFechaActual();
-                    hora_actual = casoFlujo.obtenerHoraActual();
+                        mensaje = jpaCaso.crear(crearCaso);
 
-                    
-                    SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
-                    SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
-                    date = formatterFecha.parse(fechaActual);
-                    fecha = formatterFecha2.format(date);
-                    
-                    estadoCaso = "101";
-                    fecha_creacion = fechaActual + " " + hora_actual;
+                        //creamos el flujo del caso.
+                        caso casoFlujo = new caso();
 
-                    Flujocaso flujoCaso = new Flujocaso(codigoCaso, estadoCaso, creado, fecha_creacion, fecha_creacion);
-                    
+                        String fechaActual = casoFlujo.obtenerFechaActual();
+                        hora_actual = casoFlujo.obtenerHoraActual();
+
+                        SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+                        SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+                        date = formatterFecha.parse(fechaActual);
+                        fecha = formatterFecha2.format(date);
+
+                        estadoCaso = "101";
+                        fecha_creacion = fechaActual + " " + hora_actual;
+
+                        Flujocaso flujoCaso = new Flujocaso(codigoCaso, estadoCaso, creado, fecha_creacion, fecha_creacion);
+
                         jpaflujoCaso.create(flujoCaso);
                     } catch (Exception ex) {
-                         Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     List<Persona> listPersonas;
@@ -150,6 +156,47 @@ public class CasoServlet extends HttpServlet {
 
         if (editar != null && !editar.equals("")) {
             session.setAttribute("codigoCaso", editar);
+            rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
+        }
+
+        if (cambiarEstado != null && !cambiarEstado.equals("")) {
+            caso camEstdo = new caso();
+            boolean respuesta;
+            respuesta = camEstdo.actualizarEstado(Integer.parseInt(casoCodigo), Integer.parseInt(Estado));
+            if (respuesta == true) {
+                try {
+               
+                    caso casoFlujo = new caso();
+
+                    String fechaActual = casoFlujo.obtenerFechaActual();
+                    hora_actual = casoFlujo.obtenerHoraActual();
+
+                    SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+                    SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+                    date = formatterFecha.parse(fechaActual);
+                    fecha = formatterFecha2.format(date);
+                    String fecha_actualizada;
+
+                    //Actualizamos el flujo de los estados del caso
+                    fecha_actualizada = fechaActual + " " + hora_actual;
+                    Flujocaso flujoCaso = new Flujocaso(Integer.parseInt(casoCodigo), Estado, usuario, fecha_actualizada);
+                    jpaflujoCaso.edit(flujoCaso);
+
+                    //Agrgeamos los comentarios ya rchivos que suban.
+                    AccionesCaso acciones;
+                    InputStream inputStream = null;
+                    if (filePart.getSize() > 0) {
+                        inputStream = filePart.getInputStream();
+                    }
+                    if (inputStream != null) {
+
+                        acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
             rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
         }
 

@@ -10,11 +10,11 @@
     <class>com.co.sofcoiso.modelo.Eps</class>
     <class>com.co.sofcoiso.modelo.TipoCaso</class>
     <class>com.co.sofcoiso.modelo.Arl</class>
-    <class>com.co.sofcoiso.modelo.CasoAcciones</class>
     <class>com.co.sofcoiso.modelo.Caso</class>
     <class>com.co.sofcoiso.modelo.Afp</class>
     <class>com.co.sofcoiso.modelo.Formacion</class>
     <class>com.co.sofcoiso.modelo.Flujocaso</class>
+    <class>com.co.sofcoiso.modelo.AccionesCaso</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/SofCoiso"/>

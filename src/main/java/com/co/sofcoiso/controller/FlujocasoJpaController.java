@@ -5,8 +5,8 @@
  */
 package com.co.sofcoiso.controller;
 
-import com.co.sofcoiso.Servlet.exceptions.NonexistentEntityException;
-import com.co.sofcoiso.Servlet.exceptions.PreexistingEntityException;
+import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
+import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import com.co.sofcoiso.modelo.Flujocaso;
 import java.io.Serializable;
 import java.util.List;

@@ -61,6 +61,14 @@ public class Flujocaso implements Serializable {
         this.idFlujocaso = idFlujocaso;
     }
 
+    public Flujocaso(Integer caso, String Usuario, String estadoCaso
+            , String fecha_actualizada) {
+       
+        this.codigocaso = caso;
+        this.usuario = Usuario;
+        this.estadocaso = estadoCaso;
+        this.fechaActualizacion =  fecha_actualizada;
+    }
      public Flujocaso(Integer caso, String Usuario, String estadoCaso,
              String fecha_creacion, String fecha_actualizada) {
        

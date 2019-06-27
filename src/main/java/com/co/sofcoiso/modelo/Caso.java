@@ -7,7 +7,6 @@ package com.co.sofcoiso.modelo;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,16 +42,16 @@ public class Caso implements Serializable {
     @NotNull
     @Column(name = "codigocaso")
     private Integer codigocaso;
-    @Size(max = 500)
+    @Size(max = 5000)
     @Column(name = "descripcion_caso")
     private String descripcionCaso;
     @Size(max = 20)
     @Column(name = "fecha_inicio_afectacion")
     private String fechaInicioAfectacion;
-    @Size(max = 10)
+    @Size(max = 100)
     @Column(name = "pcl")
     private String pcl;
-    @Size(max = 20)
+    @Size(max = 100)
     @Column(name = "parte_afectada")
     private String parteAfectada;
     @Size(max = 15)
@@ -69,8 +67,6 @@ public class Caso implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "asignado")
     private String asignado;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "caso")
-    private CasoAcciones casoAcciones;
     @JoinColumn(name = "estado_caso_codigoestado", referencedColumnName = "codigoestado")
     @ManyToOne(optional = false)
     private EstadoCaso estadoCasoCodigoestado;
@@ -93,14 +89,20 @@ public class Caso implements Serializable {
         this.creado = creado;
         this.asignado = asignado;
     }
-    
-    public Caso(Integer codigoCaso, String textarea, String fechaAfectacion,String pcl,
-            String parteAfectada, String tiempoInca, String creado, 
-            Persona per, 
+
+    public Caso(Integer codigocaso, EstadoCaso estado) {
+        this.codigocaso = codigocaso;
+        this.estadoCasoCodigoestado = estado;
+
+    }
+
+    public Caso(Integer codigoCaso, String textarea, String fechaAfectacion, String pcl,
+            String parteAfectada, String tiempoInca, String creado,
+            Persona per,
             String asignado,
             EstadoCaso estadocaso, TipoCaso tipo) {
         this.codigocaso = codigoCaso;
-        this.descripcionCaso  = textarea;
+        this.descripcionCaso = textarea;
         this.fechaInicioAfectacion = fechaAfectacion;
         this.pcl = pcl;
         this.parteAfectada = parteAfectada;
@@ -111,7 +113,6 @@ public class Caso implements Serializable {
         this.estadoCasoCodigoestado = estadocaso;
         this.tipoCasoCodigoTipoCaso = tipo;
     }
-    
 
     public Integer getCodigocaso() {
         return codigocaso;
@@ -177,14 +178,6 @@ public class Caso implements Serializable {
         this.asignado = asignado;
     }
 
-    public CasoAcciones getCasoAcciones() {
-        return casoAcciones;
-    }
-
-    public void setCasoAcciones(CasoAcciones casoAcciones) {
-        this.casoAcciones = casoAcciones;
-    }
-
     public EstadoCaso getEstadoCasoCodigoestado() {
         return estadoCasoCodigoestado;
     }
@@ -233,5 +226,5 @@ public class Caso implements Serializable {
     public String toString() {
         return "com.co.sofcoiso.modelo.Caso[ codigocaso=" + codigocaso + " ]";
     }
-    
+
 }
