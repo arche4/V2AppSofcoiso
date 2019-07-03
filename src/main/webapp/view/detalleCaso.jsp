@@ -29,7 +29,7 @@
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.servletContext.contextPath}/javaScript/detalleCaso.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/javaScript/css/detalleCaso.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="">
@@ -204,7 +204,7 @@
                         <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
                             Asignar
                         </button>
-                         <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
+                        <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
                             Citar 
                         </button>
                         <div class="issue-body-content">

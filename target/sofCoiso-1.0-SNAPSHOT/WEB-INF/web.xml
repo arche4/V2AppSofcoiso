@@ -13,9 +13,13 @@
         <servlet-name>CasoServlet</servlet-name>
         <servlet-class>com.co.sofcoiso.Servlet.CasoServlet</servlet-class>
     </servlet>
-    <servlet>
+     <servlet>
         <servlet-name>ReportServlet</servlet-name>
         <servlet-class>com.co.sofcoiso.Servlet.ReportServlet</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>detalleServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.detalleServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>usuarioLogin</servlet-name>
@@ -32,6 +36,10 @@
        <servlet-mapping>
         <servlet-name>ReportServlet</servlet-name>
         <url-pattern>/ReportServlet</url-pattern>
+    </servlet-mapping>
+         <servlet-mapping>
+        <servlet-name>detalleServlet</servlet-name>
+        <url-pattern>/detalleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,11 +5,11 @@
  */
 package com.co.sofcoiso.Servlet;
 
-import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.clases.caso;
 import com.co.sofcoiso.controller.CambioCasoJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
+import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.controller.TipoCasoJpaController;
 import com.co.sofcoiso.controller.UsuarioJpaController;
@@ -26,15 +26,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,8 +43,8 @@ import javax.servlet.http.Part;
  *
  * @author manue
  */
-@WebServlet(name = "CasoServlet", urlPatterns = {"/CasoServlet"})
-public class CasoServlet extends HttpServlet {
+@WebServlet(name = "detalleServlet", urlPatterns = {"/detalleServlet"})
+public class detalleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -72,102 +67,16 @@ public class CasoServlet extends HttpServlet {
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
         CambioCasoJpaController seguimientoCaso = new CambioCasoJpaController(JPAFactory.getFACTORY());
 
-        String mensaje = "";
-
-        String accion = request.getParameter("accion");
-        String persona = request.getParameter("persona");
-        String Tipo = request.getParameter("Tipo");
-        String fechaAfectacion = request.getParameter("fechaAfectacion");
-        String pcl = request.getParameter("pcl");
-        String textarea = request.getParameter("textarea");
-        String creado = request.getParameter("creado");
-        String tiempoInca = request.getParameter("tiempoInca");
-        String editar = request.getParameter("editar");
-        String hora_actual, estadoCaso, fecha_creacion, fecha;
         String cambiarEstado = request.getParameter("cambiarEstado");
         String usuario = request.getParameter("usuario");
         String Estado = request.getParameter("Estado");
         String casoCodigo = request.getParameter("codigoCaso");
         Part filePart = request.getPart("file");
         String comentarios = request.getParameter("comentarios");
-
+        String hora_actual, estadoCaso, fecha_creacion, fecha;
         Date date;
         EstadoCaso estadocaso;
         TipoCaso tipo;
-
-        if (accion != null && !accion.equals("")) {
-            switch (accion) {
-                case "crear":
-                    //Creamos codigo del caso.
-                    Integer codigoCaso = Integer.parseInt(persona);
-                    Persona per = new Persona(Integer.parseInt(persona));
-
-                    //Por ser primera vez el Estado del caso sera Emitida
-                    estadocaso = new EstadoCaso(101);
-                    tipo = new TipoCaso(Tipo);
-                    Caso crearCaso = new Caso(codigoCaso, textarea, fechaAfectacion, pcl, "", tiempoInca, creado, per, creado, estadocaso, tipo);
-
-                    try {
-                        mensaje = jpaCaso.crear(crearCaso);
-
-                        //creamos el flujo del caso.
-                        caso casoFlujo = new caso();
-
-                        String fechaActual = casoFlujo.obtenerFechaActual();
-                        hora_actual = casoFlujo.obtenerHoraActual();
-
-                        SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
-                        SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
-                        date = formatterFecha.parse(fechaActual);
-                        fecha = formatterFecha2.format(date);
-
-                        estadoCaso = "101";
-                        fecha_creacion = fecha + " " + hora_actual;
-
-                        Flujocaso flujoCaso = new Flujocaso(codigoCaso, estadoCaso, creado, fecha_creacion, fecha_creacion);
-                        jpaflujoCaso.create(flujoCaso);
-
-                        //agregamos el seguimiento del caso
-                        CambioCaso casoSeguimiento = new CambioCaso(codigoCaso.toString(), estadoCaso, creado, fecha_creacion);
-                        seguimientoCaso.create(casoSeguimiento);
-
-                    } catch (Exception ex) {
-                        Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    List<CambioCaso> cambioCasoList;
-                    List<Caso> listCaso;
-                    List<Persona> listPersonas;
-                    List<EstadoCaso> listEstado;
-                    List<TipoCaso> listTipo;
-                    List<Usuario> usuarioList;
-                    List<Flujocaso> flujoList;
-                    listPersonas = jpaperson.findPersonaEntities();
-                    session.setAttribute("Persona", listPersonas);
-                    listCaso = jpaCaso.findCasoEntities();
-                    session.setAttribute("Caso", listCaso);
-                    listEstado = jpaEstado.findEstadoCasoEntities();
-                    session.setAttribute("Estado", listEstado);
-                    listTipo = jpaTipo.findTipoCasoEntities();
-                    session.setAttribute("Tipo", listTipo);
-                    usuarioList = jpaUsuario.findUsuarioEntities();
-                    session.setAttribute("Usuario", usuarioList);
-                    session.setAttribute("codigoCaso", codigoCaso);
-                    flujoList = jpaflujoCaso.findFlujocasoEntities();
-                    session.setAttribute("flujoList", flujoList);
-                    cambioCasoList = seguimientoCaso.findCambioCasoEntities();
-                    session.setAttribute("cambioCasoList", cambioCasoList);
-                    rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
-                    break;
-
-            }
-        }
-
-        if (editar != null && !editar.equals("")) {
-            session.setAttribute("codigoCaso", editar);
-            rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
-        }
-
         if (cambiarEstado != null && !cambiarEstado.equals("")) {
             caso camEstdo = new caso();
             boolean respuesta;
@@ -202,13 +111,13 @@ public class CasoServlet extends HttpServlet {
                     //Agrgeamos los comentarios ya rchivos que suban.
                     AccionesCaso acciones;
                     InputStream inputStream = null;
-                    if (filePart.getSize() > 0) {
-                       inputStream = filePart.getInputStream();
-                  }
-                    if (inputStream != null) {
-                      // acciones.setArchivo(inputStream);
-                       // acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
-                  }
+                    //if (filePart.getSize() > 0) {
+                    // inputStream = filePart.getInputStream();
+                    //   }
+                    //   if (inputStream != null) {
+
+                    // acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
+                    //  }
                 } catch (Exception ex) {
                     Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -239,7 +148,6 @@ public class CasoServlet extends HttpServlet {
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
         }
 
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

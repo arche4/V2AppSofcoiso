@@ -206,6 +206,7 @@ public class CasoJpaController implements Serializable {
             em.close();
         }
     }
+  
 
     public Caso findCaso(Integer id) {
         EntityManager em = getEntityManager();
@@ -274,6 +275,8 @@ public class CasoJpaController implements Serializable {
         }
           return respuesta;
     }
+    
+   
 
 
    
