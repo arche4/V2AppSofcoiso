@@ -9,6 +9,8 @@ com\co\sofcoiso\controller\PersonaasistenteJpaController.class
 com\co\sofcoiso\modelo\Flujocaso_.class
 com\co\sofcoiso\Servlet\CasoServlet.class
 com\co\sofcoiso\modelo\Flujocaso.class
+com\co\sofcoiso\conexion\Operaciones.class
+com\co\sofcoiso\modelo\CambioCaso_.class
 com\co\sofcoiso\modelo\Caso_.class
 com\co\sofcoiso\modelo\EstadoCaso.class
 com\co\sofcoiso\controller\EstadoCasoJpaController.class
@@ -19,8 +21,10 @@ com\co\sofcoiso\modelo\TipoCaso_.class
 com\co\sofcoiso\modelo\CitasPersona.class
 com\co\sofcoiso\modelo\Afp_.class
 com\co\sofcoiso\modelo\Usuario_.class
+com\co\sofcoiso\controller\CambioCasoJpaController.class
 com\co\sofcoiso\controller\ArlJpaController.class
 com\co\sofcoiso\modelo\Persona.class
+com\co\sofcoiso\modelo\CambioCaso.class
 com\co\sofcoiso\controller\CitasPersonaJpaController.class
 com\co\sofcoiso\controller\CasoJpaController.class
 com\co\sofcoiso\controller\TipoCasoJpaController.class
@@ -29,13 +33,11 @@ com\co\sofcoiso\modelo\AccionesCaso.class
 com\co\sofcoiso\modelo\Formacion_.class
 com\co\sofcoiso\controller\PersonaJpaController.class
 com\co\sofcoiso\modelo\Arl.class
-com\co\sofcoiso\Servlet\exceptions\IllegalOrphanException.class
 com\co\sofcoiso\modelo\EstadoCaso_.class
 com\co\sofcoiso\controller\FlujocasoJpaController.class
 com\co\sofcoiso\clases\caso.class
 com\co\sofcoiso\modelo\Formacion.class
 com\co\sofcoiso\modelo\Eps_.class
-com\co\sofcoiso\Servlet\exceptions\NonexistentEntityException.class
 com\co\sofcoiso\conexion\Conexion.class
 com\co\sofcoiso\modelo\Personaasistente_.class
 com\co\sofcoiso\modelo\AccionesCaso_.class
@@ -44,8 +46,10 @@ com\co\sofcoiso\modelo\CitasPersona_.class
 com\co\sofcoiso\modelo\Caso.class
 com\co\sofcoiso\modelo\Eps.class
 com\co\sofcoiso\modelo\Arl_.class
+com\co\sofcoiso\Servlet\UsuarioServlet.class
 com\co\sofcoiso\modelo\TipoCaso.class
 com\co\sofcoiso\modelo\Usuario.class
-com\co\sofcoiso\Servlet\exceptions\PreexistingEntityException.class
+com\co\sofcoiso\ExcelReport\ExcelCreateReport.class
+com\co\sofcoiso\Servlet\ReportServlet.class
 com\co\sofcoiso\controller\FormacionJpaController.class
 com\co\sofcoiso\controller\exceptions\IllegalOrphanException.class

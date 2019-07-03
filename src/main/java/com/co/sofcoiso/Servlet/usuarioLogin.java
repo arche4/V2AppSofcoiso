@@ -69,6 +69,7 @@ public class usuarioLogin extends HttpServlet {
         EstadoCasoJpaController estado = new EstadoCasoJpaController(JPAFactory.getFACTORY());
         TipoCasoJpaController tipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
         FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
+        UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
         
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
         String Mensaje = "";
@@ -83,6 +84,8 @@ public class usuarioLogin extends HttpServlet {
         }
 
         session.setAttribute("USUARIO", usuario);
+        List<Usuario> listUsuario = jpaUsuario.findUsuarioEntities();
+        session.setAttribute("listUsuario", listUsuario);
         List<Eps> listEps = ejc.findEpsEntities();
         session.setAttribute("EPS", listEps);
         List<Arl> ListArl = arl.findArlEntities();

@@ -7,12 +7,14 @@ package com.co.sofcoiso.Servlet;
 
 import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.clases.caso;
+import com.co.sofcoiso.controller.CambioCasoJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.controller.TipoCasoJpaController;
 import com.co.sofcoiso.controller.UsuarioJpaController;
 import com.co.sofcoiso.modelo.AccionesCaso;
+import com.co.sofcoiso.modelo.CambioCaso;
 import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Flujocaso;
@@ -68,6 +70,7 @@ public class CasoServlet extends HttpServlet {
         TipoCasoJpaController jpaTipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
         FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
+        CambioCasoJpaController seguimientoCaso = new CambioCasoJpaController(JPAFactory.getFACTORY());
 
         String mensaje = "";
 
@@ -84,12 +87,11 @@ public class CasoServlet extends HttpServlet {
         String cambiarEstado = request.getParameter("cambiarEstado");
         String usuario = request.getParameter("usuario");
         String Estado = request.getParameter("Estado");
-        String casoCodigo = request.getParameter("Estado");
+        String casoCodigo = request.getParameter("codigoCaso");
         Part filePart = request.getPart("file");
         String comentarios = request.getParameter("comentarios");
 
         Date date;
-        Caso caso;
         EstadoCaso estadocaso;
         TipoCaso tipo;
 
@@ -120,34 +122,41 @@ public class CasoServlet extends HttpServlet {
                         fecha = formatterFecha2.format(date);
 
                         estadoCaso = "101";
-                        fecha_creacion = fechaActual + " " + hora_actual;
+                        fecha_creacion = fecha + " " + hora_actual;
 
                         Flujocaso flujoCaso = new Flujocaso(codigoCaso, estadoCaso, creado, fecha_creacion, fecha_creacion);
-
                         jpaflujoCaso.create(flujoCaso);
+
+                        //agregamos el seguimiento del caso
+                        CambioCaso casoSeguimiento = new CambioCaso(codigoCaso.toString(), estadoCaso, creado, fecha_creacion);
+                        seguimientoCaso.create(casoSeguimiento);
+
                     } catch (Exception ex) {
                         Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
+                    List<CambioCaso> cambioCasoList;
+                    List<Caso> listCaso;
                     List<Persona> listPersonas;
+                    List<EstadoCaso> listEstado;
+                    List<TipoCaso> listTipo;
+                    List<Usuario> usuarioList;
+                    List<Flujocaso> flujoList;
                     listPersonas = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", listPersonas);
-                    List<Caso> listCaso;
                     listCaso = jpaCaso.findCasoEntities();
                     session.setAttribute("Caso", listCaso);
-                    List<EstadoCaso> listEstado;
                     listEstado = jpaEstado.findEstadoCasoEntities();
                     session.setAttribute("Estado", listEstado);
-                    List<TipoCaso> listTipo;
                     listTipo = jpaTipo.findTipoCasoEntities();
                     session.setAttribute("Tipo", listTipo);
-                    List<Usuario> usuarioList;
                     usuarioList = jpaUsuario.findUsuarioEntities();
                     session.setAttribute("Usuario", usuarioList);
                     session.setAttribute("codigoCaso", codigoCaso);
-                    List<Flujocaso> flujoList;
                     flujoList = jpaflujoCaso.findFlujocasoEntities();
                     session.setAttribute("flujoList", flujoList);
+                    cambioCasoList = seguimientoCaso.findCambioCasoEntities();
+                    session.setAttribute("cambioCasoList", cambioCasoList);
                     rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
                     break;
 
@@ -165,11 +174,11 @@ public class CasoServlet extends HttpServlet {
             respuesta = camEstdo.actualizarEstado(Integer.parseInt(casoCodigo), Integer.parseInt(Estado));
             if (respuesta == true) {
                 try {
-               
-                    caso casoFlujo = new caso();
 
-                    String fechaActual = casoFlujo.obtenerFechaActual();
-                    hora_actual = casoFlujo.obtenerHoraActual();
+                    caso tomarFecha = new caso();
+
+                    String fechaActual = tomarFecha.obtenerFechaActual();
+                    hora_actual = tomarFecha.obtenerHoraActual();
 
                     SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
                     SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -178,26 +187,56 @@ public class CasoServlet extends HttpServlet {
                     String fecha_actualizada;
 
                     //Actualizamos el flujo de los estados del caso
-                    fecha_actualizada = fechaActual + " " + hora_actual;
-                    Flujocaso flujoCaso = new Flujocaso(Integer.parseInt(casoCodigo), Estado, usuario, fecha_actualizada);
-                    jpaflujoCaso.edit(flujoCaso);
+                    //Esto nos sirve para saber por cuantos estados paso el caso.
+                    fecha_actualizada = fecha + " " + hora_actual;
+                    CambioCaso casoSeguimiento = new CambioCaso(casoCodigo, Estado, usuario, fecha_actualizada);
+                    try {
+                        seguimientoCaso.create(casoSeguimiento);
+                    } catch (Exception e) {
+                        Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, e);
+                    }
+
+                    //Cambiamos el estado del caso
+                    camEstdo.actualizarFlujoCaso(casoCodigo, Estado, usuario, fecha_actualizada);
 
                     //Agrgeamos los comentarios ya rchivos que suban.
                     AccionesCaso acciones;
                     InputStream inputStream = null;
-                    if (filePart.getSize() > 0) {
-                        inputStream = filePart.getInputStream();
-                    }
-                    if (inputStream != null) {
+                    //if (filePart.getSize() > 0) {
+                       // inputStream = filePart.getInputStream();
+                 //   }
+                 //   if (inputStream != null) {
 
-                        acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
-                    }
+                       // acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
+                  //  }
                 } catch (Exception ex) {
                     Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
-            rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
+            List<CambioCaso> listCambio;
+            List<Caso> casoList;
+            List<Persona> personasList;
+            List<EstadoCaso> EstadoList;
+            List<TipoCaso> TipoList;
+            List<Usuario> ListUsuairio;
+            List<Flujocaso> ListFlujo;
+            personasList = jpaperson.findPersonaEntities();
+            session.setAttribute("Persona", personasList);
+            casoList = jpaCaso.findCasoEntities();
+            session.setAttribute("casoList", casoList);
+            EstadoList = jpaEstado.findEstadoCasoEntities();
+            session.setAttribute("Estado", EstadoList);
+            TipoList = jpaTipo.findTipoCasoEntities();
+            session.setAttribute("Tipo", TipoList);
+            ListUsuairio = jpaUsuario.findUsuarioEntities();
+            session.setAttribute("Usuario", ListUsuairio);
+            ListFlujo = jpaflujoCaso.findFlujocasoEntities();
+            session.setAttribute("flujoList", ListFlujo);
+            listCambio = seguimientoCaso.findCambioCasoEntities();
+            session.setAttribute("cambioCasoList", listCambio);
+            session.setAttribute("codigo", casoCodigo);
+            rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
         }
 
         rd.forward(request, response);

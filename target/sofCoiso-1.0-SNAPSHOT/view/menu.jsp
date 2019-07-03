@@ -42,7 +42,7 @@
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item active  ">
-                            <a class="nav-link" href="./dashboard.html">
+                            <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
@@ -50,13 +50,13 @@
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
-                                <p>Registrar Personas</p>
+                                <p>Personas</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/listadoPersonas.jsp">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
                                 <i class="material-icons">person</i>
-                                <p>Personas</p>
+                                <p>Caso</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -66,9 +66,9 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/asistente.jsp">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">bubble_chart</i>
-                                <p>Asistentes</p>
+                                <p>Fomarcion</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -77,22 +77,10 @@
                                 <p>Usuarios</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="./rtl.html">
-                                <i class="material-icons">language</i>
-                                <p>RTL Support</p>
-                            </a>
-                        </li>
-                        <li class="nav-item active-pro ">
-                            <a class="nav-link" href="./upgrade.html">
-                                <i class="material-icons">unarchive</i>
-                                <p>Upgrade to PRO</p>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">location_ons</i>
+                                <p>Reportes</p>
                             </a>
                         </li>
                     </ul>

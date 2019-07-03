@@ -24,7 +24,6 @@ import javax.servlet.http.HttpSession;
  * @author manue
  */
 public class caso {
-    private Connection con;
 
     public String obtenerFechaActual() {
         final Calendar capturar_fecha = Calendar.getInstance();
@@ -48,32 +47,29 @@ public class caso {
     }
 
     public boolean actualizarEstado(Integer casoCodigo, Integer estado) {
-        boolean resp;
+        boolean resp = true;
         final StringBuilder respondo = new StringBuilder();
         final StringBuilder Query = new StringBuilder();
         Statement stmt = null;
         ResultSet Respuesta = null;
-        Connection conn = null;
+        Connection con = null;
         ResultSet rs = null;
-        
 
         try {
 
             respondo.delete(0, respondo.length());
-            stmt = con.createStatement();
             Query.delete(0, Query.length());
             Conexion objConn = new Conexion();
-            conn = objConn.conPostgreSQL;
+            con = objConn.conPostgreSQL;
+            stmt = con.createStatement();
 
-            //STRINGS DE LOS QUERYS
-            Query.append(ActualizarEstado(casoCodigo,estado));
-            Respuesta = stmt.executeQuery(Query.toString());
-            
-
-            if (Respuesta.next()) {
-                resp = true;
-            } else {
+            //STRINGS DE LOS QUERYSTRY
+            try {
+                Query.append(ActualizarEstado(casoCodigo, estado));
+                stmt.executeUpdate(Query.toString());
+            } catch (Exception e) {
                 resp = false;
+            Logger.getLogger(caso.class.getName()).log(Level.SEVERE, null, e);
             }
 
         } catch (Exception e) {
@@ -88,8 +84,8 @@ public class caso {
                 if (stmt != null) {
                     stmt.close();
                 }
-                if (conn != null) {
-                    conn.close();
+                if (con != null) {
+                    con.close();
                 }
             } catch (Exception e) {
             }
@@ -97,10 +93,64 @@ public class caso {
 
         return resp;
     }
-    
-     private String ActualizarEstado(Integer codigo, Integer codigoEstado) {
+
+    private String ActualizarEstado(Integer codigo, Integer codigoEstado) {
         final StringBuilder retorno = new StringBuilder();
-        final String add = "UPDATE caso SET estado_caso_codigoestado = '" + codigo + "' WHERE codigocaso = '" + codigoEstado + "'";
+        final String add = " UPDATE caso SET estado_caso_codigoestado = '" + codigoEstado + "' WHERE codigocaso = '" + codigo + "'";
+        retorno.append(add);
+        return retorno.toString();
+    }
+    
+    public boolean actualizarFlujoCaso(String casoCodigo, String estado,String Usuario, String fecha) {
+        boolean resp = true;
+        final StringBuilder respondo = new StringBuilder();
+        final StringBuilder Query = new StringBuilder();
+        Statement stmt = null;
+        Connection con = null;
+        ResultSet rs = null;
+
+        try {
+
+            respondo.delete(0, respondo.length());
+            Query.delete(0, Query.length());
+            Conexion objConn = new Conexion();
+            con = objConn.conPostgreSQL;
+            stmt = con.createStatement();
+
+            //STRINGS DE LOS QUERYSTRY
+            try {
+                Query.append(ActualizarFlujoCaso(casoCodigo, estado, Usuario, fecha));
+                stmt.executeUpdate(Query.toString());
+            } catch (Exception e) {
+                resp = false;
+            Logger.getLogger(caso.class.getName()).log(Level.SEVERE, null, e);
+            }
+
+        } catch (Exception e) {
+            resp = false;
+            Logger.getLogger(caso.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            //CERRAR LAS CONEXIONES
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        return resp;
+    }
+
+    private String ActualizarFlujoCaso(String codigo, String codigoEstado, String Usuario, String fecha) {
+        final StringBuilder retorno = new StringBuilder();
+        final String add = " UPDATE flujocaso SET estadocaso = '" + codigoEstado + "',usuario = '" + Usuario + "', fecha_actualizacion = '" + fecha + "' WHERE codigocaso = '" + codigo + "'";
         retorno.append(add);
         return retorno.toString();
     }

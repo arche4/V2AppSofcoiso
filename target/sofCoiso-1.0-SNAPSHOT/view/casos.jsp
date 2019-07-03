@@ -46,8 +46,8 @@
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
-                    <ul class="nav">
-                        <li class="nav-item active  ">
+                     <ul class="nav">
+                        <li class="nav-item">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
@@ -59,9 +59,9 @@
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item active">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">person</i>
+                                <i class="material-icons">library_books</i>
                                 <p>Casos</p>
                             </a>
                         </li>
@@ -72,33 +72,9 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/asistente.jsp">
-                                <i class="material-icons">bubble_chart</i>
-                                <p>Asistentes</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
-                                <p>Empresa</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
                                 <i class="material-icons">location_ons</i>
                                 <p>Usuarios</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/empresa.jsp">
-                                <i class="material-icons">location_ons</i>
-                                <p>Empresa</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
-                                <p>Cargo</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -176,6 +152,9 @@
                             <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearCaso">
                                 Crear Caso
                             </button>
+                              <li class="nav-item" style="border-left: 1px solid rgba(255, 255, 255, 0.102);">
+                <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/home.jsp">Generar Reporte</a>
+            </li>
                         </div>                        <hr class="line-seprate">
                         <div class="section__content section__content--p30">
                             <div class="container-fluid">

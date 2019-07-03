@@ -89,13 +89,6 @@ public class Caso implements Serializable {
         this.creado = creado;
         this.asignado = asignado;
     }
-
-    public Caso(Integer codigocaso, EstadoCaso estado) {
-        this.codigocaso = codigocaso;
-        this.estadoCasoCodigoestado = estado;
-
-    }
-
     public Caso(Integer codigoCaso, String textarea, String fechaAfectacion, String pcl,
             String parteAfectada, String tiempoInca, String creado,
             Persona per,
@@ -226,5 +219,5 @@ public class Caso implements Serializable {
     public String toString() {
         return "com.co.sofcoiso.modelo.Caso[ codigocaso=" + codigocaso + " ]";
     }
-
+    
 }

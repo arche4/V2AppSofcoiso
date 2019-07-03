@@ -204,6 +204,9 @@
                         <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
                             Asignar
                         </button>
+                         <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
+                            Citar 
+                        </button>
                         <div class="issue-body-content">
                             <div class="aui-group issue-body">
                                 <div class="aui-item issue-main-column" style="
@@ -382,7 +385,7 @@
                 <div class="modal-content" style="padding:60px 50px;">
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Cambiar Estado</h4>
+                        <h4 class="modal-title">Caso: </h4>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
                     <c:forEach var="Caso" items="${sessionScope.Caso}">
@@ -409,7 +412,7 @@
                                     <div class="form-group"> 
                                         <textarea class="form-control" rows="5" id="comentarios" name="comentarios" value="comentarios"></textarea>
                                     </div>
-                                    <button name="cambiarEstado" value="cambiarEstado" type="submit" class="btn btn-success" onclick="return cambiarEstado()">Guardar</button>
+                                    <button name="cambiarEstado" value="cambiarEstado" type="submit" class="btn btn-success" onclick="return cambiarEstado()">Cambiar Estado</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                 </form>
                             </c:when>

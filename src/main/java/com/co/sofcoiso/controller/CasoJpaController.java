@@ -228,7 +228,7 @@ public class CasoJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public String crear(Caso caso) {
         String respuesta = null;
         EntityManager em = null;
@@ -274,5 +274,8 @@ public class CasoJpaController implements Serializable {
         }
           return respuesta;
     }
+
+
+   
 
 }
