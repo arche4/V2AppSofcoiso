@@ -5,22 +5,47 @@ body {
   background: #FCFDFD;
 }
 h1{
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-weight: normal;
   text-align: center;
   color:#aaa;
 }
 h2 {
-  margin: 5px 0 2em;
+  margin: 0.5px 0 2em;
   color: #7F8C9A;
 }
 
 
 body {
   margin: 0;
-  padding: 2rem 1.5rem;
+  padding: 4rem 1.5rem;
   font: 1rem/1.5 "PT Sans", Arial, sans-serif;
   color: #5a5a5a;
 }
 
 
+  #uploads {
+      display:block;
+      position:relative;
+  } 
+
+  #uploads li {
+      list-style:none;
+  }
+
+  #drop {
+      width: 90%;
+      height: 100px;
+      padding: 2em;
+      float: left;
+      margin: 10px;
+      border: 8px dotted grey;
+  }
+
+  #drop.hover {
+      border: 8px dotted green;
+  }
+
+  #drop.err {
+      border: 8px dotted orangered;
+  }

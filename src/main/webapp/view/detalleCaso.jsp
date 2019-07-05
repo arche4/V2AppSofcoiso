@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
+     <meta charset="utf-8" />
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
         <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -29,10 +29,104 @@
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.servletContext.contextPath}/javaScript/css/detalleCaso.css" rel="stylesheet" type="text/css"/>
-    </head>
+        <link href="${pageContext.servletContext.contextPath}/javaScript/detalleCaso.css" rel="stylesheet" type="text/css"/>
+    
+        
+        
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script> 
+        <script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+        <script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+        <script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
 
+        <script src="${pageContext.servletContext.contextPath}/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/main.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload-validate.js" type="text/javascript"></script>
+
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload-ui.js" type="text/javascript"></script>
+    </head>
     <body class="">
+        <script id="template-upload" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-upload fade">
+            <td>
+            <span class="preview"></span>
+            </td>
+            <td>
+            {% if (window.innerWidth > 480 || !o.options.loadImageFileTypes.test(file.type)) { %}
+            <p class="name">{%=file.name%}</p>
+            {% } %}
+            <strong class="error text-danger"></strong>
+            </td>
+            <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+            </td>
+            <td>
+            {% if (!i && !o.options.autoUpload) { %}
+            <button class="btn btn-primary start" disabled>
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Start</span>
+            </button>
+            {% } %}
+            {% if (!i) { %}
+            <button class="btn btn-warning cancel">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Cancel</span>
+            </button>
+            {% } %}
+            </td>
+            </tr>
+            {% } %}
+        </script>
+        <!-- The template to display files available for download -->
+        <script id="template-download" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-download fade">
+            <td>
+            <span class="preview">
+            {% if (file.thumbnailUrl) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+            {% } %}
+            </span>
+            </td>
+            <td>
+            {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
+            <p class="name">
+            {% if (file.url) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+            {% } else { %}
+            <span>{%=file.name%}</span>
+            {% } %}
+            </p>
+            {% } %}
+            {% if (file.error) { %}
+            <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+            </td>
+            <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td>
+            <td>
+            {% if (file.deleteUrl) { %}
+            <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+            <i class="glyphicon glyphicon-trash"></i>
+            <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+            <button class="btn btn-warning cancel">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Cancel</span>
+            </button>
+            {% } %}
+            </td>
+            </tr>
+            {% } %}
+        </script>
         <div class="wrapper ">
             <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
                 <!--
@@ -207,6 +301,9 @@
                         <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
                             Citar 
                         </button>
+                        <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Cargar">
+                            Cargar Archivos 
+                        </button>
                         <div class="issue-body-content">
                             <div class="aui-group issue-body">
                                 <div class="aui-item issue-main-column" style="
@@ -293,176 +390,221 @@
                                     <div id="dnd-metadata" class="module toggle-wrap">
                                         <div id="dnd-metadata_heading" class="mod-header">
                                             <ul class="ops"></ul><h3 class="toggle-title">Adjuntos</h3>
-                                            <form action="#">
-                                                <div class="input-file-container">  
-                                                    <input class="input-file" id="my-file" type="file">
-                                                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
-                                                </div>
-                                                <p class="file-return"></p>
-                                            </form>
+
                                         </div>
-                                    </div>
-                                </div>             
-                                <div id="viewissuesidebar" class="aui-item issue-side-column" style="width: 35%;padding-left: 30px;
-                                     box-sizing: border-box; display: table-cell;margin: 0;vertical-align: top; ">
-                                    <c:forEach var="caso" items="${sessionScope.Caso}">
-                                        <c:choose>
-                                            <c:when test="${caso.getCodigocaso() == sessionScope.codigoCaso}">
-                                                <div id="peoplemodule" class="module toggle-wrap">
-                                                    <div id="peoplemodule_heading" class="mod-header">
-                                                        <ul class="ops"></ul>
-                                                        <h3 class="toggle-title">Personas</h3>
-                                                    </div>
-                                                    <div class="mod-content">
-                                                        <ul class="item-details" id="peopledetails">
-                                                            <li class="people-details">
-                                                                <dl>
-                                                                    <dt>Responsable:</dt>
-                                                                    <dd>
-                                                                        <span id="assignee-val" class="view-issue-field">
-                                                                            <c:out value='${caso.getAsignado()}' />
-                                                                        </span>
-                                                                        </span>
-                                                                    </dd>
-                                                                </dl>                                            
-                                                                <dl>
-                                                                    <dt>Informador:</dt>
-                                                                    <dd>
-                                                                        <span id="reporter-val" class="view-issue-field">
-                                                                            <c:out value='${caso.getCreado()}' />
-                                                                        </span>
-                                                                    </dd>
-                                                                </dl>  
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </c:when>
-                                        </c:choose>         
-                                    </c:forEach>
-                                    <div id="datesmodule" class="module toggle-wrap">
-                                        <div id="datesmodule_heading" class="mod-header">
-                                            <h3 class="toggle-title">Fechas</h3>
-                                        </div>
-                                        <c:forEach var="flujoList" items="${sessionScope.flujoList}">
+                                    </div>             
+                                    <div id="viewissuesidebar" class="aui-item issue-side-column" style="width: 35%;padding-left: 30px;
+                                         box-sizing: border-box; display: table-cell;margin: 0;vertical-align: top; ">
+                                        <c:forEach var="caso" items="${sessionScope.Caso}">
                                             <c:choose>
-                                                <c:when test="${flujoList.getCodigocaso() == sessionScope.codigoCaso}">
-                                                    <div class="mod-content">
-                                                        <ul class="item-details">
-                                                            <li>
-                                                                <dl class="dates">
-                                                                    <dt>Creada:</dt>
-                                                                    <c:out value='${flujoList.getFechaCreacion()}' />
-                                                                </dl>
-                                                                <dl class="dates">
-                                                                    <dt>Actualizada:</dt>
-                                                                    <c:out value='${flujoList.getFechaActualizacion()}' />
-                                                                </dl>
-                                                            </li>
-                                                        </ul>
+                                                <c:when test="${caso.getCodigocaso() == sessionScope.codigoCaso}">
+                                                    <div id="peoplemodule" class="module toggle-wrap">
+                                                        <div id="peoplemodule_heading" class="mod-header">
+                                                            <ul class="ops"></ul>
+                                                            <h3 class="toggle-title">Personas</h3>
+                                                        </div>
+                                                        <div class="mod-content">
+                                                            <ul class="item-details" id="peopledetails">
+                                                                <li class="people-details">
+                                                                    <dl>
+                                                                        <dt>Responsable:</dt>
+                                                                        <dd>
+                                                                            <span id="assignee-val" class="view-issue-field">
+                                                                                <c:out value='${caso.getAsignado()}' />
+                                                                            </span>
+                                                                            </span>
+                                                                        </dd>
+                                                                    </dl>                                            
+                                                                    <dl>
+                                                                        <dt>Informador:</dt>
+                                                                        <dd>
+                                                                            <span id="reporter-val" class="view-issue-field">
+                                                                                <c:out value='${caso.getCreado()}' />
+                                                                            </span>
+                                                                        </dd>
+                                                                    </dl>  
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </c:when>
-                                        </c:choose>         
-                                    </c:forEach>
+                                                </c:when>
+                                            </c:choose>         
+                                        </c:forEach>
+                                        <div id="datesmodule" class="module toggle-wrap">
+                                            <div id="datesmodule_heading" class="mod-header">
+                                                <h3 class="toggle-title">Fechas</h3>
+                                            </div>
+                                            <c:forEach var="flujoList" items="${sessionScope.flujoList}">
+                                                <c:choose>
+                                                    <c:when test="${flujoList.getCodigocaso() == sessionScope.codigoCaso}">
+                                                        <div class="mod-content">
+                                                            <ul class="item-details">
+                                                                <li>
+                                                                    <dl class="dates">
+                                                                        <dt>Creada:</dt>
+                                                                        <c:out value='${flujoList.getFechaCreacion()}' />
+                                                                    </dl>
+                                                                    <dl class="dates">
+                                                                        <dt>Actualizada:</dt>
+                                                                        <c:out value='${flujoList.getFechaActualizacion()}' />
+                                                                    </dl>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </c:when>
+                                            </c:choose>         
+                                        </c:forEach>
+                                    </div>
                                 </div>
                             </div>
+                        </div>                 
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('#myTable').DataTable();
+                });
+
+            </script>
+
+            <div class="modal fade" id="cambiarEstado">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="padding:60px 50px;">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Caso: </h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
-                    </div>                 
-                </div>
-            </div>
-        </div>
-
-        <script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
-
-        </script>
-
-        <div class="modal fade" id="cambiarEstado">
-            <div class="modal-dialog">
-                <div class="modal-content" style="padding:60px 50px;">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Caso: </h4>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                    </div>
-                    <c:forEach var="Caso" items="${sessionScope.Caso}">
-                        <c:choose>
-                            <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
-                                <form method="post" name="cambiarEstado" id="Caso" action="">
-                                    <div class="form-group">
-                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
-                                        <input  name="usuario" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
-                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
-                                    </div>
-                                    <div class="form-group">
-                                        <select name="Estado" id="Estado" class="form-control-sm form-control">
-                                            <option value="">Estado</option>
-                                            <c:forEach var="Estado" items="${sessionScope.Estado}">
-                                                <option value="${Estado.getCodigoestado()}"><c:out value="${Estado.getNombreEstado()}"/></option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <label class="file">
-                                        <input type="file" id="file" name="file" aria-label="File browser example">
-                                        <span class="file-custom"></span>
-                                    </label>
-                                    <div class="form-group"> 
-                                        <textarea class="form-control" rows="5" id="comentarios" name="comentarios" value="comentarios"></textarea>
-                                    </div>
-                                    <button name="cambiarEstado" value="cambiarEstado" type="submit" class="btn btn-success" onclick="return cambiarEstado()">Cambiar Estado</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                </form>
-                            </c:when>
-                        </c:choose>
-                    </c:forEach>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="Asignar">
-            <div class="modal-dialog">
-                <div class="modal-content" style="padding:60px 50px;">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Asignar</h4>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                    </div>
-                    <c:forEach var="Caso" items="${sessionScope.Caso}">
-                        <c:choose>
-                            <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
-                                <form method="post" name="usuario" id="Caso" action="">
-                                    <div class="form-group">
-                                        <div class="form-group col-md-6">
+                        <c:forEach var="Caso" items="${sessionScope.Caso}">
+                            <c:choose>
+                                <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
+                                    <form method="post" name="cambiarEstado" id="Caso" action="">
+                                        <div class="form-group">
                                             <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
-                                            <input  name="" disabled  class="form-control" type="text" value="<c:out value='${Caso.getCodigocaso()}' />">
-
+                                            <input  name="usuario" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                            <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="usuario">Asignar</label>
-                                        <select name="usuario" id="persona" class="form-control-sm form-control">
-                                            <option value="">Asignar</option>
-                                            <c:forEach var="Usuario" items="${sessionScope.Usuario}">
-                                                <option value="${Usuario.getCedulaUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="form-group"> 
-                                        <label for="comentario">Deje aquí sus comentarios</label>
-                                        <textarea class="form-control" rows="5" id="comentarios" value="comentarios"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button name="accion" value="asignar" type="submit" class="btn btn-success" onclick="return asignar()">Guardar</button>
+                                        <div class="form-group">
+                                            <select name="Estado" id="Estado" class="form-control-sm form-control">
+                                                <option value="">Estado</option>
+                                                <c:forEach var="Estado" items="${sessionScope.Estado}">
+                                                    <option value="${Estado.getCodigoestado()}"><c:out value="${Estado.getNombreEstado()}"/></option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <label class="file">
+                                            <input type="file" id="file" name="file" aria-label="File browser example">
+                                            <span class="file-custom"></span>
+                                        </label>
+                                        <div class="form-group"> 
+                                            <textarea class="form-control" rows="5" id="comentarios" name="comentarios" value="comentarios"></textarea>
+                                        </div>
+                                        <button name="cambiarEstado" value="cambiarEstado" type="submit" class="btn btn-success" onclick="return cambiarEstado()">Cambiar Estado</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                    </div>
-                                </form>
-                            </c:when>
-                        </c:choose>
-                    </c:forEach>
+                                    </form>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="modal fade" id="Cargar">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="padding:60px 50px;">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Caso: </h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                        </div>
+                        <form id="fileupload" action="https://jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
+                            <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                            <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+                            <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                            <div class="row fileupload-buttonbar">
+                                <div class="col-lg-7">
+                                    <!-- The fileinput-button span is used to style the file input field as button -->
+                                    <span class="btn btn-success fileinput-button">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>Add files...</span>
+                                        <input type="file" name="files[]" multiple>
+                                    </span>
+                                    <button type="submit" class="btn btn-primary start">
+                                        <i class="glyphicon glyphicon-upload"></i>
+                                        <span>Start upload</span>
+                                    </button>
+                                    <button type="reset" class="btn btn-warning cancel">
+                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                        <span>Cancel upload</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger delete">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                        <span>Delete</span>
+                                    </button>
+                                    <input type="checkbox" class="toggle">
+                                    <!-- The global file processing state -->
+                                    <span class="fileupload-process"></span>
+                                </div>
+                                <!-- The global progress state -->
+                                <div class="col-lg-5 fileupload-progress fade">
+                                    <!-- The global progress bar -->
+                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                    </div>
+                                    <!-- The extended global progress state -->
+                                    <div class="progress-extended">&nbsp;</div>
+                                </div>
+                            </div>
+                            <!-- The table listing the files available for upload/download -->
+                            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="Asignar">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="padding:60px 50px;">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Asignar</h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                        </div>
+                        <c:forEach var="Caso" items="${sessionScope.Caso}">
+                            <c:choose>
+                                <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
+                                    <form method="post" name="usuario" id="Caso" action="">
+                                        <div class="form-group">
+                                            <div class="form-group col-md-6">
+                                                <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
+                                                <input  name="" disabled  class="form-control" type="text" value="<c:out value='${Caso.getCodigocaso()}' />">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="usuario">Asignar</label>
+                                            <select name="usuario" id="persona" class="form-control-sm form-control">
+                                                <option value="">Asignar</option>
+                                                <c:forEach var="Usuario" items="${sessionScope.Usuario}">
+                                                    <option value="${Usuario.getCedulaUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group"> 
+                                            <label for="comentario">Deje aquí sus comentarios</label>
+                                            <textarea class="form-control" rows="5" id="comentarios" value="comentarios"></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="accion" value="asignar" type="submit" class="btn btn-success" onclick="return asignar()">Guardar</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </form>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
     </body>
 </html>

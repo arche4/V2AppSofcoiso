@@ -6,8 +6,9 @@
         <meta charset="utf-8" />
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
         <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /
+              <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -29,17 +30,27 @@
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.servletContext.contextPath}/javaScript/detalleCaso.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/javaScript/css/detalleCaso.css" rel="stylesheet" type="text/css"/>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script> 
+        <script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+        <script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+        <script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+
+        <link href="${pageContext.servletContext.contextPath}/js/jquery.fileupload.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/main.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload-validate.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload-ui.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/js/jquery.fileupload-ui.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="">
         <div class="wrapper ">
             <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
-                <!--
-                  Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-          
-                  Tip 2: you can also add an image using data-image tag
-                -->
                 <div class="logo">
                     <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
@@ -173,6 +184,9 @@
                         <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
                             Citar 
                         </button>
+                        <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Cargar">
+                            Cargar Archivos 
+                        </button>
                         <div class="issue-body-content">
                             <div class="aui-group issue-body">
                                 <div class="aui-item issue-main-column" style="
@@ -268,6 +282,14 @@
                                             </form>
                                         </div>
                                     </div>
+                                    <div id="dnd-metadata" class="module toggle-wrap">
+                                        <div id="dnd-metadata_heading" class="mod-header">
+                                            <ul class="ops"></ul><h3 class="toggle-title">Comentarios</h3>
+                                            <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Cargar">
+                                               Comentar
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>             
                                 <div id="viewissuesidebar" class="aui-item issue-side-column" style="width: 35%;padding-left: 30px;
                                      box-sizing: border-box; display: table-cell;margin: 0;vertical-align: top; ">
@@ -337,6 +359,33 @@
                     </div>                 
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-8">                            
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Carga Masiva de Información</h3>
+                        </div>
+                        <form enctype="multipart/form-data" id="formuploadajax"  method="post">
+                            <div class="box-body">
+                                <div class="col-xs-8">  
+                                    <div class="form-group">                                          
+                                        <label for="fileCarga">Adjunte el Archivo</label>
+                                        <input type="file" class="form-control-file" id="archivo1" name="fileCarga"/>                                               
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <div class="row">
+                                    <div class="col-xs-4">                                           
+                                        <input type="submit" class="btn btn-success btn-block" value="Cargar Archivo"/> 
+                                    </div>
+                                </div>
+                            </div> 
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>
@@ -387,6 +436,58 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="Cargar">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:60px 50px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Caso: </h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form id="fileupload" action="https://jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
+                        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                        <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                        <div class="row fileupload-buttonbar">
+                            <div class="col-lg-7">
+                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                <span class="btn btn-success fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Add files...</span>
+                                    <input type="file" name="files[]" multiple>
+                                </span>
+                                <button type="submit" class="btn btn-primary start">
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                    <span>Start upload</span>
+                                </button>
+                                <button type="reset" class="btn btn-warning cancel">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel upload</span>
+                                </button>
+                                <button type="button" class="btn btn-danger delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                                <input type="checkbox" class="toggle">
+                                <!-- The global file processing state -->
+                                <span class="fileupload-process"></span>
+                            </div>
+                            <!-- The global progress state -->
+                            <div class="col-lg-5 fileupload-progress fade">
+                                <!-- The global progress bar -->
+                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                </div>
+                                <!-- The extended global progress state -->
+                                <div class="progress-extended">&nbsp;</div>
+                            </div>
+                        </div>
+                        <!-- The table listing the files available for upload/download -->
+                        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="Asignar">
             <div class="modal-dialog">
                 <div class="modal-content" style="padding:60px 50px;">
@@ -430,5 +531,83 @@
                 </div>
             </div>
         </div>
+        <script id="template-upload" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-upload fade">
+            <td>
+            <span class="preview"></span>
+            </td>
+            <td>
+            {% if (window.innerWidth > 480 || !o.options.loadImageFileTypes.test(file.type)) { %}
+            <p class="name">{%=file.name%}</p>
+            {% } %}
+            <strong class="error text-danger"></strong>
+            </td>
+            <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+            </td>
+            <td>
+            {% if (!i && !o.options.autoUpload) { %}
+            <button class="btn btn-primary start" disabled>
+            <i class="glyphicon glyphicon-upload"></i>
+            <span>Start</span>
+            </button>
+            {% } %}
+            {% if (!i) { %}
+            <button class="btn btn-warning cancel">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Cancel</span>
+            </button>
+            {% } %}
+            </td>
+            </tr>
+            {% } %}
+        </script>
+        <!-- The template to display files available for download -->
+        <script id="template-download" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-download fade">
+            <td>
+            <span class="preview">
+            {% if (file.thumbnailUrl) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+            {% } %}
+            </span>
+            </td>
+            <td>
+            {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
+            <p class="name">
+            {% if (file.url) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+            {% } else { %}
+            <span>{%=file.name%}</span>
+            {% } %}
+            </p>
+            {% } %}
+            {% if (file.error) { %}
+            <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+            </td>
+            <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+            </td>
+            <td>
+            {% if (file.deleteUrl) { %}
+            <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+            <i class="glyphicon glyphicon-trash"></i>
+            <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+            <button class="btn btn-warning cancel">
+            <i class="glyphicon glyphicon-ban-circle"></i>
+            <span>Cancel</span>
+            </button>
+            {% } %}
+            </td>
+            </tr>
+            {% } %}
+        </script>
     </body>
 </html>
