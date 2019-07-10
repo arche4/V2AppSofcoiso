@@ -83,6 +83,12 @@
                                 <p>Reportes</p>
                             </a>
                         </li>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/graficas.jsp">
+                                <i class="material-icons">location_ons</i>
+                                <p>Graficas</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -158,19 +164,18 @@
                         <div class="row">
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
-                                    <div class="card-header card-header-warning card-header-icon">
-                                        <div class="card-icon">
-                                            <i class="material-icons">content_copy</i>
+                                    <div class="card-header card-header-secondary card-header-icon">
+                                        <div class="card-icon" style="background: #1c2165;">
+                                            <i class="material-icons">accessibility</i>
                                         </div>
-                                        <p class="card-category">Used Space</p>
-                                        <h3 class="card-title">49/50
-                                            <small>GB</small>
+                                        <p class="card-category">Personas</p>
+                                        <h3 class="card-title">N° <c:out value="${sessionScope.countPersona}"/>
                                         </h3>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
-                                            <i class="material-icons text-danger">warning</i>
-                                            <a href="#pablo">Get More Space...</a>
+                                            <i class="material-icons">file_copy</i>
+                                            <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -178,15 +183,16 @@
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-success card-header-icon">
-                                        <div class="card-icon">
+                                        <div class="card-icon" style="background: #1c2165;">
                                             <i class="material-icons">store</i>
                                         </div>
-                                        <p class="card-category">Revenue</p>
-                                        <h3 class="card-title">$34,245</h3>
+                                        <p class="card-category">Casos</p>
+                                        <h3 class="card-title">N° <c:out value="${sessionScope.countCaso}"/></h3>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
-                                            <i class="material-icons">date_range</i> Last 24 Hours
+                                            <i class="material-icons">file_copye</i> 
+                                            <a href="${pageContext.servletContext.contextPath}/view/ReporteCasos.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -194,15 +200,16 @@
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-danger card-header-icon">
-                                        <div class="card-icon">
-                                            <i class="material-icons">info_outline</i>
+                                        <div class="card-icon" style="background: #1c2165;">
+                                            <i class="material-icons">date_range</i>
                                         </div>
-                                        <p class="card-category">Fixed Issues</p>
-                                        <h3 class="card-title">75</h3>
+                                        <p class="card-category">Citas</p>
+                                        <h3 class="card-title">N° <c:out value="${sessionScope.countCitas}"/></h3>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
-                                            <i class="material-icons">local_offer</i> Tracked from Github
+                                            <i class="material-icons">file_copye</i> 
+                                             <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -210,15 +217,16 @@
                             <div class="col-lg-3 col-md-6 col-sm-6">
                                 <div class="card card-stats">
                                     <div class="card-header card-header-info card-header-icon">
-                                        <div class="card-icon">
-                                            <i class="fa fa-twitter"></i>
+                                        <div class="card-icon" style="background: #1c2165;">
+                                            <i class="material-icons">event_note</i>
                                         </div>
-                                        <p class="card-category">Followers</p>
-                                        <h3 class="card-title">+245</h3>
+                                        <p class="card-category">Formaciones</p>
+                                        <h3 class="card-title">N° <c:out value="${sessionScope.countFormaciones}"/></h3>
                                     </div>
                                     <div class="card-footer">
                                         <div class="stats">
-                                            <i class="material-icons">update</i> Just Updated
+                                            <i class="material-icons">file_copye</i> 
+                                             <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -521,7 +529,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-12">
+                    <div class="col-lg-6 col-md-12">
                                 <div class="card">
                                     <div class="card-header card-header-warning">
                                         <h4 class="card-title">Employees Stats</h4>
@@ -568,41 +576,7 @@
                         </div>
                     </div>
                 </div>
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <nav class="float-left">
-                            <ul>
-                                <li>
-                                    <a href="https://www.creative-tim.com">
-                                        Creative Tim
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://creative-tim.com/presentation">
-                                        About Us
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="http://blog.creative-tim.com">
-                                        Blog
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://www.creative-tim.com/license">
-                                        Licenses
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div class="copyright float-right">
-                            &copy;
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>, made with <i class="material-icons">favorite</i> by
-                            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-                        </div>
-                    </div>
-                </footer>
+               
             </div>
         </div>
 

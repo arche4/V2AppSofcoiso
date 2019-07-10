@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.clases.Dashboard;
 import com.co.sofcoiso.controller.AfpJpaController;
 import com.co.sofcoiso.controller.ArlJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
@@ -70,6 +71,8 @@ public class usuarioLogin extends HttpServlet {
         TipoCasoJpaController tipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
         FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
+        CitasPersonaJpaController citaJpa = new CitasPersonaJpaController(JPAFactory.getFACTORY());
+        FormacionJpaController formacionJpa = new FormacionJpaController(JPAFactory.getFACTORY());
         
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
         String Mensaje = "";
@@ -82,7 +85,10 @@ public class usuarioLogin extends HttpServlet {
             rd = request.getRequestDispatcher("view/menu.jsp");
             //Mensaje = "Email o Clave no validos";
         }
-
+        
+         Dashboard dashboard = new Dashboard();
+         String countEstados = dashboard.countEstado();
+         session.setAttribute("countEstados", countEstados);
         session.setAttribute("USUARIO", usuario);
         List<Usuario> listUsuario = jpaUsuario.findUsuarioEntities();
         session.setAttribute("listUsuario", listUsuario);
@@ -93,9 +99,17 @@ public class usuarioLogin extends HttpServlet {
         List<Afp> ListAfp = afp.findAfpEntities();
         session.setAttribute("AFP", ListAfp);
         List<Persona> ListPersona = per.findPersonaEntities();
+        int countPersona = per.getPersonaCount();
         session.setAttribute("Persona", ListPersona);
+        session.setAttribute("countPersona", countPersona);
         List<Caso> listCaso = caso.findCasoEntities();
         session.setAttribute("Caso", listCaso);
+        int countCaso = caso.getCasoCount();
+        session.setAttribute("countCaso", countCaso);
+        int countCitas = citaJpa.getCitasPersonaCount();
+        session.setAttribute("countCitas", countCitas);
+        int countFormaciones = formacionJpa.getFormacionCount();
+        session.setAttribute("countFormaciones", countFormaciones);
         List<EstadoCaso> ListEstado = estado.findEstadoCasoEntities();
         session.setAttribute("Estado", ListEstado);
         List<TipoCaso> ListTipo = tipo.findTipoCasoEntities();

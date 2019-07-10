@@ -263,7 +263,7 @@
                                             </div>
 
                                         </div>
-                                          <div class="form-group">
+                                                                                                                                                                                                            <div class="form-group">
                                             <label for="cedula">Fecha  Nacimiento</label>
                                             <input type="date" class="form-control" id="cumpleaños" name="cumpleaños" placeholder="MM/DD/YYY" id="example-month-input">
                                         </div>

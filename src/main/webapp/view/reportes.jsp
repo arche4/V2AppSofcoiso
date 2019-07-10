@@ -9,7 +9,7 @@
         <title>Reportería autoatención</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-          <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
         <!-- CSS Files -->
         <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
@@ -28,7 +28,10 @@
         <!-- Page style -->
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/dist/css/home.css">
 
-
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     </head>
 
@@ -98,7 +101,7 @@
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="#pablo">Usuario</a>
+                            <a class="navbar-brand" href="#pablo">Reportes</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
@@ -118,20 +121,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">notifications</i>
-                                        <span class="notification">5</span>
-                                        <p class="d-lg-none d-md-block">
-                                            Some Actions
-                                        </p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                        <a class="dropdown-item" href="#">Another Notification</a>
-                                        <a class="dropdown-item" href="#">Another One</a>
-                                    </div>
+
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -159,29 +149,15 @@
                                 <div class="box box-primary">
                                     <div class="box-body">
                                         <div class="row">
-                                            <div class="col-xs-6">
-                                                <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="cedula" name="cedula"  placeholder="Cedula">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
-                                            </div>
-                                        </div>
-                                                <div class="form-group">                                                
-                                                    <label>IVR's</label>
-                                                    <select class="form-control" id="selectIVR" disabled="true">                                               
-                                                    </select>                                  
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-3">
-                                                <div class="form-group">
+                                                <div class="orm-group col-md-6">
                                                     <label>Tipo de consulta</label>
-                                                    <select class="form-control" id="selectConsulta" disabled="true">
-                                                    </select> 
+                                                    <select name="selectConsulta" id="selectConsulta" class="form-control" >
+                                                    <option value="Personas" selected>Reporte Personas</option>
+                                                    <option value="Citas" selected>Reporte Citas</option>
+                                                    <option value="Formaciones" selected>Reporte Formaciones</option>
+                                                </select>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-6">
+                                           <div class="orm-group col-md-6">
                                                 <label>Fechas: Inicio - Fin</label>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
@@ -207,7 +183,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box box-primary">
@@ -245,7 +220,6 @@
         <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <!-- AdminLTE App -->
         <!-- Funcionalidad js -->
-        <script src="${pageContext.servletContext.contextPath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 
         <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
@@ -261,7 +235,6 @@
 
 
 
-
         <script>
             $('#rangTime').daterangepicker({
                 timePicker: true,
@@ -270,8 +243,6 @@
                     format: 'YYYY-MM-DD HH:mm'
                 }
             });
-
-
         </script>
 
     </body>

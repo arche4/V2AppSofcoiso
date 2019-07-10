@@ -122,12 +122,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </nav>
             </header>
 
-
-
-
-            
-
-                <!-- Main content -->
                 <section class="content">
                     <div class="row">
                         <div class="col-md-10">
