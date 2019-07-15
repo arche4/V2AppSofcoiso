@@ -6,6 +6,7 @@
 package com.co.sofcoiso.clases;
 
 import com.co.sofcoiso.conexion.Conexion;
+import com.co.sofcoiso.report.ReportCasos;
 import com.co.sofcoiso.report.ReportPersona;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,12 +22,16 @@ import java.util.logging.Logger;
  */
 public class Dashboard {
 
-    public String countEstado() {
+    public Dashboard() {
+
+    }
+
+    public List<ReportCasos> countEstado() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         String data = "";
-        StringBuilder resp = new StringBuilder();
+        List<ReportCasos> datostabla = new ArrayList<>();
 
         try {
             Conexion objConn = new Conexion();
@@ -38,16 +43,17 @@ public class Dashboard {
                     + "inner join caso c "
                     + "on ec.codigoestado = c.estado_caso_codigoestado "
                     + "GROUP BY ec.nombre_estado";
-            
+
             stmt = conn.prepareStatement(sqlPersonaCount);
             rs = stmt.executeQuery();
-            List<String> countList = new ArrayList<>();
+
             
             while (rs.next()) {
-                
-                countList.add(rs.getString(1)+" "+rs.getString(2));
+                ReportCasos estados = new ReportCasos();
+                estados.setNombreEstado(rs.getString(1));
+                estados.setCantidadEstado(rs.getString(2));
+                datostabla.add(estados);
             }
-              data = countList.toString();
 
         } catch (Exception e) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, e);
@@ -69,7 +75,8 @@ public class Dashboard {
             }
         }
 
-        return data;
+        return datostabla;
+
     }
 
 }

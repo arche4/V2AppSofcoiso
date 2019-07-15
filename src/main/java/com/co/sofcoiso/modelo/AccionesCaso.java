@@ -9,11 +9,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -24,56 +25,64 @@ import javax.validation.constraints.Size;
 @Table(name = "acciones_caso")
 @NamedQueries({
     @NamedQuery(name = "AccionesCaso.findAll", query = "SELECT a FROM AccionesCaso a")
-    , @NamedQuery(name = "AccionesCaso.findByCodigoCaso", query = "SELECT a FROM AccionesCaso a WHERE a.codigoCaso = :codigoCaso")
+    , @NamedQuery(name = "AccionesCaso.findByIdCasoAcciones", query = "SELECT a FROM AccionesCaso a WHERE a.idCasoAcciones = :idCasoAcciones")
+    , @NamedQuery(name = "AccionesCaso.findByCodigo", query = "SELECT a FROM AccionesCaso a WHERE a.codigo = :codigo")
     , @NamedQuery(name = "AccionesCaso.findByUsuario", query = "SELECT a FROM AccionesCaso a WHERE a.usuario = :usuario")
+    , @NamedQuery(name = "AccionesCaso.findByCometario", query = "SELECT a FROM AccionesCaso a WHERE a.cometario = :cometario")
     , @NamedQuery(name = "AccionesCaso.findByArchivo", query = "SELECT a FROM AccionesCaso a WHERE a.archivo = :archivo")
-    , @NamedQuery(name = "AccionesCaso.findByCometario", query = "SELECT a FROM AccionesCaso a WHERE a.cometario = :cometario")})
+    , @NamedQuery(name = "AccionesCaso.findByFechaActualizada", query = "SELECT a FROM AccionesCaso a WHERE a.fechaActualizada = :fechaActualizada")})
 public class AccionesCaso implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "codigoCaso")
-    private Integer codigoCaso;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Column(name = "id_caso_acciones")
+    private Integer idCasoAcciones;
+    @Column(name = "codigo")
+    private Integer codigo;
+    @Size(max = 50)
     @Column(name = "usuario")
     private String usuario;
-    @Size(max = 100)
-    @Column(name = "archivo")
-    private String archivo;
     @Size(max = 1000)
     @Column(name = "cometario")
     private String cometario;
+    @Size(max = 50)
+    @Column(name = "archivo")
+    private String archivo;
+    @Size(max = 30)
+    @Column(name = "fecha_actualizada")
+    private String fechaActualizada;
 
     public AccionesCaso() {
     }
 
-    public AccionesCaso(Integer codigoCaso) {
-        this.codigoCaso = codigoCaso;
+    public AccionesCaso(Integer idCasoAcciones) {
+        this.idCasoAcciones = idCasoAcciones;
     }
 
-    public AccionesCaso(Integer codigoCaso, String usuario) {
-        this.codigoCaso = codigoCaso;
-        this.usuario = usuario;
-    }
-    
-    public AccionesCaso(Integer casoCodigocaso,  String usuario, String comentarios, String archivo) {
-        this.codigoCaso = casoCodigocaso;
+    public AccionesCaso(Integer codigo, String usuario, String comentarios, String archivos, String fecha) {
+        this.codigo = codigo;
         this.usuario = usuario;
         this.cometario = comentarios;
-        this.archivo = archivo;
-       
-    }
-    
-    public Integer getCodigoCaso() {
-        return codigoCaso;
+        this.archivo = archivos;
+        this.fechaActualizada = fecha;
     }
 
-    public void setCodigoCaso(Integer codigoCaso) {
-        this.codigoCaso = codigoCaso;
+    public Integer getIdCasoAcciones() {
+        return idCasoAcciones;
+    }
+
+    public void setIdCasoAcciones(Integer idCasoAcciones) {
+        this.idCasoAcciones = idCasoAcciones;
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getUsuario() {
@@ -84,14 +93,6 @@ public class AccionesCaso implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
-    }
-
     public String getCometario() {
         return cometario;
     }
@@ -100,10 +101,26 @@ public class AccionesCaso implements Serializable {
         this.cometario = cometario;
     }
 
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
+
+    public String getFechaActualizada() {
+        return fechaActualizada;
+    }
+
+    public void setFechaActualizada(String fechaActualizada) {
+        this.fechaActualizada = fechaActualizada;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codigoCaso != null ? codigoCaso.hashCode() : 0);
+        hash += (idCasoAcciones != null ? idCasoAcciones.hashCode() : 0);
         return hash;
     }
 
@@ -114,7 +131,7 @@ public class AccionesCaso implements Serializable {
             return false;
         }
         AccionesCaso other = (AccionesCaso) object;
-        if ((this.codigoCaso == null && other.codigoCaso != null) || (this.codigoCaso != null && !this.codigoCaso.equals(other.codigoCaso))) {
+        if ((this.idCasoAcciones == null && other.idCasoAcciones != null) || (this.idCasoAcciones != null && !this.idCasoAcciones.equals(other.idCasoAcciones))) {
             return false;
         }
         return true;
@@ -122,7 +139,7 @@ public class AccionesCaso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.co.sofcoiso.modelo.AccionesCaso[ codigoCaso=" + codigoCaso + " ]";
+        return "com.co.sofcoiso.modelo.AccionesCaso[ idCasoAcciones=" + idCasoAcciones + " ]";
     }
-    
+
 }

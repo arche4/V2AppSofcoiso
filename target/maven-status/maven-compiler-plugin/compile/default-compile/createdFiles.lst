@@ -22,6 +22,7 @@ com\co\sofcoiso\modelo\CitasPersona.class
 com\co\sofcoiso\modelo\Afp_.class
 com\co\sofcoiso\modelo\Usuario_.class
 com\co\sofcoiso\controller\CambioCasoJpaController.class
+com\co\sofcoiso\Servlet\tipoCasoServlet.class
 com\co\sofcoiso\controller\ArlJpaController.class
 com\co\sofcoiso\modelo\Persona.class
 com\co\sofcoiso\Servlet\detalleServlet.class
@@ -48,6 +49,7 @@ com\co\sofcoiso\report\ReportCasos.class
 com\co\sofcoiso\controller\AfpJpaController.class
 com\co\sofcoiso\modelo\CitasPersona_.class
 com\co\sofcoiso\modelo\Caso.class
+com\co\sofcoiso\Servlet\EstadoCasoServlet.class
 com\co\sofcoiso\modelo\Eps.class
 com\co\sofcoiso\modelo\Arl_.class
 com\co\sofcoiso\Servlet\UsuarioServlet.class

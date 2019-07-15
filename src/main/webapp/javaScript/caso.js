@@ -37,3 +37,9 @@ function cambiarEstado() {
 function asignar() {
 
 }
+function comment() {
+    document.getElementById("comment").action = "/sofCoiso/CasoServlet";
+    document.getElementById("comment").submit();
+    toastr.success("persona Guardado Correctamente");
+    return true;
+}

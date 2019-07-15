@@ -6,7 +6,6 @@
 package com.co.sofcoiso.controller;
 
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
-import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import com.co.sofcoiso.modelo.AccionesCaso;
 import java.io.Serializable;
 import java.util.List;
@@ -32,18 +31,13 @@ public class AccionesCasoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(AccionesCaso accionesCaso) throws PreexistingEntityException, Exception {
+    public void create(AccionesCaso accionesCaso) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(accionesCaso);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findAccionesCaso(accionesCaso.getCodigoCaso()) != null) {
-                throw new PreexistingEntityException("AccionesCaso " + accionesCaso + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -61,7 +55,7 @@ public class AccionesCasoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = accionesCaso.getCodigoCaso();
+                Integer id = accionesCaso.getIdCasoAcciones();
                 if (findAccionesCaso(id) == null) {
                     throw new NonexistentEntityException("The accionesCaso with id " + id + " no longer exists.");
                 }
@@ -82,7 +76,7 @@ public class AccionesCasoJpaController implements Serializable {
             AccionesCaso accionesCaso;
             try {
                 accionesCaso = em.getReference(AccionesCaso.class, id);
-                accionesCaso.getCodigoCaso();
+                accionesCaso.getIdCasoAcciones();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The accionesCaso with id " + id + " no longer exists.", enfe);
             }

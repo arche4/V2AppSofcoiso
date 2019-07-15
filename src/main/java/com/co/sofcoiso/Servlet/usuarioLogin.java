@@ -28,6 +28,7 @@ import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Flujocaso;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
+import com.co.sofcoiso.report.ReportCasos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -87,8 +88,8 @@ public class usuarioLogin extends HttpServlet {
         }
         
          Dashboard dashboard = new Dashboard();
-         String countEstados = dashboard.countEstado();
-         session.setAttribute("countEstados", countEstados);
+         List<ReportCasos> listEstados = dashboard.countEstado();
+         session.setAttribute("listEstados", listEstados);
         session.setAttribute("USUARIO", usuario);
         List<Usuario> listUsuario = jpaUsuario.findUsuarioEntities();
         session.setAttribute("listUsuario", listUsuario);

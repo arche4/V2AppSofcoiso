@@ -40,7 +40,7 @@ $(document).ready(function(){
             }
         })).done(function(data){
            
-            $("#btnDescargar").attr("urlDescarga" + tCons + ".xls");
+            $("#btnDescargar").attr("urlDescarga"+"Personas.xls");
             $("#btnDescargar").prop("disabled",false);
             $body.removeClass("loading");
             

@@ -7,6 +7,7 @@ package com.co.sofcoiso.Servlet;
 
 import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.clases.caso;
+import com.co.sofcoiso.controller.AccionesCasoJpaController;
 import com.co.sofcoiso.controller.CambioCasoJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
@@ -71,6 +72,7 @@ public class CasoServlet extends HttpServlet {
         FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
         CambioCasoJpaController seguimientoCaso = new CambioCasoJpaController(JPAFactory.getFACTORY());
+        AccionesCasoJpaController accionesCasoJpa = new AccionesCasoJpaController(JPAFactory.getFACTORY());
 
         String mensaje = "";
 
@@ -89,6 +91,9 @@ public class CasoServlet extends HttpServlet {
         String Estado = request.getParameter("Estado");
         String casoCodigo = request.getParameter("codigoCaso");
         Part filePart = request.getPart("file");
+        String comment = request.getParameter("comment");
+        String codigoC = request.getParameter("codigoC");
+        String usuarioComenta = request.getParameter("usuarioComenta");
         String comentarios = request.getParameter("comentarios");
 
         Date date;
@@ -112,7 +117,6 @@ public class CasoServlet extends HttpServlet {
 
                         //creamos el flujo del caso.
                         caso casoFlujo = new caso();
-
                         String fechaActual = casoFlujo.obtenerFechaActual();
                         hora_actual = casoFlujo.obtenerHoraActual();
 
@@ -165,6 +169,8 @@ public class CasoServlet extends HttpServlet {
 
         if (editar != null && !editar.equals("")) {
             session.setAttribute("codigoCaso", editar);
+            List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
+            session.setAttribute("listAccionesCaso", listAccionesCaso);
             rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
         }
 
@@ -203,12 +209,12 @@ public class CasoServlet extends HttpServlet {
                     AccionesCaso acciones;
                     InputStream inputStream = null;
                     if (filePart.getSize() > 0) {
-                       inputStream = filePart.getInputStream();
-                  }
+                        inputStream = filePart.getInputStream();
+                    }
                     if (inputStream != null) {
-                      // acciones.setArchivo(inputStream);
-                       // acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
-                  }
+                        // acciones.setArchivo(inputStream);
+                        // acciones = new AccionesCaso(Integer.parseInt(casoCodigo), usuario, comentarios, inputStream.toString());
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -237,6 +243,36 @@ public class CasoServlet extends HttpServlet {
             session.setAttribute("cambioCasoList", listCambio);
             session.setAttribute("codigo", casoCodigo);
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
+        }
+        if (comment != null && !comment.equals("")) {
+            //guardamos los comentarios hechos dentro del caso.
+            caso accionesFecha = new caso();
+
+            try {
+
+                String actual = accionesFecha.obtenerFechaActual();
+                hora_actual = accionesFecha.obtenerHoraActual();
+
+                SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+                SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+                date = formatterFecha.parse(actual);
+                fecha = formatterFecha2.format(date);
+                String fecha_actualizada;
+                fecha_actualizada = fecha + " " + hora_actual;
+
+                AccionesCaso accionComentar = new AccionesCaso(Integer.parseInt(codigoC), usuarioComenta, comentarios, "", fecha_actualizada);
+
+                accionesCasoJpa.create(accionComentar);
+            } catch (Exception e) {
+                Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, e);
+            }
+
+            List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
+            session.setAttribute("listAccionesCaso", listAccionesCaso);
+            session.setAttribute("codigoCaso", codigoC);
+
+            rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
+
         }
 
         rd.forward(request, response);
