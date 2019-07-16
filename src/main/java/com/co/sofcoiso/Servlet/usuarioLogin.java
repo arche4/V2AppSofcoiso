@@ -23,9 +23,11 @@ import com.co.sofcoiso.controller.UsuarioJpaController;
 import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Caso;
+import com.co.sofcoiso.modelo.CitasPersona;
 import com.co.sofcoiso.modelo.Eps;
 import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Flujocaso;
+import com.co.sofcoiso.modelo.Formacion;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.report.ReportCasos;
@@ -74,6 +76,8 @@ public class usuarioLogin extends HttpServlet {
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
         CitasPersonaJpaController citaJpa = new CitasPersonaJpaController(JPAFactory.getFACTORY());
         FormacionJpaController formacionJpa = new FormacionJpaController(JPAFactory.getFACTORY());
+
+        
         
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
         String Mensaje = "";
@@ -86,10 +90,10 @@ public class usuarioLogin extends HttpServlet {
             rd = request.getRequestDispatcher("view/menu.jsp");
             //Mensaje = "Email o Clave no validos";
         }
-        
-         Dashboard dashboard = new Dashboard();
-         List<ReportCasos> listEstados = dashboard.countEstado();
-         session.setAttribute("listEstados", listEstados);
+
+        Dashboard dashboard = new Dashboard();
+        List<ReportCasos> listEstados = dashboard.countEstado();
+        session.setAttribute("listEstados", listEstados);
         session.setAttribute("USUARIO", usuario);
         List<Usuario> listUsuario = jpaUsuario.findUsuarioEntities();
         session.setAttribute("listUsuario", listUsuario);
@@ -118,7 +122,12 @@ public class usuarioLogin extends HttpServlet {
         List<Flujocaso> flujoList;
         flujoList = jpaflujoCaso.findFlujocasoEntities();
         session.setAttribute("flujoList", flujoList);
-
+        List<Formacion> formacionlist;
+        formacionlist = formacionJpa.findFormacionEntities();
+        session.setAttribute("formacion", formacionlist);
+        List<CitasPersona> citasList;
+        citasList = citaJpa.findCitasPersonaEntities();
+        session.setAttribute("Cita", citasList);
         rd.forward(request, response);
 
     }

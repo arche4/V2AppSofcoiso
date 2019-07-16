@@ -57,6 +57,16 @@ public class Formacion implements Serializable {
     public Formacion(String idFormacion) {
         this.idFormacion = idFormacion;
     }
+    
+    
+    public Formacion(String idFormacion,String tipoFormacion, String fecha, String temas,   String numeroAsistente) {
+        this.idFormacion = idFormacion;
+        this.tipoFormacion = tipoFormacion;
+        this.fechaFormacion = fecha;
+        this.temas = temas;
+        this.numeroAsistentes = numeroAsistente;
+        
+    }
 
     public String getIdFormacion() {
         return idFormacion;

@@ -8,6 +8,7 @@ com\co\sofcoiso\controller\AccionesCasoJpaController.class
 com\co\sofcoiso\controller\PersonaasistenteJpaController.class
 com\co\sofcoiso\modelo\Flujocaso_.class
 com\co\sofcoiso\Servlet\CasoServlet.class
+com\co\sofcoiso\clases\Usuario.class
 com\co\sofcoiso\modelo\Flujocaso.class
 com\co\sofcoiso\conexion\Operaciones.class
 com\co\sofcoiso\modelo\CambioCaso_.class

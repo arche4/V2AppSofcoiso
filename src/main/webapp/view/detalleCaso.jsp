@@ -55,46 +55,57 @@
                         Menu
                     </a>
                 </div>
-                <div class="sidebar-wrapper">
+               <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item active  ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listarPersonas" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
+                            <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">Casos</i>
-                                <p>Casos</p>
+                                <i class="material-icons">receipt</i>
+                                <p>Caso</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Tipo de Caso</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
+                                <i class="material-icons">list_alt</i>
+                                <p>Fomarcion</p>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
+                                <i class="material-icons">person_pin</i>
                                 <p>Usuarios</p>
+                            </a>t
+                        </li>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                <i class="material-icons">autorenew</i>
+                                <p>Estado Casos</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">assessment</i>
+                                <p>Reportes</p>
                             </a>
                         </li>
-
-
+                       
                     </ul>
                 </div>
             </div>

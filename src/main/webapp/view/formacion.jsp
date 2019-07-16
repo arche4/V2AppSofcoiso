@@ -51,44 +51,57 @@
                         Menu
                     </a>
                 </div>
-                <div class="sidebar-wrapper">
+                 <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listarPersonas" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
+                            <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Casos</p>
+                                <i class="material-icons">receipt</i>
+                                <p>Caso</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Tipo de Caso</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
                             </a>
                         </li>
                         <li class="nav-item active ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
-                                <p>Usuarios</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
+                                <i class="material-icons">list_alt</i>
+                                <p>Fomarcion</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                <i class="material-icons">person_pin</i>
+                                <p>Usuarios</p>
                             </a>
                         </li>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                <i class="material-icons">autorenew</i>
+                                <p>Estado Casos</p>
+                            </a>
+                        </li>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">assessment</i>
+                                <p>Reportes</p>
+                            </a>
+                        </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -117,22 +130,6 @@
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">notifications</i>
-                                        <span class="notification">5</span>
-                                        <p class="d-lg-none d-md-block">
-                                            Some Actions
-                                        </p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                        <a class="dropdown-item" href="#">Another Notification</a>
-                                        <a class="dropdown-item" href="#">Another One</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">person</i>
                                         <p class="d-lg-none d-md-block">
@@ -140,10 +137,9 @@
                                         </p>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/view/perfil.jsp">Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Log out</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/index.jsp">Log out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -155,8 +151,8 @@
                     <div class="container-fluid">
 
                         <div class="col">
-                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearUsuario" style="background: #1c2165;">
-                                Crear Usuario
+                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearFormacion" style="background: #1c2165;">
+                                Crear Formacion
                             </button>
                         </div>                        
                         <hr class="line-seprate">
@@ -170,23 +166,25 @@
                                                     <tr>
                                                         <th scope="col">Accion</th>
                                                         <th scope="col">ID</th>
-                                                        <th scope="col">Nombre</th>
-                                                        <th scope="col">Apellidos</th>
-                                                        <th scope="col">rol</th>
+                                                        <th scope="col">Formación</th>
+                                                        <th scope="col">Fecha</th>
+                                                        <th scope="col">Temas</th>
+                                                        <th scope="col">N° Asistentes</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="usuario" items="${sessionScope.listUsuario}" varStatus="myIndex">
+                                                    <c:forEach var="formacion" items="${sessionScope.formacion}" varStatus="myIndex">
                                                         <tr>
                                                             <td>
-                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/UsuarioServlet">
-                                                                    <button name="ver" value="${personas.getCedulaUsuario()}" type="submit" class="btn btn-primary">Ver</button>
+                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/FormacionServlet">
+                                                                    <button name="verFormacion" value="${formacion.getIdFormacion()}" type="submit" class="btn btn-primary">Ver</button>
                                                                 </form>
                                                             </td> 
-                                                            <td><c:out value="${usuario.getCedulaUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getNombreUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getApellidoUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getRol()}"/></td>
+                                                            <td><c:out value="${formacion.getIdFormacion()}"/></td>
+                                                            <td><c:out value="${formacion.getTipoFormacion()}"/></td>
+                                                            <td><c:out value="${formacion.getFechaFormacion()}"/></td>
+                                                            <td><c:out value="${formacion.getTemas()}"/></td>
+                                                            <td><c:out value="${formacion.getNumeroAsistentes()}"/></td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -203,52 +201,40 @@
                                 $('#table_id').DataTable();
                             });
                         </script>
-                        <div class="modal fade" id="crearUsuario">
+                        <div class="modal fade" id="crearFormacion">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="padding:40px 50px;">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Crear Usuarios</h4>
+                                        <h4 class="modal-title">Crear Formacion</h4>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
-                                    <form method="post" name="usuario" id="usuario"
-                                          action="">
+                                    <form method="post" name="formacion" id="formacion" action="">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="cedula" name="cedula"  placeholder="Cedula">
+                                                <input type="text" class="form-control" id="idFormacion" name="idFormacion"  placeholder="Id Formación">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                                                <input type="text" class="form-control" id="tipoFormacion" name="tipoFormacion" placeholder="Tipo de Formación">
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="formacion">Fecha  Formacion</label>
+                                            <input type="date" class="form-control" id="formacion" name="formacion" value="2011-08-08" id="example-month-input">
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="apellido" name="apellido"  placeholder="Apellidos">
+                                                <input type="text" class="form-control" id="tema" name="tema" placeholder="Tema">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <select name="rol" id="inputState" 
-                                                        class="form-control">
-                                                    <option value="Administrador" selected>Administrador</option>
-                                                    <option value="Coordinador" selected>Coordinador</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="password" class="form-control" id="clave" name="clave" placeholder="Contraseña">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <input type="password" class="form-control" id="comfirmarClave" name="comfirmarClave" placeholder="Comfirmar Contraseña">
+                                                <input type="text" class="form-control" id="nAsistentes" name="nAsistentes" placeholder="N° Ssistentes">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="accion" value="crear" type="submit" class="btn btn-success" onclick="return validar()">Crear</button>
+                                            <button name="crear" value="crear" type="submit" class="btn btn-success" onclick="return ValidarFormacion()">Guardar</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </form>
-                                    <!-- Modal footer -->
-
                                 </div>
                             </div>
                         </div>

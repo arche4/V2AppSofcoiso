@@ -5,13 +5,21 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.controller.UsuarioJpaController;
+import com.co.sofcoiso.modelo.Usuario;
+import com.co.sofcoiso.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,18 +40,80 @@ public class UsuarioServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UsuarioServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UsuarioServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        RequestDispatcher rd = null;
+        UsuarioJpaController ujc = new UsuarioJpaController(JPAFactory.getFACTORY());
+
+        String idusuario = request.getParameter("cedula");
+        String nombreUsuario = request.getParameter("nombre");
+        String apellidoUsuario = request.getParameter("apellido");
+        String claveUsuario = request.getParameter("clave");
+        String rolUsuario = request.getParameter("rol");
+
+        String accion = request.getParameter("accion");
+        String editar = request.getParameter("editar");
+        String modificar = request.getParameter("modificar");
+        String eliminar = request.getParameter("eliminar");
+        String volver = request.getParameter("volver");
+
+        String mensaje = "";
+
+        if (accion != null && !accion.equals("")) {
+            switch (accion) {
+                case "crear":
+
+                    Usuario usuario = new Usuario(Integer.parseInt(idusuario), nombreUsuario, apellidoUsuario, claveUsuario, rolUsuario);
+                    try {
+                        ujc.create(usuario);
+                        List<Usuario> ListUsuario = ujc.findUsuarioEntities();
+                        session.setAttribute("listUsuario", ListUsuario);
+                        rd = request.getRequestDispatcher("/view/usuario.jsp");
+                    } catch (Exception e) {
+                        Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, e);
+                    }
+
+                    break;
+                case "listar":
+                    List<Usuario> lUsuario = ujc.findUsuarioEntities();
+                    session.setAttribute("Usuario", lUsuario);
+                    rd = request.getRequestDispatcher("/view/usuario.jsp");
+                    break;
+
+                case "modificar":
+                    Usuario user = new Usuario(Integer.parseInt(idusuario), nombreUsuario, apellidoUsuario, claveUsuario, rolUsuario);
+                    try {
+                        ujc.edit(user);
+                    } catch (Exception ex) {
+                        Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    List<Usuario> usuarioList = ujc.findUsuarioEntities();
+                    session.setAttribute("Usuario", usuarioList);
+                    rd = request.getRequestDispatcher("/view/usuario.jsp");
+                    break;
+                case "volver":
+                    rd = request.getRequestDispatcher("/view/usuario.jsp");
+                    break;
+
+            }
         }
+        if (editar != null && !editar.equals("")) {
+            session.setAttribute("documento", editar);
+            List<Usuario> ListUsuario = ujc.findUsuarioEntities();
+            session.setAttribute("listUsuario", ListUsuario);
+            rd = request.getRequestDispatcher("/view/verUsuario.jsp");
+        }
+        if (eliminar != null && !eliminar.equals("")) {
+            try {
+                ujc.destroy(Integer.parseInt(idusuario));
+            } catch (Exception ex) {
+                Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<Usuario> userList = ujc.findUsuarioEntities();
+            session.setAttribute("Usuario", userList);
+            rd = request.getRequestDispatcher("/view/usuario.jsp");
+        }
+
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

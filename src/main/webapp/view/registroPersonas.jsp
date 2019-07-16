@@ -19,8 +19,8 @@
 
 
         <!-- Data table -->
-       
-       
+
+
         <title>Software de Gestión Coiso</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" >
@@ -53,42 +53,55 @@
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" name="accion" value="listarPersonas" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
+                        <li class="nav-item  active">
+                            <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Casos</p>
+                                <i class="material-icons">receipt</i>
+                                <p>Caso</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Tipo de Caso</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
+                                <i class="material-icons">list_alt</i>
+                                <p>Fomarcion</p>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
+                                <i class="material-icons">person_pin</i>
                                 <p>Usuarios</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                <i class="material-icons">autorenew</i>
+                                <p>Estado Casos</p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">assessment</i>
+                                <p>Reportes</p>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -116,22 +129,7 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">notifications</i>
-                                        <span class="notification">5</span>
-                                        <p class="d-lg-none d-md-block">
-                                            Some Actions
-                                        </p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                        <a class="dropdown-item" href="#">Another Notification</a>
-                                        <a class="dropdown-item" href="#">Another One</a>
-                                    </div>
-                                </li>
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">person</i>
@@ -140,10 +138,9 @@
                                         </p>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/view/perfil.jsp">Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Log out</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/index.jsp">Log out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -208,7 +205,7 @@
                                                             <td><c:out value="${personas.getCodigoarl().getNombre()}"/></td>
                                                             <td><c:out value="${personas.getCodigoeps().getNombre()}"/></td>
                                                             <td><c:out value="${personas.getRecomendado()}"/></td>
-                                                            
+
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -253,26 +250,32 @@
                                             <div class="col col-md-3">
                                                 <label class=" form-control-label">Genero</label>
                                             </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="genero" id="femenino" value="femenino">
-                                                <label class="form-check-label" for="inlineRadio1">F</label>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="genero"  value="Masculino" class="custom-control-input" id="femenino">
+                                                <label class="custom-control-label" for="femenino">Femenino</label>
                                             </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="genero" id="Masculino" value="Masculino">
-                                                <label class="form-check-label" for="inlineRadio2">M</label>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="genero"  value="femenino" class="custom-control-input" id="masculino">
+                                                <label class="custom-control-label" for="masculino">Masculino</label>
                                             </div>
 
                                         </div>
-                                                                                                                                                                                                            <div class="form-group">
+                                        <div class="form-group">
                                             <label for="cedula">Fecha  Nacimiento</label>
                                             <input type="date" class="form-control" id="cumpleaños" name="cumpleaños" placeholder="MM/DD/YYY" id="example-month-input">
                                         </div>
-                                       
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" name="edad" id="edad" placeholder="Edad">
+                                            </div>
+                                        </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
                                             </div>
                                         </div>
+
                                         <h4>Datos Empresa Y Salud</h4>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">

@@ -51,44 +51,57 @@
                         Menu
                     </a>
                 </div>
-                <div class="sidebar-wrapper">
+                  <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listarPersonas" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
+                            <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Casos</p>
+                                <i class="material-icons">receipt</i>
+                                <p>Caso</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Tipo de Caso</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
                             </a>
                         </li>
-                        <li class="nav-item active ">
+                        <li class="nav-item  ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
+                                <i class="material-icons">list_alt</i>
+                                <p>Fomarcion</p>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
+                                <i class="material-icons">person_pin</i>
                                 <p>Usuarios</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
+                        <li class="nav-item active">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                <i class="material-icons">autorenew</i>
+                                <p>Estado Casos</p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">assessment</i>
+                                <p>Reportes</p>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -97,7 +110,7 @@
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="#pablo">Usuario</a>
+                            <a class="navbar-brand" href="#pablo">Estados</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
@@ -116,22 +129,7 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">notifications</i>
-                                        <span class="notification">5</span>
-                                        <p class="d-lg-none d-md-block">
-                                            Some Actions
-                                        </p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                        <a class="dropdown-item" href="#">Another Notification</a>
-                                        <a class="dropdown-item" href="#">Another One</a>
-                                    </div>
-                                </li>
+                            
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">person</i>
@@ -140,10 +138,9 @@
                                         </p>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/view/perfil.jsp">Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Log out</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/index.jsp">Log out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -155,8 +152,8 @@
                     <div class="container-fluid">
 
                         <div class="col">
-                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearUsuario" style="background: #1c2165;">
-                                Crear Usuario
+                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearEstado" style="background: #1c2165;">
+                                Crear Estado
                             </button>
                         </div>                        
                         <hr class="line-seprate">
@@ -169,24 +166,22 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Accion</th>
-                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Codigo</th>
                                                         <th scope="col">Nombre</th>
-                                                        <th scope="col">Apellidos</th>
-                                                        <th scope="col">rol</th>
+                                                        <th scope="col">Descripcion</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="usuario" items="${sessionScope.listUsuario}" varStatus="myIndex">
+                                                    <c:forEach var="estado" items="${sessionScope.Estado}" varStatus="myIndex">
                                                         <tr>
                                                             <td>
-                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/UsuarioServlet">
+                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/EstadoCasoServlet">
                                                                     <button name="ver" value="${personas.getCedulaUsuario()}" type="submit" class="btn btn-primary">Ver</button>
                                                                 </form>
                                                             </td> 
-                                                            <td><c:out value="${usuario.getCedulaUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getNombreUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getApellidoUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getRol()}"/></td>
+                                                            <td><c:out value="${estado.getCodigoestado()}"/></td>
+                                                            <td><c:out value="${estado.getNombreEstado()}"/></td>
+                                                            <td><c:out value="${estado.getDescripcionestado()}"/></td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -196,14 +191,13 @@
                                 </div>
                             </div>
                         </div>
-
                         <script>
                             $.noConflict();
                             jQuery(document).ready(function ($) {
                                 $('#table_id').DataTable();
                             });
                         </script>
-                        <div class="modal fade" id="crearUsuario">
+                        <div class="modal fade" id="crearEstado">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="padding:40px 50px;">
                                     <!-- Modal Header -->
