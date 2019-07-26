@@ -4,9 +4,8 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+       <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
@@ -16,25 +15,19 @@
         <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
-
-
-        <!-- Data table -->
-
-
         <title>Software de Gestión Coiso</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" >
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="${pageContext.servletContext.contextPath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        <script src="${pageContext.servletContext.contextPath}/javaScript/crearPersona.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-
+        <script src="${pageContext.servletContext.contextPath}/plugins/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/javaScript/formacion.js" type="text/javascript"></script>
     </head>
 
 
@@ -51,7 +44,7 @@
                         Menu
                     </a>
                 </div>
-                 <div class="sidebar-wrapper">
+                <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
@@ -71,43 +64,43 @@
                                 <p>Caso</p>
                             </a>
                         </li>
-                        
+
                         <li class="nav-item active ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
                                 <p>Fomarcion</p>
                             </a>
                         </li>
-                          <c:choose>
+                        <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                 <li class="nav-item ">
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
                                         <i class="material-icons">person_pin</i>
                                         <p>Usuarios</p>
-                                    </a>t
+                                    </a>
                                 </li>
-                          
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
-                                <i class="material-icons">autorenew</i>
-                                <p>Estado Casos</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                <i class="material-icons">calendar_today</i>
-                                <p>Citas</p>
-                            </a>
-                        </li>
-                          </c:when> 
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Estado Casos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                        <i class="material-icons">calendar_today</i>
+                                        <p>Citas</p>
+                                    </a>
+                                </li>
+                            </c:when> 
                         </c:choose>
-                         <li class="nav-item ">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
                                 <i class="material-icons">assessment</i>
                                 <p>Reportes</p>
                             </a>
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>
@@ -170,27 +163,38 @@
                                             <table id="table_id"  class="table table-borderless table-striped table-earning">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Accion</th>
-                                                        <th scope="col">ID</th>
+
+                                                        <th scope="col">Codigo</th>
                                                         <th scope="col">Formación</th>
                                                         <th scope="col">Fecha</th>
                                                         <th scope="col">Temas</th>
                                                         <th scope="col">N° Asistentes</th>
+                                                        <th scope="col">Ver</th>
+                                                            <c:choose>
+                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                                                <th scope="col">Elimiar</th>
+                                                                </c:when> 
+                                                            </c:choose>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach var="formacion" items="${sessionScope.formacion}" varStatus="myIndex">
                                                         <tr>
-                                                            <td>
-                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/FormacionServlet">
-                                                                    <button name="verFormacion" value="${formacion.getIdFormacion()}" type="submit" class="btn btn-primary">Ver</button>
-                                                                </form>
-                                                            </td> 
+                                                            
                                                             <td><c:out value="${formacion.getIdFormacion()}"/></td>
                                                             <td><c:out value="${formacion.getTipoFormacion()}"/></td>
                                                             <td><c:out value="${formacion.getFechaFormacion()}"/></td>
                                                             <td><c:out value="${formacion.getTemas()}"/></td>
                                                             <td><c:out value="${formacion.getNumeroAsistentes()}"/></td>
+                                                            <td> <button type="button" href="#modalInf" id ="formacionConsulta" 
+                                                                         name="formacionConsulta" class="btn btn-link" value="${formacion.getIdFormacion()}"><i class="material-icons">remove_red_eye</i> </button>
+                                                            </td>
+                                                            <c:choose>
+                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                                                    <td><button type="button" href="#modalDelete" id ="btnElimiar" 
+                                                                                name="btnElimiar" class="btn btn-link" value="${formacion.getIdFormacion()}"><i class="material-icons">highlight_off</i></button>   </td>
+                                                                    </c:when> 
+                                                                </c:choose>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -200,7 +204,51 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="modal" id="modalInf">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="padding:40px 50px;">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Crear Usuarios</h4>
+                                        <button type="button" class="close" data-dismiss="modal">×</button>
+                                    </div>
+                                    <form method="post" name="personaEdit" id="persona" action="">
 
+                                        <div class="modal-body" id="modInf">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button  type="submit" class="btn btn-primary btn-block" name="btnModificar" value="btnModificar" id="btnModificar">
+                                                Guardar
+                                            </button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="modalDelete">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="icon-box">
+                                            <i class="material-icons"></i>
+                                        </div>				
+                                        <h4 class="modal-title">¿Estás seguro?</h4>	
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Realmente quieres borrar estos registros? Este proceso no se puede deshacer.</p>
+                                    </div>
+                                    <form method="post" name="usuario" id="usuario"action="${pageContext.servletContext.contextPath}/FormacionServlet">
+                                        <div class="modal-body" id="inputUsuario">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button name="eliminar" value="eliminar" id="eliminar" type="submit" class="btn btn-danger">Eliminar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         <script>
                             $.noConflict();
                             jQuery(document).ready(function ($) {
@@ -254,6 +302,23 @@
             });
 
         </script>
+         <script src="${pageContext.servletContext.contextPath}/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <!-- AdminLTE App -->
+        <!-- Funcionalidad js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
+        <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
 
     </body>
 

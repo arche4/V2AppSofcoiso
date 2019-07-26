@@ -39,7 +39,7 @@ public class FormacionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         RequestDispatcher rd = null;
         FormacionJpaController formacionJPA = new FormacionJpaController(JPAFactory.getFACTORY());
         Formacion forma;
@@ -50,11 +50,15 @@ public class FormacionServlet extends HttpServlet {
         String tema = request.getParameter("tema");
         String nAsistentes = request.getParameter("nAsistentes");
 
+        String codigoForm = request.getParameter("codigoForm");
+        String TipoFor = request.getParameter("TipoFor");
+        String fehcaFormacionFor = request.getParameter("fehcaFormacionFor");
+        String temaForm = request.getParameter("temaForm");
+        String cantidadAsistentes = request.getParameter("cantidadAsistentes");
+
         String crear = request.getParameter("crear");
-        String editar = request.getParameter("editar");
-        String verFormacion = request.getParameter("verFormacion");
-        String modificar = request.getParameter("editar");
-        String volver = request.getParameter("volver");
+        String btnModificar = request.getParameter("btnModificar");
+        String eliminar = request.getParameter("eliminar");
 
         if (crear != null && !crear.equals("")) {
             forma = new Formacion(idFormacion, tipoFormacion, formacion, tema, nAsistentes);
@@ -67,32 +71,34 @@ public class FormacionServlet extends HttpServlet {
             }
             List<Formacion> listFormacion = formacionJPA.findFormacionEntities();
             session.setAttribute("formacion", listFormacion);
-            rd = request.getRequestDispatcher("/view/listadoFormaciones.jsp");
+            rd = request.getRequestDispatcher("/view/formacion.jsp");
         }
 
-         if (editar != null && !editar.equals("")) {
-                    forma = new Formacion(idFormacion, tipoFormacion, formacion, tema, nAsistentes);
-                     {
-                        try {
-                            formacionJPA.edit(forma);
-                        } catch (Exception ex) {
-                            Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        List<Formacion> listF = formacionJPA.findFormacionEntities();
-                        session.setAttribute("formacion", listF);
-                        rd = request.getRequestDispatcher("/view/listadoFormaciones.jsp");
-                    }
+        if (btnModificar != null && !btnModificar.equals("")) {
+            forma = new Formacion(codigoForm, TipoFor, fehcaFormacionFor, temaForm, cantidadAsistentes);
+            {
+                try {
+                    formacionJPA.edit(forma);
+                } catch (Exception ex) {
+                    Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                List<Formacion> listF = formacionJPA.findFormacionEntities();
+                session.setAttribute("formacion", listF);
+                rd = request.getRequestDispatcher("/view/formacion.jsp");
             }
-        
-        if (verFormacion != null && !verFormacion.equals("")) {
-            session.setAttribute("formacionver", verFormacion);
-            rd = request.getRequestDispatcher("/view/verFormaciones.jsp");
         }
-        if (volver != null && !volver.equals("")) {
-            rd = request.getRequestDispatcher("/view/listadoFormaciones.jsp");
+        if (eliminar != null && !eliminar.equals("")) {
+            try {
+                formacionJPA.destroy(codigoForm);
+            } catch (Exception ex) {
+                Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<Formacion> listF = formacionJPA.findFormacionEntities();
+            session.setAttribute("formacion", listF);
+            rd = request.getRequestDispatcher("/view/formacion.jsp");
         }
 
-    rd.forward(request, response);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

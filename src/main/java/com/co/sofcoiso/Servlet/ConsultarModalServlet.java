@@ -1,9 +1,13 @@
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.controller.EstadoCasoJpaController;
+import com.co.sofcoiso.controller.FormacionJpaController;
 import com.co.sofcoiso.controller.PersonaDirreccionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.controller.UsuarioJpaController;
 import com.co.sofcoiso.modelo.ComunaMedellin;
+import com.co.sofcoiso.modelo.EstadoCaso;
+import com.co.sofcoiso.modelo.Formacion;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.PersonaDirreccion;
 import com.co.sofcoiso.modelo.Usuario;
@@ -40,7 +44,10 @@ public class ConsultarModalServlet extends HttpServlet {
         RequestDispatcher rd = null;
         String cedulaModal = request.getParameter("selectConsulta");
         String cedulaUsuario = request.getParameter("usuarioConsulta");
-
+        String formacionConsulta = request.getParameter("formacionConsulta");
+        String estadoCaso = request.getParameter("estadoCasoConsulta");
+        String cita = request.getParameter("citaConsulta");
+         
         if (cedulaModal != null && !cedulaModal.equals("")) {
             PrintWriter out = response.getWriter();
             
@@ -70,6 +77,22 @@ public class ConsultarModalServlet extends HttpServlet {
             JSONObject json = getModalUsuario(cedulaUsuario);
             out.print(json);
         }
+        
+        if(formacionConsulta != null && !formacionConsulta.equals("")){
+            PrintWriter out = response.getWriter();
+            JSONObject json = getModalFormacion(formacionConsulta);
+            out.print(json);
+        }
+        if(estadoCaso != null && !estadoCaso.equals("")){
+            PrintWriter out = response.getWriter();
+            JSONObject json = getModalEstadoCaso(estadoCaso);
+            out.print(json);
+        }
+        if(cita != null && !cita.equals("")){
+            PrintWriter out = response.getWriter();
+            JSONObject json = getModalCita(cita);
+            out.print(json);
+        }
     }
 
     public JSONObject getModalUsuario(String cedula) {
@@ -81,6 +104,46 @@ public class ConsultarModalServlet extends HttpServlet {
         json.append("apellido", user.getApellidoUsuario());
         json.append("rol", user.getRol());
         json.append("clave", user.getClave());
+
+        return json;
+
+    }
+    
+    public JSONObject getModalFormacion(String codigoFormacion) {
+        FormacionJpaController formacionJPA = new FormacionJpaController(JPAFactory.getFACTORY());
+        Formacion formacion = formacionJPA.findFormacion(codigoFormacion);
+        JSONObject json = new JSONObject();
+        json.append("codigo", formacion.getIdFormacion());
+        json.append("Tipo", formacion.getTipoFormacion());
+        json.append("fehcaFormacion", formacion.getFechaFormacion());
+        json.append("tema", formacion.getTemas());
+        json.append("cantidadAsistentes", formacion.getNumeroAsistentes());
+
+        return json;
+
+    }
+    
+    public JSONObject getModalEstadoCaso(String estado) {
+        EstadoCasoJpaController japEstadoCaso = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        EstadoCaso estadoCaso = japEstadoCaso.findEstadoCaso(Integer.parseInt(estado));
+        JSONObject json = new JSONObject();
+        json.append("codigo", estadoCaso.getCodigoestado());
+        json.append("nombre", estadoCaso.getNombreEstado());
+        json.append("Descripcion", estadoCaso.getDescripcionestado());
+
+        return json;
+
+    }
+    
+    public JSONObject getModalCita(String codigoFormacion) {
+        FormacionJpaController formacionJPA = new FormacionJpaController(JPAFactory.getFACTORY());
+        Formacion formacion = formacionJPA.findFormacion(codigoFormacion);
+        JSONObject json = new JSONObject();
+        json.append("codigo", formacion.getIdFormacion());
+        json.append("Tipo", formacion.getTipoFormacion());
+        json.append("fehcaFormacion", formacion.getFechaFormacion());
+        json.append("tema", formacion.getTemas());
+        json.append("cantidadAsistentes", formacion.getNumeroAsistentes());
 
         return json;
 

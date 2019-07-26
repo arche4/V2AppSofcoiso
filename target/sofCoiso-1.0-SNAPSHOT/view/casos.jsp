@@ -78,7 +78,7 @@
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
                                         <i class="material-icons">person_pin</i>
                                         <p>Usuarios</p>
-                                    </a>t
+                                    </a>
                                 </li>
                           
                         <li class="nav-item ">
