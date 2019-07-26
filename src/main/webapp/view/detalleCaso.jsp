@@ -76,29 +76,34 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                <i class="material-icons">calendar_today</i>
-                                <p>Citas</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
                                 <p>Fomarcion</p>
                             </a>
                         </li>
+                          <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                        <i class="material-icons">person_pin</i>
+                                        <p>Usuarios</p>
+                                    </a>t
+                                </li>
+                          
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">person_pin</i>
-                                <p>Usuarios</p>
-                            </a>t
-                        </li>
-                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
                                 <i class="material-icons">autorenew</i>
                                 <p>Estado Casos</p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
+                            </a>
+                        </li>
+                          </c:when> 
+                        </c:choose>
                          <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
                                 <i class="material-icons">assessment</i>
@@ -300,10 +305,10 @@
                                                     <div class="media text-muted pt-3">
                                                         <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
                                                         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                                            <strong class="d-block text-gray-dark"> @<c:out value='${listAccionesCaso.getUsuario()}'/></strong>
+                                                            <strong class="d-block text-gray-dark"> @<c:out value='${listAccionesCaso.getUsuario()}'/> añadio un comentario - <c:out value='${listAccionesCaso.getFechaActualizada()}'/></strong> 
                                                             <c:out value='${listAccionesCaso.getCometario()}'/>
                                                             
-                                                            <c:out value='${listAccionesCaso.getFechaActualizada()}'/>
+                                              
                                                         </p>
                                                     </div>
                                                 </c:when>

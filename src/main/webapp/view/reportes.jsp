@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Reportería autoatención</title>
+        <title>Reportes</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -17,10 +17,7 @@
         <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
         <!-- Bootstrap 3.3.6 -->
         <!-- Ionicons -->
-        <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
 
-        <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-        <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
         <!-- Theme style -->
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/dist/css/AdminLTE.min.css">
         <!-- DataTables -->
@@ -69,30 +66,36 @@
                                 <p>Caso</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                <i class="material-icons">calendar_today</i>
-                                <p>Citas</p>
-                            </a>
-                        </li>
+                        
                         <li class="nav-item  ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
                                 <p>Fomarcion</p>
                             </a>
                         </li>
-                        <li class="nav-item  ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">person_pin</i>
-                                <p>Usuarios</p>
-                            </a>
-                        </li>
+                          <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                        <i class="material-icons">person_pin</i>
+                                        <p>Usuarios</p>
+                                    </a>t
+                                </li>
+                          
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
                                 <i class="material-icons">autorenew</i>
                                 <p>Estado Casos</p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
+                            </a>
+                        </li>
+                          </c:when> 
+                        </c:choose>
                         <li class="nav-item active">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
                                 <i class="material-icons">assessment</i>
@@ -227,6 +230,13 @@
         <!-- AdminLTE App -->
         <!-- Funcionalidad js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+-- Optionally, you can add Slimscroll and FastClick plugins.
+             Both of these plugins are recommended to enhance the
+             user experience. Slimscroll is required when using the
+             fixed layout. -->        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
 
         <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/javaScript/home.js" type="text/javascript"></script>

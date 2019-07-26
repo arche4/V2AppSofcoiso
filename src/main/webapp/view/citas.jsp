@@ -86,18 +86,29 @@
                                 <p>Fomarcion</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">person_pin</i>
-                                <p>Usuarios</p>
-                            </a>
-                        </li>
+                       <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                        <i class="material-icons">person_pin</i>
+                                        <p>Usuarios</p>
+                                    </a>t
+                                </li>
+                          
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
                                 <i class="material-icons">autorenew</i>
                                 <p>Estado Casos</p>
                             </a>
                         </li>
+                            <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                <i class="material-icons">calendar_today</i>
+                                <p>Citas</p>
+                            </a>
+                        </li>
+                          </c:when> 
+                        </c:choose>
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
                                 <i class="material-icons">assessment</i>

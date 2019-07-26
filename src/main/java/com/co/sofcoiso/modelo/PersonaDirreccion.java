@@ -52,6 +52,12 @@ public class PersonaDirreccion implements Serializable {
     public PersonaDirreccion(Integer idDirrecion) {
         this.idDirrecion = idDirrecion;
     }
+    
+     public PersonaDirreccion(Integer cedula, String direccion, String comuna) {
+        this.cedulaPersona = cedula;
+        this.dirreccion = direccion;
+        this.comuna = comuna;
+    }
 
     public Integer getIdDirrecion() {
         return idDirrecion;

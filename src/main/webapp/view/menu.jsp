@@ -59,37 +59,43 @@
                                 <p>Caso</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                <i class="material-icons">calendar_today</i>
-                                <p>Citas</p>
-                            </a>
-                        </li>
+
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
                                 <p>Fomarcion</p>
                             </a>
                         </li>
+                        <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                        <i class="material-icons">person_pin</i>
+                                        <p>Usuarios</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Estado Casos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                        <i class="material-icons">calendar_today</i>
+                                        <p>Citas</p>
+                                    </a>
+                                </li>
+                            </c:when> 
+                        </c:choose>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">person_pin</i>
-                                <p>Usuarios</p>
-                            </a>t
-                        </li>
-                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
-                                <i class="material-icons">autorenew</i>
-                                <p>Estado Casos</p>
-                            </a>
-                        </li>
-                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
                                 <i class="material-icons">assessment</i>
                                 <p>Reportes</p>
                             </a>
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>
@@ -125,7 +131,7 @@
                                         </p>
                                     </a>
                                 </li>
-                              
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">person</i>
@@ -194,7 +200,7 @@
                                     <div class="card-footer">
                                         <div class="stats">
                                             <i class="material-icons">file_copye</i> 
-                                             <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
+                                            <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +217,7 @@
                                     <div class="card-footer">
                                         <div class="stats">
                                             <i class="material-icons">file_copye</i> 
-                                             <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
+                                            <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -514,7 +520,7 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="col-lg-6 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <div class="card">
                                     <div class="card-header card-header-warning">
                                         <h4 class="card-title">Estado N° Casos</h4>
@@ -528,11 +534,11 @@
                                             </thead>
                                             <tbody>
                                                 <c:forEach var="listEstados" items="${sessionScope.listEstados}" varStatus="myIndex">
-                                                <tr>
-                                                    <td><c:out value="${listEstados.getNombreEstado()}"/></td>
-                                                     <td><c:out value="${listEstados.getCantidadEstado()}"/></td>
-                                                </tr>
-                                               </c:forEach>
+                                                    <tr>
+                                                        <td><c:out value="${listEstados.getNombreEstado()}"/></td>
+                                                        <td><c:out value="${listEstados.getCantidadEstado()}"/></td>
+                                                    </tr>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -541,7 +547,7 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
 
@@ -589,175 +595,175 @@
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script src="${pageContext.servletContext.contextPath}/assets/demo/demo.js"></script>
         <script>
-                      $(document).ready(function () {
-                          $().ready(function () {
-                              $sidebar = $('.sidebar');
+            $(document).ready(function () {
+                $().ready(function () {
+                    $sidebar = $('.sidebar');
 
-                              $sidebar_img_container = $sidebar.find('.sidebar-background');
+                    $sidebar_img_container = $sidebar.find('.sidebar-background');
 
-                              $full_page = $('.full-page');
+                    $full_page = $('.full-page');
 
-                              $sidebar_responsive = $('body > .navbar-collapse');
+                    $sidebar_responsive = $('body > .navbar-collapse');
 
-                              window_width = $(window).width();
+                    window_width = $(window).width();
 
-                              fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+                    fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
-                              if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
-                                  if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-                                      $('.fixed-plugin .dropdown').addClass('open');
-                                  }
+                    if (window_width > 767 && fixed_plugin_open == 'Dashboard') {
+                        if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
+                            $('.fixed-plugin .dropdown').addClass('open');
+                        }
 
-                              }
+                    }
 
-                              $('.fixed-plugin a').click(function (event) {
-                                  // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-                                  if ($(this).hasClass('switch-trigger')) {
-                                      if (event.stopPropagation) {
-                                          event.stopPropagation();
-                                      } else if (window.event) {
-                                          window.event.cancelBubble = true;
-                                      }
-                                  }
-                              });
+                    $('.fixed-plugin a').click(function (event) {
+                        // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+                        if ($(this).hasClass('switch-trigger')) {
+                            if (event.stopPropagation) {
+                                event.stopPropagation();
+                            } else if (window.event) {
+                                window.event.cancelBubble = true;
+                            }
+                        }
+                    });
 
-                              $('.fixed-plugin .active-color span').click(function () {
-                                  $full_page_background = $('.full-page-background');
+                    $('.fixed-plugin .active-color span').click(function () {
+                        $full_page_background = $('.full-page-background');
 
-                                  $(this).siblings().removeClass('active');
-                                  $(this).addClass('active');
+                        $(this).siblings().removeClass('active');
+                        $(this).addClass('active');
 
-                                  var new_color = $(this).data('color');
+                        var new_color = $(this).data('color');
 
-                                  if ($sidebar.length != 0) {
-                                      $sidebar.attr('data-color', new_color);
-                                  }
+                        if ($sidebar.length != 0) {
+                            $sidebar.attr('data-color', new_color);
+                        }
 
-                                  if ($full_page.length != 0) {
-                                      $full_page.attr('filter-color', new_color);
-                                  }
+                        if ($full_page.length != 0) {
+                            $full_page.attr('filter-color', new_color);
+                        }
 
-                                  if ($sidebar_responsive.length != 0) {
-                                      $sidebar_responsive.attr('data-color', new_color);
-                                  }
-                              });
+                        if ($sidebar_responsive.length != 0) {
+                            $sidebar_responsive.attr('data-color', new_color);
+                        }
+                    });
 
-                              $('.fixed-plugin .background-color .badge').click(function () {
-                                  $(this).siblings().removeClass('active');
-                                  $(this).addClass('active');
+                    $('.fixed-plugin .background-color .badge').click(function () {
+                        $(this).siblings().removeClass('active');
+                        $(this).addClass('active');
 
-                                  var new_color = $(this).data('background-color');
+                        var new_color = $(this).data('background-color');
 
-                                  if ($sidebar.length != 0) {
-                                      $sidebar.attr('data-background-color', new_color);
-                                  }
-                              });
+                        if ($sidebar.length != 0) {
+                            $sidebar.attr('data-background-color', new_color);
+                        }
+                    });
 
-                              $('.fixed-plugin .img-holder').click(function () {
-                                  $full_page_background = $('.full-page-background');
+                    $('.fixed-plugin .img-holder').click(function () {
+                        $full_page_background = $('.full-page-background');
 
-                                  $(this).parent('li').siblings().removeClass('active');
-                                  $(this).parent('li').addClass('active');
+                        $(this).parent('li').siblings().removeClass('active');
+                        $(this).parent('li').addClass('active');
 
 
-                                  var new_image = $(this).find("img").attr('src');
+                        var new_image = $(this).find("img").attr('src');
 
-                                  if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-                                      $sidebar_img_container.fadeOut('fast', function () {
-                                          $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-                                          $sidebar_img_container.fadeIn('fast');
-                                      });
-                                  }
+                        if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+                            $sidebar_img_container.fadeOut('fast', function () {
+                                $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                                $sidebar_img_container.fadeIn('fast');
+                            });
+                        }
 
-                                  if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-                                      var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+                        if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
+                            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-                                      $full_page_background.fadeOut('fast', function () {
-                                          $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-                                          $full_page_background.fadeIn('fast');
-                                      });
-                                  }
+                            $full_page_background.fadeOut('fast', function () {
+                                $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                                $full_page_background.fadeIn('fast');
+                            });
+                        }
 
-                                  if ($('.switch-sidebar-image input:checked').length == 0) {
-                                      var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-                                      var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
+                        if ($('.switch-sidebar-image input:checked').length == 0) {
+                            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
+                            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-                                      $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-                                      $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-                                  }
+                            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
+                            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
+                        }
 
-                                  if ($sidebar_responsive.length != 0) {
-                                      $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-                                  }
-                              });
+                        if ($sidebar_responsive.length != 0) {
+                            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
+                        }
+                    });
 
-                              $('.switch-sidebar-image input').change(function () {
-                                  $full_page_background = $('.full-page-background');
+                    $('.switch-sidebar-image input').change(function () {
+                        $full_page_background = $('.full-page-background');
 
-                                  $input = $(this);
+                        $input = $(this);
 
-                                  if ($input.is(':checked')) {
-                                      if ($sidebar_img_container.length != 0) {
-                                          $sidebar_img_container.fadeIn('fast');
-                                          $sidebar.attr('data-image', '#');
-                                      }
+                        if ($input.is(':checked')) {
+                            if ($sidebar_img_container.length != 0) {
+                                $sidebar_img_container.fadeIn('fast');
+                                $sidebar.attr('data-image', '#');
+                            }
 
-                                      if ($full_page_background.length != 0) {
-                                          $full_page_background.fadeIn('fast');
-                                          $full_page.attr('data-image', '#');
-                                      }
+                            if ($full_page_background.length != 0) {
+                                $full_page_background.fadeIn('fast');
+                                $full_page.attr('data-image', '#');
+                            }
 
-                                      background_image = true;
-                                  } else {
-                                      if ($sidebar_img_container.length != 0) {
-                                          $sidebar.removeAttr('data-image');
-                                          $sidebar_img_container.fadeOut('fast');
-                                      }
+                            background_image = true;
+                        } else {
+                            if ($sidebar_img_container.length != 0) {
+                                $sidebar.removeAttr('data-image');
+                                $sidebar_img_container.fadeOut('fast');
+                            }
 
-                                      if ($full_page_background.length != 0) {
-                                          $full_page.removeAttr('data-image', '#');
-                                          $full_page_background.fadeOut('fast');
-                                      }
+                            if ($full_page_background.length != 0) {
+                                $full_page.removeAttr('data-image', '#');
+                                $full_page_background.fadeOut('fast');
+                            }
 
-                                      background_image = false;
-                                  }
-                              });
+                            background_image = false;
+                        }
+                    });
 
-                              $('.switch-sidebar-mini input').change(function () {
-                                  $body = $('body');
+                    $('.switch-sidebar-mini input').change(function () {
+                        $body = $('body');
 
-                                  $input = $(this);
+                        $input = $(this);
 
-                                  if (md.misc.sidebar_mini_active == true) {
-                                      $('body').removeClass('sidebar-mini');
-                                      md.misc.sidebar_mini_active = false;
+                        if (md.misc.sidebar_mini_active == true) {
+                            $('body').removeClass('sidebar-mini');
+                            md.misc.sidebar_mini_active = false;
 
-                                      $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
+                            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
-                                  } else {
+                        } else {
 
-                                      $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
+                            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
 
-                                      setTimeout(function () {
-                                          $('body').addClass('sidebar-mini');
+                            setTimeout(function () {
+                                $('body').addClass('sidebar-mini');
 
-                                          md.misc.sidebar_mini_active = true;
-                                      }, 300);
-                                  }
+                                md.misc.sidebar_mini_active = true;
+                            }, 300);
+                        }
 
-                                  // we simulate the window Resize so the charts will get updated in realtime.
-                                  var simulateWindowResize = setInterval(function () {
-                                      window.dispatchEvent(new Event('resize'));
-                                  }, 180);
+                        // we simulate the window Resize so the charts will get updated in realtime.
+                        var simulateWindowResize = setInterval(function () {
+                            window.dispatchEvent(new Event('resize'));
+                        }, 180);
 
-                                  // we stop the simulation of Window Resize after the animations are completed
-                                  setTimeout(function () {
-                                      clearInterval(simulateWindowResize);
-                                  }, 1000);
+                        // we stop the simulation of Window Resize after the animations are completed
+                        setTimeout(function () {
+                            clearInterval(simulateWindowResize);
+                        }, 1000);
 
-                              });
-                          });
-                      });
+                    });
+                });
+            });
         </script>
         <script>
             $(document).ready(function () {

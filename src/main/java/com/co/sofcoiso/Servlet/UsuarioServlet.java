@@ -51,12 +51,14 @@ public class UsuarioServlet extends HttpServlet {
         String rolUsuario = request.getParameter("rol");
 
         String accion = request.getParameter("accion");
-        String editar = request.getParameter("editar");
-        String modificar = request.getParameter("modificar");
         String eliminar = request.getParameter("eliminar");
-        String volver = request.getParameter("volver");
+        String btnModificar = request.getParameter("btnModificar");
 
-        String mensaje = "";
+        String cedulaUser = request.getParameter("cedulaUser");
+        String nomUser = request.getParameter("nomUser");
+        String apellidoUser = request.getParameter("apellidoUser");
+        String rolUser = request.getParameter("rolUser");
+        String ClaveUser = request.getParameter("ClaveUser");
 
         if (accion != null && !accion.equals("")) {
             switch (accion) {
@@ -96,20 +98,26 @@ public class UsuarioServlet extends HttpServlet {
 
             }
         }
-        if (editar != null && !editar.equals("")) {
-            session.setAttribute("documento", editar);
-            List<Usuario> ListUsuario = ujc.findUsuarioEntities();
-            session.setAttribute("listUsuario", ListUsuario);
-            rd = request.getRequestDispatcher("/view/verUsuario.jsp");
-        }
-        if (eliminar != null && !eliminar.equals("")) {
+        if (btnModificar != null && !btnModificar.equals("")) {
             try {
-                ujc.destroy(Integer.parseInt(idusuario));
+               Usuario user = new Usuario(Integer.parseInt(cedulaUser), nomUser, apellidoUser, ClaveUser, rolUser);
+                ujc.edit(user);
             } catch (Exception ex) {
                 Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             List<Usuario> userList = ujc.findUsuarioEntities();
-            session.setAttribute("Usuario", userList);
+            session.setAttribute("listUsuario", userList);
+            rd = request.getRequestDispatcher("/view/usuario.jsp");
+        }
+
+        if (eliminar != null && !eliminar.equals("")) {
+            try {
+                ujc.destroy(Integer.parseInt(cedulaUser));
+            } catch (Exception ex) {
+                Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<Usuario> userList = ujc.findUsuarioEntities();
+            session.setAttribute("listUsuario", userList);
             rd = request.getRequestDispatcher("/view/usuario.jsp");
         }
 

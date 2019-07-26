@@ -1,4 +1,5 @@
-function validar() {
+
+function validarUsuario() {
     var cedula = document.getElementById('cedula').value;
     var nombre = document.getElementById('nombre').value;
     var apellido = document.getElementById('apellido').value;
@@ -46,31 +47,96 @@ function validar() {
         }
 
     }
+
+
+
 }
-var botCons;
+function deleteUser() {
+    var cedulaUser = document.getElementById('cedulaUser').value;
+    document.getElementById("eliminarUsuario").action = "/sofCoiso/UsuarioServlet";
+    document.getElementById("eliminarUsuario").submit();
+    toastr.success("Usuario Guardado Correctamente");
+    return true;
+
+}
+
+
 $body = $("body");
 
-$("body").on("click", "#botCons", function () {
-    $.ajax({
-        type: "GET",
-        url: "/sofCoiso/ReportServlet",
-        data: 'botCons=' + botCons,
-        success: function (data) {
-            if (data === null && data === undefined) {
-                $('#modInf').html('<p>Se ha presentado un error en la busqueda '
-                        + ' de los paises. Por favor contacte a un administrador.</p>');
+$(document).ready(function () {
+    var alt = $(document).height();
+    $('.modal-dialog').css('top', alt * 0.3);
+    $(window).resize(function () {
+        var alt2 = $(document).height();
+        $('.modal-dialog').css('top', alt2 * 0.3);
+    });
+    $("body").on("click", "#usuarioConsulta", function () {
+        var usuarioConsulta = $(this).val();
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "/sofCoiso/ConsultarModalServlet",
+            data: 'usuarioConsulta=' + usuarioConsulta,
+            success: function (data) {
+                var json_obj = $.parseJSON(data);
+                $(this).removeData('modalInf');
+                $('#modInf').html(' <div class="form-row">  <div class="form-group col-md-6">'
+                        + '<label for="cedula">Cedula</label>'
+                        + '<p></p>'
+                        + '<span>' + json_obj.Cedula[0] + '</span>'
+                        + '<input name="cedulaUser" id="cedulaUser" type="hidden" class="form-control" value=' + json_obj.Cedula[0] + '> </div>'
+                        + '<div class="form-group col-md-6">'
+                        + '<label for="nombre">Nombre</label>'
+                        + '<input name="nomUser" id="nomUser" class="form-control" value=' + json_obj.Nombre[0] + '> </div> </div>'
+                        + '<div class="form-row"> <div class="form-group col-md-6">'
+                        + '<label for="apellido">Apellido</label>'
+                        + '<input name="apellidoUser" id="apellidoUser" class="form-control" value=' + json_obj.apellido[0] + '> </div>'
+                        + '<div class="form-group col-md-6">'
+                        + '<label for="rol">Rol</label>'
+                        + '<input name="rolUser" id="rolUser" class="form-control" value=' + json_obj.rol[0] + '> </div> </div>'
+                        + '<div class="form-row"> <div class="form-group col-md-6"> '
+                        + '<label for="Clave">Clave</label>'
+                        + '<input name="ClaveUser" id="ClaveUser" class="form-control" value=' + json_obj.clave[0] + '> </div> </div>'
+
+                        )
+
                 $('#modalInf').modal('show');
-            } else {
-                var listItems = "<option value='" + 9999 + "'>--Seleccione un Pais--</option>";
-                listItems += data;
             }
-            $("#selectPais").html(listItems);
-            $("#selectPais").prop('disabled', false);
-        }
+        });
+    });
+    var cedulaUser;
+    var nomUser;
+    var apellidoUser;
+    var rolUser;
+    var ClaveUser;
+    $("body").on("click", "#btnModificar", function () {
+        cedulaUser = $('#cedulaUser').val();
+        nomUser = $('#nomUser').val();
+        apellidoUser = $('#apellidoUser').val();
+        rolUser = $('#rolUser').val();
+        ClaveUser = $('#ClaveUser').val();
+        btnModificar = $(this).val();
+         toastr.success("Usuario Guardado Correctamente");
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "/sofCoiso/UsuarioServlet",
+            data: 'cedulaUser=' + cedulaUser + '&nomUser=' + nomUser + '&apellidoUser=' + apellidoUser + '&rolUser=' + rolUser + '&ClaveUser=' + ClaveUser + '&btnModificar=' + btnModificar,
+            success: function (data) {
+                toastr.success("Formacion Guardado Correctamente");
+                return true;
+            }
+        });
     });
 
-});
+    $("body").on("click", "#btnElimiar", function () {
+        var btnElimiar = this.value
+        $('#inputUsuario').html('<input name="cedulaUser" type="hidden"  id="cedulaUser" class="form-control" value=' + btnElimiar + '>')
+        $('#modalDelete').modal('show');
+    });
 
+
+});
 
 function ValidarFormacion()
 {

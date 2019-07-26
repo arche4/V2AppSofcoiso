@@ -5,11 +5,13 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.controller.PersonaDirreccionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Eps;
 import com.co.sofcoiso.modelo.Persona;
+import com.co.sofcoiso.modelo.PersonaDirreccion;
 import com.co.sofcoiso.util.JPAFactory;
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.logging.Logger;
+
 /**
  *
  * @author manue
@@ -40,22 +43,19 @@ public class PersonaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
         HttpSession session = request.getSession();
         RequestDispatcher rd = null;
         PersonaJpaController jpaperson = new PersonaJpaController(JPAFactory.getFACTORY());
         String mensaje = "";
- 
-        
-        
+
         String accion = request.getParameter("accion");
         String cedula = request.getParameter("cedula");
         String nombre = request.getParameter("nombre");
         String apellidoUno = request.getParameter("primerApellido");
         String apellidoDos = request.getParameter("segundoApellido");
         String genero = request.getParameter("genero");
-        String fechaCumpleaños = request.getParameter("cumpleaños");
+        String fechaCumpleaños = request.getParameter("cumpleanos");
         String edad = request.getParameter("edad");
         String telefono = request.getParameter("telefono");
         String codigoEps = request.getParameter("eps");
@@ -66,10 +66,13 @@ public class PersonaServlet extends HttpServlet {
         String fechaClinica = request.getParameter("FechaClinica");
         String añosExperiencia = request.getParameter("anosExperiencia");
         String recomendado = request.getParameter("recomendado");
+        String comuna = request.getParameter("comuna");
+        String direccion = request.getParameter("direccion");
         String ver = request.getParameter("ver");
-     
+        String cedulaPerson = request.getParameter("cedulaPerson");
+        
         Persona persona;
-       
+
         Eps eps = new Eps(codigoEps);
         Arl arl = new Arl(codigoArl);
         Afp afp = new Afp(codigoAFP);
@@ -80,15 +83,20 @@ public class PersonaServlet extends HttpServlet {
                 case "crear":
                     //Crear persona
                     persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
-                            empresa, eps, arl, afp, fechaClinica, añosExperiencia,recomendado, telefono, cargo);
+                            empresa, eps, arl, afp, fechaClinica, añosExperiencia, recomendado, telefono, cargo);
                     try {
                         mensaje = jpaperson.crear(persona);
                     } catch (Exception e) {
                     }
+                    //Agregamos el contacto de la persona
                     Persona person = new Persona(Integer.parseInt(cedula));
-                   
-
-
+                    PersonaDirreccion personDirreccion = new PersonaDirreccion(Integer.parseInt(cedula), direccion, comuna);
+                    PersonaDirreccionJpaController jpaDir = new PersonaDirreccionJpaController(JPAFactory.getFACTORY());
+                    try {
+                    jpaDir.create(personDirreccion);
+                    } catch (Exception e) {
+                         Logger.getLogger(PersonaServlet.class.getName()).log(Level.SEVERE, null, e);
+                    }
                     listPersonas = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", listPersonas);
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
@@ -100,9 +108,9 @@ public class PersonaServlet extends HttpServlet {
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
                     break;
 
-                case "editar":
-                     persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
-                            empresa, eps, arl, afp, fechaClinica, añosExperiencia,recomendado, telefono, cargo);
+                case "btnModificar":
+                    persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
+                            empresa, eps, arl, afp, fechaClinica, añosExperiencia, recomendado, telefono, cargo);
 
                     try {
                         jpaperson.edit(persona);
@@ -115,7 +123,7 @@ public class PersonaServlet extends HttpServlet {
 
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
                     break;
-               
+
                 case "volver":
                     rd = request.getRequestDispatcher("/view/listadoPersonas.jsp");
                     break;

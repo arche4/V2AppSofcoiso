@@ -10,6 +10,7 @@ import com.co.sofcoiso.controller.AfpJpaController;
 import com.co.sofcoiso.controller.ArlJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.CitasPersonaJpaController;
+import com.co.sofcoiso.controller.ComunaMedellinJpaController;
 import com.co.sofcoiso.controller.EpsJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.FlujocasoJpaController;
@@ -24,6 +25,7 @@ import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.CitasPersona;
+import com.co.sofcoiso.modelo.ComunaMedellin;
 import com.co.sofcoiso.modelo.Eps;
 import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Flujocaso;
@@ -76,7 +78,7 @@ public class usuarioLogin extends HttpServlet {
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
         CitasPersonaJpaController citaJpa = new CitasPersonaJpaController(JPAFactory.getFACTORY());
         FormacionJpaController formacionJpa = new FormacionJpaController(JPAFactory.getFACTORY());
-
+        ComunaMedellinJpaController comunajpa = new ComunaMedellinJpaController(JPAFactory.getFACTORY());
         
         
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
@@ -129,7 +131,10 @@ public class usuarioLogin extends HttpServlet {
         citasList = citaJpa.findCitasPersonaEntities();
         session.setAttribute("Cita", citasList);
         rd.forward(request, response);
-
+        List<ComunaMedellin> listComuna = comunajpa.findComunaMedellinEntities();
+        session.setAttribute("listComuna", listComuna);
+        String admin = "Administrador";
+        session.setAttribute("rol", admin);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

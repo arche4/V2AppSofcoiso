@@ -5,6 +5,8 @@
  */
 package com.co.sofcoiso.clases;
 
+import javax.servlet.annotation.WebServlet;
+
 /**
  *
  * @author manue
