@@ -70,6 +70,8 @@ public class PersonaServlet extends HttpServlet {
         String direccion = request.getParameter("direccion");
         String ver = request.getParameter("ver");
         String cedulaPerson = request.getParameter("cedulaPerson");
+        String empresaUsuaria = request.getParameter("empresaUsuaria");
+        String sectorEconomico = request.getParameter("sectorEconomico");
         
         Persona persona;
 
@@ -83,7 +85,8 @@ public class PersonaServlet extends HttpServlet {
                 case "crear":
                     //Crear persona
                     persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
-                            empresa, eps, arl, afp, fechaClinica, añosExperiencia, recomendado, telefono, cargo);
+                            empresa, añosExperiencia,cargo, fechaClinica, afp, arl, eps,telefono,empresaUsuaria,
+                            sectorEconomico, recomendado, "No");
                     try {
                         mensaje = jpaperson.crear(persona);
                     } catch (Exception e) {
@@ -99,6 +102,8 @@ public class PersonaServlet extends HttpServlet {
                     }
                     listPersonas = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", listPersonas);
+                    session.setAttribute("MensajePersona", mensaje);
+                    
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
                     break;
                 case "listar":
@@ -109,8 +114,9 @@ public class PersonaServlet extends HttpServlet {
                     break;
 
                 case "btnModificar":
-                    persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
-                            empresa, eps, arl, afp, fechaClinica, añosExperiencia, recomendado, telefono, cargo);
+                     persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
+                            empresa, añosExperiencia,cargo, fechaClinica, afp, arl, eps,telefono,empresaUsuaria,
+                            sectorEconomico, recomendado, "Si");
 
                     try {
                         jpaperson.edit(persona);

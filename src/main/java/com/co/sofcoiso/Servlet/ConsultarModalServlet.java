@@ -1,10 +1,12 @@
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.controller.CasoJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.FormacionJpaController;
 import com.co.sofcoiso.controller.PersonaDirreccionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.controller.UsuarioJpaController;
+import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.ComunaMedellin;
 import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Formacion;
@@ -47,6 +49,7 @@ public class ConsultarModalServlet extends HttpServlet {
         String formacionConsulta = request.getParameter("formacionConsulta");
         String estadoCaso = request.getParameter("estadoCasoConsulta");
         String cita = request.getParameter("citaConsulta");
+        String casoEdit = request.getParameter("btnEdtar");
          
         if (cedulaModal != null && !cedulaModal.equals("")) {
             PrintWriter out = response.getWriter();
@@ -91,6 +94,11 @@ public class ConsultarModalServlet extends HttpServlet {
         if(cita != null && !cita.equals("")){
             PrintWriter out = response.getWriter();
             JSONObject json = getModalCita(cita);
+            out.print(json);
+        }
+        if(casoEdit != null && !casoEdit.equals("")){
+            PrintWriter out = response.getWriter();
+            JSONObject json = getModalEdit(casoEdit);
             out.print(json);
         }
     }
@@ -145,6 +153,27 @@ public class ConsultarModalServlet extends HttpServlet {
         json.append("tema", formacion.getTemas());
         json.append("cantidadAsistentes", formacion.getNumeroAsistentes());
 
+        return json;
+
+    }
+    
+     public JSONObject getModalEdit(String casoCodigo) {
+        CasoJpaController jpaCaso = new CasoJpaController(JPAFactory.getFACTORY());
+        Caso CasoUnico = jpaCaso.findCaso(Integer.parseInt(casoCodigo));
+        EstadoCasoJpaController jpaEstado = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        List<EstadoCaso> listEstado = jpaEstado.findEstadoCasoEntities();
+        JSONObject json = new JSONObject();
+        json.append("codigo", CasoUnico.getCodigocaso());
+        json.append("DescripcionCaso", CasoUnico.getDescripcionCaso());
+        json.append("fechaAfectacion", CasoUnico.getFechaInicioAfectacion());
+        json.append("pcl", CasoUnico.getPcl());
+        json.append("parteAfectada", CasoUnico.getParteAfectada());
+        json.append("tiempoIncapacidad", CasoUnico.getTiempoIncapacidad());
+        json.append("creado", CasoUnico.getCreado());
+        json.append("personaCedula", CasoUnico.getPersonaCedula());
+        json.append("asignado", CasoUnico.getAsignado());
+        
+       
         return json;
 
     }

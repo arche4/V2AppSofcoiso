@@ -8,7 +8,6 @@ com\co\sofcoiso\modelo\Persona_.class
 com\co\sofcoiso\Servlet\FormacionServlet.class
 com\co\sofcoiso\controller\AccionesCasoJpaController.class
 com\co\sofcoiso\controller\PersonaasistenteJpaController.class
-com\co\sofcoiso\Servlet\consultarUusarioModalServlet.class
 com\co\sofcoiso\modelo\Flujocaso_.class
 com\co\sofcoiso\Servlet\CasoServlet.class
 com\co\sofcoiso\clases\Usuario.class

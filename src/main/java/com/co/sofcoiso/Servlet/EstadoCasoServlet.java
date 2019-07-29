@@ -63,7 +63,7 @@ public class EstadoCasoServlet extends HttpServlet {
                 try {
                     jpaEstado.create(estadoCaso);
                 } catch (Exception ex) {
-                    Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EstadoCasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             List<EstadoCaso> ListEstado = jpaEstado.findEstadoCasoEntities();
@@ -77,7 +77,7 @@ public class EstadoCasoServlet extends HttpServlet {
                 try {
                     jpaEstado.edit(estadoCaso);
                 } catch (Exception ex) {
-                    Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EstadoCasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 List<EstadoCaso> ListEstado = jpaEstado.findEstadoCasoEntities();
                 session.setAttribute("Estado", ListEstado);
@@ -88,7 +88,7 @@ public class EstadoCasoServlet extends HttpServlet {
             try {
                 jpaEstado.destroy(Integer.parseInt(codigoForm));
             } catch (Exception ex) {
-                Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EstadoCasoServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             List<EstadoCaso> ListEstado = jpaEstado.findEstadoCasoEntities();
             session.setAttribute("Estado", ListEstado);

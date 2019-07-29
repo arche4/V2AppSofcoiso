@@ -18,6 +18,7 @@
     <class>com.co.sofcoiso.modelo.CambioCaso</class>
     <class>com.co.sofcoiso.modelo.PersonaDirreccion</class>
     <class>com.co.sofcoiso.modelo.ComunaMedellin</class>
+    <class>com.co.sofcoiso.modelo.Cita</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/SofCoiso"/>

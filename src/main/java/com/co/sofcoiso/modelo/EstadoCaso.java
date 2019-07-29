@@ -43,7 +43,7 @@ public class EstadoCaso implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "nombre_estado")
     private String nombreEstado;
-    @Size(max = 50)
+    @Size(max = 500)
     @Column(name = "descripcionestado")
     private String descripcionestado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estadoCasoCodigoestado")
@@ -60,8 +60,8 @@ public class EstadoCaso implements Serializable {
         this.codigoestado = codigoestado;
         this.nombreEstado = nombreEstado;
     }
-    
-      public EstadoCaso(Integer codigoestado, String nombreEstado, String Descripcion) {
+
+    public EstadoCaso(Integer codigoestado, String nombreEstado, String Descripcion) {
         this.codigoestado = codigoestado;
         this.nombreEstado = nombreEstado;
         this.descripcionestado = Descripcion;
@@ -123,5 +123,5 @@ public class EstadoCaso implements Serializable {
     public String toString() {
         return "com.co.sofcoiso.modelo.EstadoCaso[ codigoestado=" + codigoestado + " ]";
     }
-    
+
 }

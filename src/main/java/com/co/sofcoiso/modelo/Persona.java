@@ -40,8 +40,11 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Persona.findByAntiguedadEmpresa", query = "SELECT p FROM Persona p WHERE p.antiguedadEmpresa = :antiguedadEmpresa")
     , @NamedQuery(name = "Persona.findByCargo", query = "SELECT p FROM Persona p WHERE p.cargo = :cargo")
     , @NamedQuery(name = "Persona.findByFechaClinica", query = "SELECT p FROM Persona p WHERE p.fechaClinica = :fechaClinica")
+    , @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")
+    , @NamedQuery(name = "Persona.findByEmpresaUsuaria", query = "SELECT p FROM Persona p WHERE p.empresaUsuaria = :empresaUsuaria")
+    , @NamedQuery(name = "Persona.findBySectorEconomico", query = "SELECT p FROM Persona p WHERE p.sectorEconomico = :sectorEconomico")
     , @NamedQuery(name = "Persona.findByRecomendado", query = "SELECT p FROM Persona p WHERE p.recomendado = :recomendado")
-    , @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")})
+    , @NamedQuery(name = "Persona.findByCasoAsociado", query = "SELECT p FROM Persona p WHERE p.casoAsociado = :casoAsociado")})
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,19 +66,19 @@ public class Persona implements Serializable {
     @Size(max = 15)
     @Column(name = "apellido_dos")
     private String apellidoDos;
-    @Size(max = 2)
+    @Size(max = 15)
     @Column(name = "genero")
     private String genero;
     @Size(max = 20)
     @Column(name = "fecha_nacimiento")
     private String fechaNacimiento;
-    @Size(max = 2)
+    @Size(max = 3)
     @Column(name = "edad")
     private String edad;
     @Size(max = 50)
     @Column(name = "empresa")
     private String empresa;
-    @Size(max = 2)
+    @Size(max = 3)
     @Column(name = "antiguedad_empresa")
     private String antiguedadEmpresa;
     @Size(max = 50)
@@ -84,11 +87,21 @@ public class Persona implements Serializable {
     @Size(max = 20)
     @Column(name = "fecha_clinica")
     private String fechaClinica;
-    @Column(name = "recomendado")
-    private Integer recomendado;
     @Size(max = 10)
     @Column(name = "telefono")
     private String telefono;
+    @Size(max = 500)
+    @Column(name = "empresa_usuaria")
+    private String empresaUsuaria;
+    @Size(max = 500)
+    @Column(name = "sector_economico")
+    private String sectorEconomico;
+    @Size(max = 40)
+    @Column(name = "recomendado")
+    private String recomendado;
+    @Size(max = 2)
+    @Column(name = "caso_asociado")
+    private String casoAsociado;
     @JoinColumn(name = "codigoafp", referencedColumnName = "codigoafp")
     @ManyToOne(optional = false)
     private Afp codigoafp;
@@ -113,10 +126,12 @@ public class Persona implements Serializable {
         this.nombre = nombre;
         this.apellidoUno = apellidoUno;
     }
-
-    public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
-            String fechaCumpleaños, String edad, String empresa, Eps eps, Arl arl, Afp codigoafp, String fechaClinica,
-            String antiguedad, String recomendado, String telefono, String cargo) {
+    
+    
+     public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
+            String fechaCumpleaños, String edad, String empresa, String antiguedad, String cargo, String fechaClinica,
+            Afp codigoafp, Arl arl,Eps eps, String telefono, String empresaUsuaria, String sectorEconomico,
+             String recomendado,  String casoAsociado) {
 
         this.cedula = Integer.parseInt(cedula);
         this.nombre = nombre;
@@ -127,15 +142,17 @@ public class Persona implements Serializable {
         this.edad = edad;
         this.empresa = empresa;
         this.antiguedadEmpresa = antiguedad;
-        this.telefono = telefono;
-        this.codigoeps = eps;
-        this.codigoarl = arl;
-        this.codigoafp = codigoafp;
         this.cargo = cargo;
         this.fechaClinica = fechaClinica;
-        this.recomendado = Integer.parseInt(recomendado);
+        this.codigoafp = codigoafp;
+        this.codigoarl = arl;
+        this.codigoeps = eps;
+        this.telefono = telefono;
+        this.empresaUsuaria = empresaUsuaria;
+        this.sectorEconomico  = sectorEconomico;
+        this.recomendado = recomendado;
+        this.casoAsociado = casoAsociado;
     }
-
     public Integer getCedula() {
         return cedula;
     }
@@ -224,20 +241,44 @@ public class Persona implements Serializable {
         this.fechaClinica = fechaClinica;
     }
 
-    public Integer getRecomendado() {
-        return recomendado;
-    }
-
-    public void setRecomendado(Integer recomendado) {
-        this.recomendado = recomendado;
-    }
-
     public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getEmpresaUsuaria() {
+        return empresaUsuaria;
+    }
+
+    public void setEmpresaUsuaria(String empresaUsuaria) {
+        this.empresaUsuaria = empresaUsuaria;
+    }
+
+    public String getSectorEconomico() {
+        return sectorEconomico;
+    }
+
+    public void setSectorEconomico(String sectorEconomico) {
+        this.sectorEconomico = sectorEconomico;
+    }
+
+    public String getRecomendado() {
+        return recomendado;
+    }
+
+    public void setRecomendado(String recomendado) {
+        this.recomendado = recomendado;
+    }
+
+    public String getCasoAsociado() {
+        return casoAsociado;
+    }
+
+    public void setCasoAsociado(String casoAsociado) {
+        this.casoAsociado = casoAsociado;
     }
 
     public Afp getCodigoafp() {
@@ -296,5 +337,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "com.co.sofcoiso.modelo.Persona[ cedula=" + cedula + " ]";
     }
-
+    
 }

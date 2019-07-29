@@ -34,6 +34,19 @@ function validarEstado(){
     }
 }
 
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
 
 $body = $("body");
 
@@ -62,9 +75,9 @@ $(document).ready(function () {
                         + '<div class="form-group col-md-6">'
                         + '<label for="nombre">nombre</label>'
                         + '<input name="nombreEst" id="nombreEst" class="form-control" value=' + json_obj.nombre[0] + '> </div> </div>'
-                        + '<div class="form-row"> <div class="form-group col-md-6">'
+                        + '<div class="form-row"> '
                         + '<label for="Descripcion">Descripcion</label>'
-                        + '<textarea name="DescripcionEsta" id="DescripcionEsta" class="form-control" value=' + json_obj.Descripcion[0] + '> </textarea> </div> </div>'
+                        + '<textarea name="DescripcionEsta" id="DescripcionEsta" class="form-control" rows="10" cols="50" value="' + json_obj.Descripcion[0] + '">'+ json_obj.Descripcion[0]+'</textarea>   </div>'
                        
                         )
 
@@ -84,7 +97,7 @@ $(document).ready(function () {
         $.ajax({
             async: false,
             type: "GET",
-            url: "/sofCoiso/FormacionServlet",
+            url: "/sofCoiso/EstadoCasoServlet",
             data: 'codigoForm=' + codigoForm + '&nombreEst=' + nombreEst + '&DescripcionEsta=' + DescripcionEsta + '&btnModificar=' + btnModificar,
             success: function (data) {
                 toastr.success("Formacion Guardado Correctamente");

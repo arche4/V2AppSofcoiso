@@ -9,7 +9,7 @@ import com.co.sofcoiso.clases.Dashboard;
 import com.co.sofcoiso.controller.AfpJpaController;
 import com.co.sofcoiso.controller.ArlJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
-import com.co.sofcoiso.controller.CitasPersonaJpaController;
+import com.co.sofcoiso.controller.CitaJpaController;
 import com.co.sofcoiso.controller.ComunaMedellinJpaController;
 import com.co.sofcoiso.controller.EpsJpaController;
 import com.co.sofcoiso.controller.EstadoCasoJpaController;
@@ -24,7 +24,7 @@ import com.co.sofcoiso.controller.UsuarioJpaController;
 import com.co.sofcoiso.modelo.Afp;
 import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Caso;
-import com.co.sofcoiso.modelo.CitasPersona;
+import com.co.sofcoiso.modelo.Cita;
 import com.co.sofcoiso.modelo.ComunaMedellin;
 import com.co.sofcoiso.modelo.Eps;
 import com.co.sofcoiso.modelo.EstadoCaso;
@@ -76,7 +76,7 @@ public class usuarioLogin extends HttpServlet {
         TipoCasoJpaController tipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
         FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
         UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
-        CitasPersonaJpaController citaJpa = new CitasPersonaJpaController(JPAFactory.getFACTORY());
+        CitaJpaController citaJpa = new CitaJpaController(JPAFactory.getFACTORY());
         FormacionJpaController formacionJpa = new FormacionJpaController(JPAFactory.getFACTORY());
         ComunaMedellinJpaController comunajpa = new ComunaMedellinJpaController(JPAFactory.getFACTORY());
         
@@ -113,7 +113,7 @@ public class usuarioLogin extends HttpServlet {
         session.setAttribute("Caso", listCaso);
         int countCaso = caso.getCasoCount();
         session.setAttribute("countCaso", countCaso);
-        int countCitas = citaJpa.getCitasPersonaCount();
+        int countCitas = citaJpa.getCitaCount();
         session.setAttribute("countCitas", countCitas);
         int countFormaciones = formacionJpa.getFormacionCount();
         session.setAttribute("countFormaciones", countFormaciones);
@@ -127,14 +127,16 @@ public class usuarioLogin extends HttpServlet {
         List<Formacion> formacionlist;
         formacionlist = formacionJpa.findFormacionEntities();
         session.setAttribute("formacion", formacionlist);
-        List<CitasPersona> citasList;
-        citasList = citaJpa.findCitasPersonaEntities();
+        List<Cita> citasList;
+        citasList = citaJpa.findCitaEntities();
         session.setAttribute("Cita", citasList);
         rd.forward(request, response);
         List<ComunaMedellin> listComuna = comunajpa.findComunaMedellinEntities();
         session.setAttribute("listComuna", listComuna);
         String admin = "Administrador";
+        String si = "No";
         session.setAttribute("rol", admin);
+        session.setAttribute("TieneCaso", si);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

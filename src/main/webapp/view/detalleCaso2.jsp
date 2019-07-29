@@ -6,9 +6,8 @@
         <meta charset="utf-8" />
         <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
         <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /
-              <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -16,13 +15,10 @@
         <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
-        <script src="${pageContext.servletContext.contextPath}/javaScript/caso.js" type="text/javascript"></script>
-        <!-- Data table -->
         <title>Software de Gestión Coiso</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" >
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="${pageContext.servletContext.contextPath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -30,14 +26,8 @@
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.servletContext.contextPath}/javaScript/css/detalleCaso.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/plugins/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script> 
-        <script src="https://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
-        <script src="https://blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
-        <script src="https://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="https://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
 
         <link href="${pageContext.servletContext.contextPath}/js/jquery.fileupload.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/vendor/jquery.ui.widget.js" type="text/javascript"></script>
@@ -46,6 +36,8 @@
         <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload-validate.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/js/jquery.fileupload-ui.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/js/jquery.fileupload-ui.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/javaScript/css/detalleCaso.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.servletContext.contextPath}/javaScript/caso.js" type="text/javascript"></script>
     </head>
 
     <body class="">
@@ -58,43 +50,59 @@
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item active  ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listarPersonas" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
+                            <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">Casos</i>
-                                <p>Casos</p>
+                                <i class="material-icons">receipt</i>
+                                <p>Caso</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Tipo de Caso</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
+                                <i class="material-icons">list_alt</i>
+                                <p>Fomarcion</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
-                                <p>Usuarios</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
-                            </a>
-                        </li>
+                        <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                        <i class="material-icons">person_pin</i>
+                                        <p>Usuarios</p>
+                                    </a>
+                                </li>
 
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Estado Casos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                        <i class="material-icons">calendar_today</i>
+                                        <p>Citas</p>
+                                    </a>
+                                </li>
+                            </c:when> 
+                        </c:choose>
+                        <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">assessment</i>
+                                <p>Reportes</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -104,7 +112,7 @@
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="#pablo">Detalle del Caso</a>
+                            <a class="navbar-brand" href="${pageContext.servletContext.contextPath}/view/menu.jsp">Detalle del Caso</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
@@ -122,22 +130,6 @@
                                             Stats
                                         </p>
                                     </a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">notifications</i>
-                                        <span class="notification">5</span>
-                                        <p class="d-lg-none d-md-block">
-                                            Some Actions
-                                        </p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                        <a class="dropdown-item" href="#">Another Notification</a>
-                                        <a class="dropdown-item" href="#">Another One</a>
-                                    </div>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -160,48 +152,53 @@
                 <!-- End Navbar -->
                 <div class="content" style="background: white;">
                     <div class="col">
-                        <c:forEach var="caso" items="${sessionScope.casoList}">
+                        <c:forEach var="caso" items="${sessionScope.ListCaso}">
                             <c:choose>
-                                <c:when test="${caso.getCodigocaso() == sessionScope.codigo}">
+                                <c:when test="${caso.getCodigoCaso() == sessionScope.codigoCaso}">
                                     <h1>
                                         <span>
-                                            CASO: <c:out value='${caso.getCodigocaso()}'/> - <c:out value='${caso.getTipoCasoCodigoTipoCaso().getNombreTipoCaso()}' />
+                                            CASO: <c:out value='${caso.getCodigoCaso()}'/> - <c:out value='${caso.getNombre_tipo_caso()}' />
                                         </span></h1>
                                     <h3>
                                         <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit">
-                                            <c:out value='${caso.getPersonaCedula().getNombre()}'/>  <c:out value='${caso.getPersonaCedula().getApellidoUno()}' />
+                                            <c:out value='${caso.getPersona_cedula()}'/>  <c:out value='${caso.getNombrePersona()}' />
                                         </span></h3>
-                                    </c:when>    
-                                </c:choose>         
-                            </c:forEach>
 
-                        <button name="accion" value="CamEstado" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#cambiarEstado">
-                            Cambiar Estado
-                        </button>
-                        <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
-                            Asignar
-                        </button>
-                        <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Asignar">
-                            Citar 
-                        </button>
-                        <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Cargar">
-                            Cargar Archivos 
-                        </button>
+                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                        <a  id="comment-issue" href="#Asignar" id ="btnEdtar" 
+                                            name="btnEdtar" class="btn btn-link" value="${caso.getCodigoCaso()}" 
+                                            title="Comentar en este caso"  class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment">
+                                            <span class="trigger-label">Editar</span></a></div>
+                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                        <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
+                                           data-toggle="modal" data-target="#cambiarEstado">
+                                            <span class="trigger-label">Cambiar Estado</span></a></div>
+                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                        <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
+                                           data-toggle="modal" data-target="#Asignar">
+                                            <span class="trigger-label">Asignar Usuario</span></a></div>
+                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                        <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
+                                           data-toggle="modal" data-target="#Asignar">
+                                            <span class="trigger-label">Citar</span></a></div>
+                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                        <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
+                                           data-toggle="modal" data-target="#Cargar">
+                                            <span class="trigger-label">Subir archivos</span></a></div>
+
+                                </c:when>    
+                            </c:choose>         
+                        </c:forEach>
                         <div class="issue-body-content">
                             <div class="aui-group issue-body">
-                                <div class="aui-item issue-main-column" style="
-                                     box-sizing: border-box;
-                                     display: table-cell;
-                                     margin: 0;
-                                     vertical-align: top;">
-                                    <hr style="color: #0056b2;" />
-                                    <c:forEach var="caso" items="${sessionScope.Caso}">
+                                <div class="aui-item issue-main-column">
+                                    <c:forEach var="caso" items="${sessionScope.ListCaso}">
                                         <c:choose> 
-                                            <c:when test="${caso.getCodigocaso() == sessionScope.codigoCaso}">
+                                            <c:when test="${caso.getCodigoCaso() == sessionScope.codigoCaso}">
                                                 <div id="details-module" class="module toggle-wrap">
                                                     <div id="details-module_heading" class="mod-header">
                                                         <ul class="ops"></ul>
-                                                        <h3 class="toggle-title">Detalles</h3>
+                                                        <h4 class="toggle-title">Detalles</h4>
                                                     </div>
                                                     <div class="mod-content">
                                                         <ul id="issuedetails" class="property-list two-cols">
@@ -209,15 +206,15 @@
                                                                 <div class="wrap">
                                                                     <strong class="name">Tipo:</strong>
                                                                     <span id="type-val" class="value">
-                                                                        <c:out value='${caso.getTipoCasoCodigoTipoCaso().getNombreTipoCaso()}' />
+                                                                        <c:out value='${caso.getNombre_tipo_caso()}' />
                                                                     </span>
                                                                 </div>
                                                             </li>                    
-                                                            <li class="item item-right" style="clear: right; float: right;">
+                                                            <li class="item item-right">
                                                                 <div class="wrap">
                                                                     <strong class="name">Estado:</strong>
                                                                     <span id="status-val" class="value">
-                                                                        <c:out value='${caso.getEstadoCasoCodigoestado().getNombreEstado()}' />
+                                                                        <c:out value='${caso.getNombre_estado()}' />
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -229,40 +226,42 @@
                                                                     </span>
                                                                 </div>
                                                             </li> 
-                                                            <li class="item item-right" style="clear: right; float: right;">
+                                                            <li class="item item-right">
                                                                 <div class="wrap">
                                                                     <strong class="name">Tiempo Incapacidad</strong>
                                                                     <span id="status-val" class="value">
-                                                                        <c:out value='${caso.getTiempoIncapacidad()}' />
+                                                                        <c:out value='${caso.getTiempo_incapacidad()}' />
                                                                     </span>
                                                                 </div>
                                                             </li>
-                                                            <li class="item new">
+                                                            <li class="item">
                                                                 <div class="wrap">
                                                                     <strong class="name">Parte Afectada</strong>
                                                                     <span>
-                                                                        <c:out value='${caso.getParteAfectada()}' />
+                                                                        <c:out value='${caso.getParte_afectada()}' />
                                                                     </span>
                                                                 </div>
                                                             </li>    
-                                                            <li class="item item-right" style="clear: right; float: right;">
+                                                            <li class="item full-width">
                                                                 <div class="wrap">
                                                                     <strong class="name">Fecha Incio de Afectacion</strong>
                                                                     <span id="status-val" class="value">
-                                                                        <c:out value='${caso.getFechaInicioAfectacion()}'/>
+                                                                        <c:out value='${caso.getFecha_inicio_afectacion()}'/>
                                                                     </span>
                                                                 </div>
                                                             </li>
                                                         </ul>
+
                                                     </div>
                                                 </div>
-                                                <div id="descriptionmodule" class="module toggle-wrap"><div id="descriptionmodule_heading" class="mod-header"><ul class="ops"></ul>
-                                                        <h3 class="toggle-title">Descripción</h3>
+                                                <div id="descriptionmodule" class="module toggle-wrap">
+                                                    <div id="descriptionmodule_heading" class="mod-header">
+                                                        <h4 class="toggle-title">Descripción</h4>
                                                     </div>
                                                     <div class="mod-content">
                                                         <div id="description-val" class="field-ignore-highlight editable-field inactive" title="Haga clic para editar">
                                                             <div class="user-content-block je-not-empty">
-                                                                <p> <c:out value='${caso.getDescripcionCaso()}'/></p>
+                                                                <p> <c:out value='${caso.getDescripcion_caso()}'/></p>
                                                             </div>
                                                             <span class="overlay-icon aui-icon aui-icon-small aui-iconfont-edit"></span></div>
                                                     </div>
@@ -270,36 +269,162 @@
                                             </c:when>
                                         </c:choose>         
                                     </c:forEach>
+
                                     <div id="dnd-metadata" class="module toggle-wrap">
                                         <div id="dnd-metadata_heading" class="mod-header">
-                                            <ul class="ops"></ul><h3 class="toggle-title">Adjuntos</h3>
-                                            <form action="#">
-                                                <div class="input-file-container">  
-                                                    <input class="input-file" id="my-file" type="file">
-                                                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
-                                                </div>
-                                                <p class="file-return"></p>
-                                            </form>
+                                            <ul class="ops"></ul><h4 class="toggle-title">Adjuntos</h4>
+
                                         </div>
                                     </div>
-                                    <div id="dnd-metadata" class="module toggle-wrap">
-                                        <div id="dnd-metadata_heading" class="mod-header">
-                                            <ul class="ops"></ul><h3 class="toggle-title">Comentarios</h3>
-                                            <button name="accion" value="Asignar" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Cargar">
-                                               Comentar
-                                            </button>
+
+                                    <h4 class="toggle-title">Actividad</h4>
+                                    <div class="mod-content">
+                                        <div class="tabwrap aui-tabs horizontal-tabs aui-tabs-disabled">
+                                            <div class="container--tabs">
+                                                <section class="row">
+                                                    <ul class="nav nav-tabs">
+                                                        <li  class="active" id="tabs-acction"  data-label="Coementrios">
+                                                            <a id="comentarios"  href="#tab-1" class="ajax-activity-content">Comentarios</a>
+                                                        </li>
+                                                        <li class="" id="tabs-acction" ><a href="#tab-2" class="ajax-activity-content">Historico de Cambios</a></li>
+                                                        <li class="" id="tabs-acction"><a href="#tab-3" class="ajax-activity-content">Citas</a></li>
+                                                    </ul>
+                                                    <div class="tab-content">
+                                                        <div id="tab-1" class="tab-pane active"> 
+                                                            <hr class="line-seprate">
+                                                            <c:forEach var="listAccionesCaso" items="${sessionScope.listAccionesCaso}">
+                                                                <c:choose> 
+                                                                    <c:when test="${listAccionesCaso.getCodigo() == sessionScope.codigoCaso}">
+                                                                        <div class="media text-muted pt-3">
+                                                                            <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                                                                            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                                                                <strong class="d-block text-gray-dark"> @<c:out value='${listAccionesCaso.getUsuario()}'/> añadio un comentario - <c:out value='${listAccionesCaso.getFechaActualizada()}'/></strong> 
+                                                                                <c:out value='${listAccionesCaso.getCometario()}'/>
+                                                                            </p>
+                                                                        </div>
+                                                                    </c:when>
+                                                                </c:choose>  
+                                                            </c:forEach>
+                                                            <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                                                <a id="comment-issue"  data-toggle="collapse" data-target="#collapseExample" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" aria-expanded="false" aria-controls="collapseExample">
+                                                                    <span class="trigger-label">Comentar</span></a></div>
+                                                            <div class="collapse" id="collapseExample">
+                                                                <div class="card card-body">
+                                                                    <c:forEach var="Caso" items="${sessionScope.ListCaso}">
+                                                                        <c:choose>
+                                                                            <c:when test="${Caso.getCodigoCaso() == sessionScope.codigoCaso}">
+                                                                                <form method="post" name="comment" id="caso" action="">
+                                                                                    <div class="form-group">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <input  name="codigoC" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigoCaso()}' />">
+                                                                                            <input  name="usuarioComenta" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group"> 
+                                                                                        <label for="comentario">Deje aquí sus comentarios</label>
+                                                                                        <textarea class="form-control" rows="5" name="comentarios" id="comentarios"></textarea>
+                                                                                    </div>
+
+                                                                                    <button name="comment" value="comment" type="submit" class="btn btn-outline-secondary" onclick="return comment()">Comentar</button>
+                                                                                </form>
+                                                                            </c:when>
+                                                                        </c:choose>
+                                                                    </c:forEach>
+                                                                </div>
+                                                            </div>
+
+                                                            </span>
+                                                        </div> 
+                                                        <div id="tab-2" class="tab-pane">
+                                                            <h3>Historico de cambios</h3>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <div class="issuePanelWrapper">
+                                                                <div class="issuePanelProgress"></div>
+                                                                <div class="issuePanelContainer" id="issue_actions_container">
+
+                                                                    <div class="issue-data-block" id="issuecreated-437666">
+                                                                        <div class="actionContainer">
+                                                                            <div class="action-details" id="issuecreateddetails-437666">
+
+                                                                                <span class="aui-avatar aui-avatar-xsmall">
+                                                                                    <c:out value='${sessionScope.CasoUnico.getCreado()}'/>
+                                                                                </span>
+                                                                                creó el caso  - <span><time class="livestamp"<c:out value='${sessionScope.listFlujoCaso.getFechaCreacion()}'/></time></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="issue-data-block" id="changehistory-3206744">
+                                                                        <div class="actionContainer">
+                                                                            <div class="action-details" id="changehistorydetails_3206744">
+
+
+                                                                                Cambiado por         
+
+                                                                                <a class="user-hover user-avatar" rel="afelipev" id="changehistoryauthor_3206744" href="/secure/ViewProfile.jspa?name=afelipev"><span class="aui-avatar aui-avatar-xsmall"><span class="aui-avatar-inner"><img src="http://ventanillaunicajira.ind.local/secure/useravatar?size=xsmall&amp;avatarId=10348" alt="afelipev"></span></span> Andres Felipe Velez</a>
+                                                                                - <span class="date" title="Hace 2 días 9:51 PM"><time class="livestamp" datetime="2019-07-26T21:51:23+0200">Hace 2 días</time></span>
+                                                                            </div>
+                                                                            <div class="changehistory action-body">
+                                                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" id="changehistory_3206744">
+                                                                                    <tbody align="left">
+                                                                                        <tr id="changeitem5421084_WorklogId">
+                                                                                            <td width="20%" class="activity-name">
+                                                                                                Id de registro de trabajo
+                                                                                            </td>
+                                                                                            <td width="40%" class="activity-old-val">
+                                                                                                842443
+                                                                                                <span class="hist-value">[    842443
+                                                                                                    ]</span>
+                                                                                            </td>
+                                                                                            <td width="40%" class="activity-new-val">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr id="changeitem5421083_timespent">
+                                                                                            <td width="20%" class="activity-name">
+                                                                                                Tiempo Consumido
+                                                                                            </td>
+                                                                                            <td width="40%" class="activity-old-val">
+                                                                                                80h
+                                                                                                <span class="hist-value">[    288000
+                                                                                                    ]</span>
+                                                                                            </td>
+                                                                                            <td width="40%" class="activity-new-val">
+                                                                                                85h
+                                                                                                <span class="hist-value">[    306000
+                                                                                                    ]</span>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="tab-3" class="tab-pane">
+                                                            <span class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"></span>
+                                                            <span class="col-md-10">
+                                                                <h3>Feature 3</h3>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>             
                                 <div id="viewissuesidebar" class="aui-item issue-side-column" style="width: 35%;padding-left: 30px;
                                      box-sizing: border-box; display: table-cell;margin: 0;vertical-align: top; ">
-                                    <c:forEach var="caso" items="${sessionScope.Caso}">
+                                    <c:forEach var="caso" items="${sessionScope.ListCaso}">
                                         <c:choose>
-                                            <c:when test="${caso.getCodigocaso() == sessionScope.codigo}">
+                                            <c:when test="${caso.getCodigoCaso() == sessionScope.codigoCaso}">
                                                 <div id="peoplemodule" class="module toggle-wrap">
                                                     <div id="peoplemodule_heading" class="mod-header">
                                                         <ul class="ops"></ul>
-                                                        <h3 class="toggle-title">Personas</h3>
+                                                        <h4 class="toggle-title">Personas</h4>
                                                     </div>
                                                     <div class="mod-content">
                                                         <ul class="item-details" id="peopledetails">
@@ -328,9 +453,10 @@
                                             </c:when>
                                         </c:choose>         
                                     </c:forEach>
+
                                     <div id="datesmodule" class="module toggle-wrap">
                                         <div id="datesmodule_heading" class="mod-header">
-                                            <h3 class="toggle-title">Fechas</h3>
+                                            <h4 class="toggle-title">Fechas</h4>
                                         </div>
                                         <c:forEach var="flujoList" items="${sessionScope.flujoList}">
                                             <c:choose>
@@ -403,14 +529,14 @@
                         <h4 class="modal-title">Caso: </h4>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
-                    <c:forEach var="Caso" items="${sessionScope.Caso}">
+                    <c:forEach var="Caso" items="${sessionScope.ListCaso}">
                         <c:choose>
-                            <c:when test="${Caso.getCodigocaso() == sessionScope.codigo}">
+                            <c:when test="${Caso.getCodigoCaso() == sessionScope.codigoCaso}">
                                 <form method="post" name="cambiarEstado" id="Caso" action="">
                                     <div class="form-group">
-                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
+                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigoCaso()}' />">
                                         <input  name="usuario" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
-                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
+                                        <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigoCaso()}' />">
                                     </div>
                                     <div class="form-group">
                                         <select name="Estado" id="Estado" class="form-control-sm form-control">
@@ -493,35 +619,35 @@
                 <div class="modal-content" style="padding:60px 50px;">
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Asignar</h4>
+                        <h4 class="modal-title">Asignar a un Usuario</h4>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
-                    <c:forEach var="Caso" items="${sessionScope.Caso}">
+                    <c:forEach var="Caso" items="${sessionScope.ListCaso}">
                         <c:choose>
-                            <c:when test="${Caso.getCodigocaso() == sessionScope.codigo}">
-                                <form method="post" name="usuario" id="Caso" action="">
+                            <c:when test="${Caso.getCodigoCaso() == sessionScope.codigoCaso}">
+                                <form method="post" name="cambiarUsuario" id="cambiarUsuario" action="">
                                     <div class="form-group">
                                         <div class="form-group col-md-6">
-                                            <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
-                                            <input  name="" disabled  class="form-control" type="text" value="<c:out value='${Caso.getCodigocaso()}' />">
-
+                                            <input  name="codigoAsingado" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigoCaso()}' />">
+                                            <input  name="usuarioAsignado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                            <input  name="estadoAsignado" class="form-control"  type="hidden" value="<c:out value='${Caso.getNombreEstado()}' />">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="usuario">Asignar</label>
-                                        <select name="usuario" id="persona" class="form-control-sm form-control">
+                                        <label for="UsuarioCam">Asignar</label>
+                                        <select name="UsuarioCam" id="UsuarioCam" class="form-control-sm form-control">
                                             <option value="">Asignar</option>
-                                            <c:forEach var="Usuario" items="${sessionScope.Usuario}">
+                                            <c:forEach var="UsuarioCam" items="${sessionScope.Usuario}">
                                                 <option value="${Usuario.getCedulaUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
                                             </c:forEach>
                                         </select>
                                     </div>
                                     <div class="form-group"> 
                                         <label for="comentario">Deje aquí sus comentarios</label>
-                                        <textarea class="form-control" rows="5" id="comentarios" value="comentarios"></textarea>
+                                        <textarea class="form-control" rows="5" name="comentariosAsignado" id="comentarios"></textarea>
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="accion" value="asignar" type="submit" class="btn btn-success" onclick="return asignar()">Asignar</button>
+                                        <button name="btnAsignar" value="btnAsignar" type="submit" class="btn btn-success" onclick="return asignar()">Asignar</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                     </div>
                                 </form>
@@ -531,6 +657,61 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="Citar">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:60px 50px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Citar</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <c:forEach var="Caso" items="${sessionScope.ListCaso}">
+                        <c:choose>
+                            <c:when test="${Caso.getCodigoCaso() == sessionScope.codigoCaso}">
+                                <form method="post" name="citar" id="citar" action="">
+                                    <div class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <input  name="codigoCita" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigoCaso()}' />">
+                                            <input  name="usuarioCita" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cedula">Fecha de la Cita</label>
+                                        <input type="date" class="form-control" id="cita" name="cita" value="2011-08-08" id="example-month-input">
+                                    </div>
+                                    <div class="form-group"> 
+                                        <label for="comentario">Deje aquí sus comentarios</label>
+                                        <textarea class="form-control" rows="5" name="comentarioCita" id="comentarios"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="btnCitar" value="btnCitar" type="submit" class="btn btn-success" onclick="return Citar()">Citar</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+
+        <script src="${pageContext.servletContext.contextPath}/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <!-- AdminLTE App -->
+        <!-- Funcionalidad js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
+        <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
         <script id="template-upload" type="text/x-tmpl">
             {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">

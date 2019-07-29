@@ -149,7 +149,7 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <div class="container-fluid">
-
+                        <span class="centrado" style="color:red;"> <c:out value="${sessionScope.MensajePersona}"/></span>
                         <div class="col">
                             <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearPersona" style="background: #1c2165;">
                                 Crear Persona
@@ -173,6 +173,7 @@
                                                         <th scope="col">Telefono</th>
                                                         <th scope="col">Fecha Clinica</th>
                                                         <th scope="col">Recomendado</th>
+                                                        <th scope="col">Caso</th>
                                                             <c:choose>
                                                                 <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                                                 <th scope="col">Eliminar</th>
@@ -194,13 +195,25 @@
                                                             <td><c:out value="${personas.getFechaClinica()}"/></td>
                                                             <td><c:out value="${personas.getRecomendado()}"/></td>
                                                             <c:choose>
+                                                                <c:when test="${personas.getCasoAsociado() == sessionScope.TieneCaso}">  
+                                                                    <td>
+                                                                        <button name="accion" value="crear" type="button" class="btn btn-link" data-toggle="modal" data-target="#crearCaso">
+                                                                            Crear Caso
+                                                                        </button>  </td>
+                                                                    </c:when> 
+                                                                    <c:otherwise>
+                                                                    <td><form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
+                                                                            <button name="editar" value="${personas.getCedula()}" type="submit" class="btn btn-link">Ver Caso</button>
+                                                                        </form> </td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            <c:choose>
                                                                 <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                                                     <td><button type="button" href="#modalDelete" id ="btnElimiar" 
                                                                                 name="btnElimiar" class="btn btn-link" value="${personas.getCedula()}"><i class="material-icons">highlight_off</i></button>   </td>
                                                                     </c:when> 
                                                                 </c:choose>
                                                         </tr>
-
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
@@ -221,10 +234,11 @@
                                 <div class="modal-content" style="padding:40px 50px; width: 750px;">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Crear Persona</h4>
+                                        <h3 class="modal-title">Crear Persona</h3>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
                                     <h4>Datos Personales</h4>
+                                    <p></p>
                                     <form method="post" name="persona" id="persona" action="">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -233,26 +247,22 @@
                                             <div class="form-group col-md-6">
                                                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
                                             </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" id="primerApellido" name="primerApellido"  placeholder="Primer Apellido">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" id="segundoApellido" name="segundoApellido"  placeholder="Segundo Apellido">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="primerApellido" name="primerApellido"  placeholder="Primer Apellido">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="segundoApellido" name="segundoApellido"  placeholder="Segundo Apellido">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col col-md-3">
-                                                <label class=" form-control-label">Genero</label>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <select name="genero" id="genero" 
+                                                        class="form-control">
+                                                    <option value="Femenimo" selected>Mujer</option>
+                                                    <option value="Masculino" selected>Hombre</option>
+                                                </select>
                                             </div>
 
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="genero"  value="Masculino" class="custom-control-input" id="femenino">
-                                                <label class="custom-control-label" for="femenino">Femenino</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="genero"  value="femenino" class="custom-control-input" id="masculino">
-                                                <label class="custom-control-label" for="masculino">Masculino</label>
-                                            </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -273,7 +283,7 @@
                                                 <select name="comuna" id="comuna" class="form-control-sm form-control">
                                                     <option value="">Comuna</option>
                                                     <c:forEach var="listComuna" items="${sessionScope.listComuna}">
-                                                        <option value="${listComuna.getCodigocomuna()}"><c:out value="${listComuna.getComunaNombre()}"/></option>
+                                                        <option value="${listComuna.getComunaNombre()}"><c:out value="${listComuna.getComunaNombre()}"/></option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -282,47 +292,58 @@
                                             <input type="text" class="form-control" id="direccion" name="direccion"  placeholder="Direccion">
                                         </div>
                                         <h4>Datos Empresa Y Salud</h4>
-                                        <div class="form-group col-md-6">
-                                            <select name="eps" id="eps" class="form-control-sm form-control">
-                                                <option value="">EPS</option>
-                                                <c:forEach var="eps" items="${sessionScope.EPS}">
-                                                    <option value="${eps.getCodigoeps()}"><c:out value="${eps.getNombre()}"/></option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <select name="eps" id="eps" class="form-control-sm form-control">
+                                                    <option value="">EPS</option>
+                                                    <c:forEach var="eps" items="${sessionScope.EPS}">
+                                                        <option value="${eps.getCodigoeps()}"><c:out value="${eps.getNombre()}"/></option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
 
-                                        <div class="form-group col-md-6">
-                                            <select name="arl" id="arl"  class="form-control-sm form-control">
-                                                <option value="">ARL</option>
-                                                <c:forEach var="arl" items="${sessionScope.ARL}">
-                                                    <option value="${arl.getCodigoarl()}"><c:out value="${arl.getNombre()}"/></option>
-                                                </c:forEach>
-                                            </select>
+                                            <div class="form-group col-md-4">
+                                                <select name="arl" id="arl"  class="form-control-sm form-control">
+                                                    <option value="">ARL</option>
+                                                    <c:forEach var="arl" items="${sessionScope.ARL}">
+                                                        <option value="${arl.getCodigoarl()}"><c:out value="${arl.getNombre()}"/></option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <select name="afp" id="afp"  class="form-control-sm form-control">
+                                                    <option value="">AFP</option>
+                                                    <c:forEach var="afp" items="${sessionScope.AFP}">
+                                                        <option value="${afp.getCodigoafp()}"><c:out value="${afp.getNombre()}"/></option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <select name="afp" id="afp"  class="form-control-sm form-control">
-                                                <option value="">AFP</option>
-                                                <c:forEach var="afp" items="${sessionScope.AFP}">
-                                                    <option value="${afp.getCodigoafp()}"><c:out value="${afp.getNombre()}"/></option>
-                                                </c:forEach>
-                                            </select>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" class="form-control" id="empresaUsuaria" name="empresaUsuaria" placeholder="Empresa Usuaria">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <input type="text" class="form-control" name="sectorEconomico" id="sectorEconomico" placeholder="Sector Economico">
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="cargo">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text" class="form-control" name="anosExperiencia" id="anosExperiencia" placeholder="Años Experiencia">
+                                            </div>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <input type="text" class="form-control" id="cargo" name="cargo" placeholder="cargo">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <input type="number" class="form-control" name="anosExperiencia" id="anosExperiencia" placeholder="Años Experiencia">
-                                        </div>
-
                                         <div class="form-group">
                                             <label for="cedula">Fecha de Clinica</label>
                                             <input type="date" class="form-control" id="FechaClinica" name="FechaClinica" placeholder="MM/DD/YYY" id="example-month-input">
                                         </div>
                                         <div class="form-group">
-                                            <input type="recomendado" class="form-control" name="recomendado" id="recomendado" placeholder="Recomendado">
+                                            <input type="text" class="form-control" name="recomendado" id="recomendado" placeholder="Recomendado">
                                         </div>
                                         <div class="modal-footer">
                                             <button name="accion" value="crear" type="submit" class="btn btn-success" onclick="return validar()">Guardar</button>
@@ -383,6 +404,69 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="crearCaso">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:40px 50px; width: 750px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Crear Caso</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form method="post" name="Caso" id="Caso" action="">
+
+                        <div class="form-group">
+                            <label for="persona">Persona</label>
+                            <select name="persona" id="persona" class="form-control-sm form-control">
+                                <option value="">Persona</option>
+                                <c:forEach var="persona" items="${sessionScope.Persona}">
+                                    <option value="${persona.getCedula()}"><c:out value="${persona.getNombre()}"/></option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Tipo">Tipo de Caso</label>
+                            <select name="Tipo" id="Tipo" class="form-control-sm form-control">
+                                <option value="">Tipo Caso </option>
+                                <c:forEach var="Tipo" items="${sessionScope.Tipo}">
+                                    <option value="${Tipo.getCodigoTipoCaso()}"><c:out value="${Tipo.getNombreTipoCaso()}"/></option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Tipo">Creado Por</label>
+                            <input  name="creado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                            <input  name="" disabled  class="form-control" type="text" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaAfectacion">Fecha  Afectacion</label>
+                            <input type="date" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="MM/DD/YYY" id="example-month-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="Tipo">Parte Afectada</label>
+                            <input  name="parteAfectada" id="parteAfectada" type="text" class="form-control" placeholder="Parte del cuerpo afectada">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="tiempoInca" name="tiempoInca" placeholder="Tiempo de Incapacidad">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="pcl" name="pcl" placeholder="pcl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="textarea" id="textarea" class="form-control"  rows="10" cols="50">Descripcion del caso</textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button name="accion" value="crear" type="submit" class="btn btn-success" onclick="return validarCaso()">Guardar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
         <div class="loadIc"></div>                       
 
         <script src="${pageContext.servletContext.contextPath}/bootstrap/js/bootstrap.min.js"></script>
@@ -404,9 +488,9 @@
 
 
         <script>
-                                                $(document).ready(function () {
-                                                    $('#myTable').DataTable();
-                                                });
+                                $(document).ready(function () {
+                                    $('#myTable').DataTable();
+                                });
 
         </script>
 

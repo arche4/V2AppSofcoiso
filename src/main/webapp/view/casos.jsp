@@ -152,7 +152,7 @@
                     <div class="container-fluid">
 
                         <div class="col">
-                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearCaso">
+                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearCaso" style="background: #1c2165;">
                                 Crear Caso
                             </button>
                               <li class="nav-item" style="border-left: 1px solid rgba(255, 255, 255, 0.102);">
@@ -167,31 +167,32 @@
                                             <table id="table_id"  class="table table-borderless table-striped table-earning">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Accion</th>
+                                                       
                                                         <th scope="col">Codigo Caso</th>
                                                         <th scope="col">Cedula</th>
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">Apellido</th>
                                                         <th scope="col">Tipo</th>
                                                         <th scope="col">Estado</th>
+                                                        <th scope="col">Ver</th>
                                                       
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach var="Caso" items="${sessionScope.Caso}" varStatus="myIndex">
                                                         <tr>
-                                                            <td>
-                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
-                                                                    <button name="editar" value="${Caso.getCodigocaso()}" type="submit" class="btn btn-primary">Ver</button>
-                                                                </form>
-                                                            </td> 
+                                                            
                                                             <td><c:out value="${Caso.getCodigocaso()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getCedula()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getNombre()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getApellidoUno()}"/></td>
                                                             <td><c:out value="${Caso.getTipoCasoCodigoTipoCaso().getNombreTipoCaso()}"/></td>
                                                             <td><c:out value="${Caso.getEstadoCasoCodigoestado().getNombreEstado()}"/></td>
-                                                            
+                                                             <td> <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
+                                                                    <button name="editar" value="${Caso.getCodigocaso()}" type="submit" class="btn btn-link"><i class="material-icons">remove_red_eye</i></button>
+                                                                </form>
+                                                               
+                                                            </td>
 
                                                         </tr>
                                                     </c:forEach>
@@ -247,9 +248,13 @@
                                             <label for="fechaAfectacion">Fecha  Afectacion</label>
                                             <input type="date" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="MM/DD/YYY" id="example-month-input">
                                         </div>
+                                          <div class="form-group">
+                                            <label for="Tipo">Parte Afectada</label>
+                                            <input  name="parteAfectada" id="parteAfectada" type="text" class="form-control" placeholder="Parte del cuerpo afectada">
+                                        </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="number" class="form-control" id="tiempoInca" name="tiempoInca" placeholder="Tiempo de Incapacidad">
+                                                <input type="text" class="form-control" id="tiempoInca" name="tiempoInca" placeholder="Tiempo de Incapacidad">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <input type="text" class="form-control" id="pcl" name="pcl" placeholder="pcl">

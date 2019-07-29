@@ -89,6 +89,7 @@ public class Caso implements Serializable {
         this.creado = creado;
         this.asignado = asignado;
     }
+
     public Caso(Integer codigoCaso, String textarea, String fechaAfectacion, String pcl,
             String parteAfectada, String tiempoInca, String creado,
             Persona per,
@@ -106,7 +107,6 @@ public class Caso implements Serializable {
         this.estadoCasoCodigoestado = estadocaso;
         this.tipoCasoCodigoTipoCaso = tipo;
     }
-
     public Integer getCodigocaso() {
         return codigocaso;
     }

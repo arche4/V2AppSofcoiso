@@ -294,7 +294,7 @@ public class PersonaJpaController implements Serializable {
         }
     }
     
-    public String  crear(Persona personas){
+        public String  crear(Persona personas){
         String respuesta = null;
         EntityManager em = null;
         try {
