@@ -92,8 +92,8 @@ $(document).ready(function () {
         var alt2 = $(document).height();
         $('.modal-dialog').css('top', alt2 * 0.3);
     });
-    
-    
+
+
     $("body").on("click", "#selectConsulta", function () {
         var selectConsulta = $(this).val();
         $.ajax({
@@ -104,7 +104,7 @@ $(document).ready(function () {
             success: function (data) {
                 var json_obj = $.parseJSON(data);
                 $(this).removeData('modalInf');
-
+                console.log(json_obj)
                 $('#modInf').html('<div class="form-row"><div class="form-group col-md-6">'
                         + '<label for="cedula">Cedula</label>'
                         + '<input name="cedulaPerson" id="cedulaPerson" class="form-control" value=' + json_obj.Cedula[0] + '> </div>'
@@ -129,7 +129,13 @@ $(document).ready(function () {
                         + '<p></p> <h4>Contacto</h4>'
                         + ' <div class="form-row"> <div class="form-group col-md-6">'
                         + '<label for="Telefono">Telefono</label>'
-                        + '<input name="TelefonoPerson" id="TelefonoPerson" class="form-control" value=' + json_obj.Telefono[0] + '> </div> </div>'
+                        + '<input name="TelefonoPerson" id="TelefonoPerson" class="form-control" value=' + json_obj.Telefono[0] + '> </div>'
+                        + '<div class="form-group col-md-6">'
+                        + '<label for="comuna">Comuna</label>'
+                        + '<input name="comunaPerson" id="comunaPerson" class="form-control" value=' + json_obj.Comuna  + '> </div> </div>'
+                        + '<div class="form-group">'
+                        + '<label for="Direccion">Direccion</label>'
+                        + '<input name="direccionPerson" id="direccionPerson" class="form-control" value=' + json_obj.Direccion + '> </div>'
                         + '<p></p> <h4>Datos Empresa Y Salud</h4>'
                         + '<div class="form-row"> <div class="form-group col-md-6"> '
                         + '<label for="empresa">Empresa</label>'
@@ -153,28 +159,54 @@ $(document).ready(function () {
             }
         });
     });
-    
+
     var cedulaPerson;
     var nomPerson;
     var ApellidoUnoPeson;
-    var fecha_f;
-    var tCons;
+    var ApellidodosPeson;
+    var generoPerson;
+    var EdadPerson;
+    var FechaNacimientoPerson;
+    var TelefonoPerson;
+    var comunaPerson;
+    var direccionPerson;
+    var empresaPerson;
+    var cargoPerson;
+    var ExperienciaPerson;
+    var fechaClinicaPerson;
+    var RecomendadoPerson;
     
-    
-      $("body").on("click", "#btnModificar", function () {
+    $("body").on("click", "#btnModificar", function () {
         cedulaPerson = $('#cedulaPerson').val();
-       
-       
-    $.ajax({
-        async: false,
-        type: "GET",
-        url: "/sofCoiso/PersonaServlet",
-        data: 'cedulaPerson=' + cedulaPerson,
-        success: function (data) {
-            toastr.success("persona Guardado Correctamente");
-        }
+        nomPerson = $('#nomPerson').val();
+        ApellidoUnoPeson = $('#ApellidoUnoPeson').val();
+        ApellidodosPeson = $('#ApellidodosPeson').val();
+        generoPerson = $('#generoPerson').val();
+        EdadPerson = $('#EdadPerson').val();
+        FechaNacimientoPerson = $('#FechaNacimientoPerson').val();
+        TelefonoPerson = $('#TelefonoPerson').val();
+        comunaPerson = $('#comunaPerson').val();
+        direccionPerson = $('#direccionPerson').val();
+        empresaPerson = $('#empresaPerson').val();
+        cargoPerson = $('#cargoPerson').val();
+        ExperienciaPerson = $('#ExperienciaPerson').val();
+        fechaClinicaPerson = $('#fechaClinicaPerson').val();
+        RecomendadoPerson = $('#RecomendadoPerson').val();
+        btnModificar = $(this).val();
+        toastr.success("Persona Guardado Correctamente");
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "/sofCoiso/PersonaServlet",
+            data: 'cedulaPerson=' + cedulaPerson + '&nomPerson=' + nomPerson + '&ApellidoUnoPeson=' + ApellidoUnoPeson + '&ApellidodosPeson=' + ApellidodosPeson + '&generoPerson=' + generoPerson + 
+                    '&EdadPerson=' + EdadPerson + '&FechaNacimientoPerson=' + FechaNacimientoPerson + '&TelefonoPerson=' + TelefonoPerson + '&comunaPerson=' + comunaPerson + 
+                    '&direccionPerson=' + direccionPerson + '&empresaPerson=' + empresaPerson + '&cargoPerson=' + cargoPerson + '&ExperienciaPerson=' + ExperienciaPerson
+            + '&fechaClinicaPerson=' + fechaClinicaPerson + '&RecomendadoPerson=' + RecomendadoPerson + '&btnModificar=' + btnModificar,
+            success: function (data) {
+                toastr.success("persona Guardado Correctamente");
+            }
+        });
     });
-});
 });
 
 

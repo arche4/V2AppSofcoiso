@@ -25,6 +25,10 @@
         <servlet-name>ConsultarModalServlet</servlet-name>
         <servlet-class>com.co.sofcoiso.Servlet.ConsultarModalServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CitasServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.CitasServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>usuarioLogin</servlet-name>
         <url-pattern>/usuarioLogin</url-pattern>
@@ -48,6 +52,10 @@
     <servlet-mapping>
         <servlet-name>ConsultarModalServlet</servlet-name>
         <url-pattern>/ConsultarModalServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>CitasServlet</servlet-name>
+        <url-pattern>/CitasServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

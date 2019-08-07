@@ -16,7 +16,6 @@ import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.FlujocasoJpaController;
 import com.co.sofcoiso.controller.FormacionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
-import com.co.sofcoiso.controller.PersonaasistenteJpaController;
 import com.co.sofcoiso.controller.TipoCasoJpaController;
 import com.co.sofcoiso.modelo.Usuario;
 import com.co.sofcoiso.util.JPAFactory;
@@ -33,8 +32,8 @@ import com.co.sofcoiso.modelo.Formacion;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.report.ReportCasos;
+import com.co.sofcoiso.report.ReportCitas;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -96,6 +95,8 @@ public class usuarioLogin extends HttpServlet {
         Dashboard dashboard = new Dashboard();
         List<ReportCasos> listEstados = dashboard.countEstado();
         session.setAttribute("listEstados", listEstados);
+        List<ReportCitas> listCitas = dashboard.citasDeldia();
+        session.setAttribute("listCitas", listCitas);
         session.setAttribute("USUARIO", usuario);
         List<Usuario> listUsuario = jpaUsuario.findUsuarioEntities();
         session.setAttribute("listUsuario", listUsuario);
@@ -137,6 +138,8 @@ public class usuarioLogin extends HttpServlet {
         String si = "No";
         session.setAttribute("rol", admin);
         session.setAttribute("TieneCaso", si);
+        List<Cita> listCita = citaJpa.findCitaEntities();
+        session.setAttribute("listCita", listCita);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

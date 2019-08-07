@@ -209,7 +209,7 @@
                                 <div class="modal-content" style="padding:40px 50px;">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Crear Usuarios</h4>
+                                        <h4 class="modal-title">Formacion</h4>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
                                     <form method="post" name="personaEdit" id="persona" action="">
@@ -218,7 +218,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button  type="submit" class="btn btn-primary btn-block" name="btnModificar" value="btnModificar" id="btnModificar">
-                                                Guardar
+                                                Modificar
                                             </button>
 
                                         </div>

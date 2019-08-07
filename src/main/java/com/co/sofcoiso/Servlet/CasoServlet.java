@@ -112,6 +112,13 @@ public class CasoServlet extends HttpServlet {
         String UsuarioCam = request.getParameter("UsuarioCam");
         String comentariosAsignado = request.getParameter("comentariosAsignado");
         String estadoAsignado = request.getParameter("estadoAsignado");
+
+        String codigoCita = request.getParameter("codigoCita");
+        String usuarioCita = request.getParameter("usuarioCita");
+        String Fechacita = request.getParameter("cita");
+        String comentarioCita = request.getParameter("comentarioCita");
+        String btnCitar = request.getParameter("btnCitar");
+
         Date date;
         EstadoCaso estadocaso;
         TipoCaso tipo;
@@ -193,8 +200,8 @@ public class CasoServlet extends HttpServlet {
             session.setAttribute("listPersonaCaso", personCaso);
             List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
             session.setAttribute("listAccionesCaso", listAccionesCaso);
-            Flujocaso listFlujoCaso = jpaflujoCaso.findFlujocaso(Integer.parseInt(editar));
-            session.setAttribute("listFlujoCaso", listFlujoCaso);
+            List<Flujocaso> flujoList = jpaflujoCaso.findFlujocasoEntities();
+            session.setAttribute("flujoList", flujoList);
             Caso CasoUnico = jpaCaso.findCaso(Integer.parseInt(editar));
             session.setAttribute("CasoUnico", CasoUnico);
             rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
@@ -226,32 +233,28 @@ public class CasoServlet extends HttpServlet {
                     } catch (Exception e) {
                         Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
-                     //Cambiamos el estado del caso
+                    //Cambiamos el estado del caso
                     camEstdo.actualizarFlujoCaso(codigoAsingado, estadoAsignado, usuarioAsignado, fecha_actualizada);
                     //Agrgeamos los comentarios ya rchivos que suban.
-                try {
+                    try {
 
-                    AccionesCaso accionComentar = new AccionesCaso(Integer.parseInt(codigoAsingado), usuarioAsignado, comentariosAsignado, "", fecha_actualizada);
+                        AccionesCaso accionComentar = new AccionesCaso(Integer.parseInt(codigoAsingado), usuarioAsignado, comentariosAsignado, "", fecha_actualizada);
 
                         accionesCasoJpa.create(accionComentar);
                     } catch (Exception e) {
                         Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
-                
+
                 } catch (Exception e) {
                     Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
-            
+
             List<CambioCaso> listCambio;
-            List<Caso> casoList;
-            List<Persona> personasList;
             List<EstadoCaso> EstadoList;
             List<TipoCaso> TipoList;
             List<Usuario> ListUsuairio;
             List<Flujocaso> ListFlujo;
-            personasList = jpaperson.findPersonaEntities();
-            session.setAttribute("Persona", personasList);
             EstadoList = jpaEstado.findEstadoCasoEntities();
             session.setAttribute("Estado", EstadoList);
             TipoList = jpaTipo.findTipoCasoEntities();
@@ -262,13 +265,12 @@ public class CasoServlet extends HttpServlet {
             session.setAttribute("flujoList", ListFlujo);
             listCambio = seguimientoCaso.findCambioCasoEntities();
             session.setAttribute("cambioCasoList", listCambio);
-            session.setAttribute("codigo", casoCodigo);
             caso CasosList = new caso();
             List<ReportCasos> listCaso = CasosList.listarCaso();
             session.setAttribute("ListCaso", listCaso);
             List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
             session.setAttribute("listAccionesCaso", listAccionesCaso);
-            session.setAttribute("codigoCaso", casoCodigo);
+            session.setAttribute("codigoCaso", codigoAsingado);
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
 
         }
@@ -376,6 +378,49 @@ public class CasoServlet extends HttpServlet {
 
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
 
+        }
+
+        if (btnCitar != null && !btnCitar.equals("")) {
+            Cita cita = new Cita(codigoCita, Fechacita, "Abierta");
+            {
+                try {
+                    citaJpa.create(cita);
+                } catch (Exception ex) {
+                    Logger.getLogger(FormacionServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            //Agregamos los comentarios
+            try {
+
+                caso tomarFecha = new caso();
+
+                String fechaActual = tomarFecha.obtenerFechaActual();
+                hora_actual = tomarFecha.obtenerHoraActual();
+
+                SimpleDateFormat formatterFecha = new SimpleDateFormat("yyyyMMdd");
+                SimpleDateFormat formatterFecha2 = new SimpleDateFormat("yyyy-MM-dd");
+                date = formatterFecha.parse(fechaActual);
+                fecha = formatterFecha2.format(date);
+                String fecha_actualizada;
+
+                //Actualizamos el flujo de los estados del caso
+                //Esto nos sirve para saber por cuantos estados paso el caso.
+                fecha_actualizada = fecha + " " + hora_actual;
+
+                AccionesCaso accionComentar = new AccionesCaso(Integer.parseInt(codigoCita), usuarioCita, comentarioCita, "", fecha_actualizada);
+
+                accionesCasoJpa.create(accionComentar);
+            } catch (Exception e) {
+                Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, e);
+            }
+            List<Cita> listCita = citaJpa.findCitaEntities();
+            session.setAttribute("listCita", listCita);
+            caso CasosList = new caso();
+            List<ReportCasos> listCaso = CasosList.listarCaso();
+            session.setAttribute("ListCaso", listCaso);
+            List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
+            session.setAttribute("listAccionesCaso", listAccionesCaso);
+            rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
         }
 
         rd.forward(request, response);

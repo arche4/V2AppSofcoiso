@@ -92,7 +92,7 @@ $(document).ready(function () {
         temaForm = $('#temaForm').val();
         cantidadAsistentes = $('#cantidadAsistentes').val();
         btnModificar = $(this).val();
-         toastr.success("Usuario Guardado Correctamente");
+        toastr.success("Usuario Guardado Correctamente");
         $.ajax({
             async: false,
             type: "GET",

@@ -1,7 +1,7 @@
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\exceptions\PreexistingEntityException.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\Persona.java
+C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\CitaJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\Formacion.java
-C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\CitasPersonaJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\CambioCaso.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\report\ReportCitas.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\Caso.java
@@ -9,6 +9,7 @@ C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\Flujocaso.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\TipoCasoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\Servlet\ReportServlet.java
+C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\Cita.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\Servlet\EstadoCasoServlet.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\EstadoCasoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\EstadoCaso.java
@@ -25,12 +26,12 @@ C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\EpsJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\conexion\Operaciones.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\exceptions\NonexistentEntityException.java
+C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\Servlet\CitasServlet.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\Arl.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\CasoJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\conexion\Conexion.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\FormacionJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\TipoCaso.java
-C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\modelo\CitasPersona.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\Servlet\ConsultarModalServlet.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\ArlJpaController.java
 C:\Users\manue\Documents\NetBeansProjects\sofCoiso\src\main\java\com\co\sofcoiso\controller\exceptions\IllegalOrphanException.java

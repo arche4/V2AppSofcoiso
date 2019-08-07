@@ -30,12 +30,39 @@ public class ReportPersona {
     private String antiguedadEmpresa;
     private String cargo;
     private String fechaClinica;
-    private Integer recomendado;
+    private String recomendado;
     private String telefono;
     private List<String> header;
     private String eps;
     private String arl;
     private String afp;
+    String direccion;
+    String  comuna;
+
+    public String getRecomendado() {
+        return recomendado;
+    }
+
+    public void setRecomendado(String recomendado) {
+        this.recomendado = recomendado;
+    }
+    
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getComuna() {
+        return comuna;
+    }
+
+    public void setComuna(String comuna) {
+        this.comuna = comuna;
+    }
 
     
     
@@ -161,14 +188,6 @@ public class ReportPersona {
 
     public void setFechaClinica(String fechaClinica) {
         this.fechaClinica = fechaClinica;
-    }
-
-    public Integer getRecomendado() {
-        return recomendado;
-    }
-
-    public void setRecomendado(Integer recomendado) {
-        this.recomendado = recomendado;
     }
 
     public String getTelefono() {

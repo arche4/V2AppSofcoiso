@@ -166,8 +166,8 @@
 
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a  id="comment-issue" href="#Asignar" id ="btnEdtar" 
-                                           name="btnEdtar" class="btn btn-link" value="${caso.getCodigocaso()}" 
-                                           title="Comentar en este caso"  class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment">
+                                            name="btnEdtar" class="btn btn-link" value="${caso.getCodigocaso()}" 
+                                            title="Comentar en este caso"  class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment">
                                             <span class="trigger-label">Editar</span></a></div>
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
@@ -179,7 +179,7 @@
                                             <span class="trigger-label">Asignar Usuario</span></a></div>
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
-                                           data-toggle="modal" data-target="#Asignar">
+                                           data-toggle="modal" data-target="#Citar">
                                             <span class="trigger-label">Citar</span></a></div>
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
@@ -342,73 +342,65 @@
                                                             <div class="issuePanelWrapper">
                                                                 <div class="issuePanelProgress"></div>
                                                                 <div class="issuePanelContainer" id="issue_actions_container">
+                                                                    <c:forEach var="flujoList" items="${sessionScope.flujoList}">
+                                                                        <c:choose>
+                                                                            <c:when test="${flujoList.getCodigocaso() == sessionScope.codigoCaso}">
+                                                                                <div class="issue-data-block" id="issuecreated-437666">
+                                                                                    <div class="actionContainer">
+                                                                                        <div class="action-details" id="issuecreateddetails-437666">
 
-                                                                    <div class="issue-data-block" id="issuecreated-437666">
-                                                                        <div class="actionContainer">
-                                                                            <div class="action-details" id="issuecreateddetails-437666">
+                                                                                            <span class="aui-avatar aui-avatar-xsmall">
+                                                                                                <c:out value='${sessionScope.CasoUnico.getCreado()}'/>
+                                                                                            </span>
+                                                                                            creó el caso  - <span><time class="livestamp"<c:out value='${flujoList.getFechaCreacion()}'/></time></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
 
-                                                                                <span class="aui-avatar aui-avatar-xsmall">
-                                                                                    <c:out value='${sessionScope.CasoUnico.getCreado()}'/>
-                                                                                </span>
-                                                                                creó el caso  - <span><time class="livestamp"<c:out value='${sessionScope.listFlujoCaso.getFechaCreacion()}'/></time></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                                <div class="issue-data-block" id="changehistory-3206744">
+                                                                                    <div class="actionContainer">
+                                                                                        <div class="action-details" id="changehistorydetails_3206744">
+                                                                                            Cambiado por         
+                                                                                            <a class="user-hover user-avatar" rel="afelipev" id="changehistoryauthor_3206744" href="/secure/ViewProfile.jspa?name=afelipev"><span class="aui-avatar aui-avatar-xsmall"><span class="aui-avatar-inner"><img src="http://ventanillaunicajira.ind.local/secure/useravatar?size=xsmall&amp;avatarId=10348" alt="afelipev"></span></span> Andres Felipe Velez</a>
+                                                                                            - <span class="date" title="Hace 2 días 9:51 PM"><time class="livestamp" datetime="2019-07-26T21:51:23+0200">Hace 2 días</time></span>
+                                                                                        </div>
 
-                                                                    <div class="issue-data-block" id="changehistory-3206744">
-                                                                        <div class="actionContainer">
-                                                                            <div class="action-details" id="changehistorydetails_3206744">
-
-
-                                                                                Cambiado por         
-
-                                                                                <a class="user-hover user-avatar" rel="afelipev" id="changehistoryauthor_3206744" href="/secure/ViewProfile.jspa?name=afelipev"><span class="aui-avatar aui-avatar-xsmall"><span class="aui-avatar-inner"><img src="http://ventanillaunicajira.ind.local/secure/useravatar?size=xsmall&amp;avatarId=10348" alt="afelipev"></span></span> Andres Felipe Velez</a>
-                                                                                - <span class="date" title="Hace 2 días 9:51 PM"><time class="livestamp" datetime="2019-07-26T21:51:23+0200">Hace 2 días</time></span>
-                                                                            </div>
-                                                                            <div class="changehistory action-body">
-                                                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" id="changehistory_3206744">
-                                                                                    <tbody align="left">
-                                                                                        <tr id="changeitem5421084_WorklogId">
-                                                                                            <td width="20%" class="activity-name">
-                                                                                                Id de registro de trabajo
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-old-val">
-                                                                                                842443
-                                                                                                <span class="hist-value">[    842443
-                                                                                                    ]</span>
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-new-val">
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr id="changeitem5421083_timespent">
-                                                                                            <td width="20%" class="activity-name">
-                                                                                                Tiempo Consumido
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-old-val">
-                                                                                                80h
-                                                                                                <span class="hist-value">[    288000
-                                                                                                    ]</span>
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-new-val">
-                                                                                                85h
-                                                                                                <span class="hist-value">[    306000
-                                                                                                    ]</span>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </c:when>
+                                                                        </c:choose>         
+                                                                    </c:forEach> 
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div id="tab-3" class="tab-pane">
-                                                            <span class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"></span>
-                                                            <span class="col-md-10">
-                                                                <h3>Feature 3</h3>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            </span>
+
+                                                            <table id="table_id"  class="table table-borderless table-striped table-earning">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Fecha</th>
+                                                                        <th scope="col">Estado</th>
+                                                                        <th scope="col">Ver</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <c:forEach var="listCita" items="${sessionScope.listCita}">
+                                                                        <c:choose>
+                                                                            <c:when test="${listCita.getCodigoCaso() == sessionScope.codigoCaso}">
+                                                                                <tr>
+
+                                                                                    <td><c:out value="${listCita.getFechaCita()}"/></td>
+                                                                                    <td><c:out value="${listCita.getEstado()}"/></td>
+                                                                                   <td> <button type="button" href="#modalCitasInf" id ="citaConsulta" 
+                                                                                         name="citaConsulta" class="btn btn-link" value="${listCita.getIdCita()}"><i class="material-icons">remove_red_eye</i> </button>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </c:when>
+                                                                        </c:choose>         
+                                                                    </c:forEach>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -424,7 +416,7 @@
                                                 <div id="peoplemodule" class="module toggle-wrap">
                                                     <div id="peoplemodule_heading" class="mod-header">
                                                         <ul class="ops"></ul>
-                                                        <h4 class="toggle-title">Personas</h4>
+                                                        <h4 class="toggle-title">Usuario</h4>
                                                     </div>
                                                     <div class="mod-content">
                                                         <ul class="item-details" id="peopledetails">
@@ -528,11 +520,11 @@
                     <c:forEach var="Caso" items="${sessionScope.Caso}">
                         <c:choose>
                             <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Caso <c:out value='${Caso.getCodigocaso()}' /> </h4>
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                    </div>
-                    
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Caso <c:out value='${Caso.getCodigocaso()}' /> </h4>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+
                                 <form method="post" name="cambiarEstado" id="Caso" action="">
                                     <div class="form-group">
                                         <input  name="codigoCaso" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
@@ -623,23 +615,23 @@
                         <h4 class="modal-title">Asignar a un Usuario</h4>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
-                    <c:forEach var="Caso" items="${sessionScope.ListCaso}">
+                    <c:forEach var="Caso" items="${sessionScope.Caso}">
                         <c:choose>
-                            <c:when test="${Caso.getCodigoCaso() == sessionScope.codigoCaso}">
+                            <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
                                 <form method="post" name="cambiarUsuario" id="cambiarUsuario" action="">
                                     <div class="form-group">
                                         <div class="form-group col-md-6">
-                                            <input  name="codigoAsingado" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigoCaso()}' />">
+                                            <input  name="codigoAsingado" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
                                             <input  name="usuarioAsignado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
-                                            <input  name="estadoAsignado" class="form-control"  type="hidden" value="<c:out value='${Caso.getNombreEstado()}' />">
+                                            <input  name="estadoAsignado" class="form-control"  type="hidden" value="<c:out value='${Caso.getEstadoCasoCodigoestado().getNombreEstado()}' />">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="UsuarioCam">Asignar</label>
                                         <select name="UsuarioCam" id="UsuarioCam" class="form-control-sm form-control">
                                             <option value="">Asignar</option>
-                                            <c:forEach var="UsuarioCam" items="${sessionScope.Usuario}">
-                                                <option value="${Usuario.getCedulaUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
+                                            <c:forEach var="Usuario" items="${sessionScope.listUsuario}">
+                                                <option value="${Usuario.getNombreUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -658,7 +650,65 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="Citar">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:60px 50px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Citar</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <c:forEach var="Caso" items="${sessionScope.Caso}">
+                        <c:choose>
+                            <c:when test="${Caso.getCodigocaso() == sessionScope.codigoCaso}">
+                                <form method="post" name="citar" id="citar" action="">
+                                    <div class="form-group">
+                                        <div class="form-group col-md-6">
+                                            <input  name="codigoCita" class="form-control"  type="hidden" value="<c:out value='${Caso.getCodigocaso()}' />">
+                                            <input  name="usuarioCita" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cedula">Fecha de la Cita</label>
+                                        <input type="date" class="form-control" id="cita" name="cita" value="2011-08-08" id="example-month-input">
+                                    </div>
+                                    <div class="form-group"> 
+                                        <label for="comentario">Deje aquí sus comentarios</label>
+                                        <textarea class="form-control" rows="5" name="comentarioCita" id="comentarios"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button name="btnCitar" value="btnCitar" type="submit" class="btn btn-success" onclick="return citar()">Citar</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </form>
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+         <div class="modal" id="modalCitasInf">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:40px 50px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Citas</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form method="post" name="editarCitar" id="editarCitar" action="">
 
+                        <div class="modal-body" id="infCitas">
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="submit" class="btn btn-primary btn-block" name="btnModificarCita" value="btnModificarCita" id="btnModificarCita">
+                                Guardar
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <script src="${pageContext.servletContext.contextPath}/bootstrap/js/bootstrap.min.js"></script>
         <!-- DataTables -->
         <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>

@@ -72,7 +72,25 @@ public class PersonaServlet extends HttpServlet {
         String cedulaPerson = request.getParameter("cedulaPerson");
         String empresaUsuaria = request.getParameter("empresaUsuaria");
         String sectorEconomico = request.getParameter("sectorEconomico");
-        
+
+        //Modificar persona 
+        String btnModificar = request.getParameter("btnModificar");
+        String cedulaPersona = request.getParameter("cedulaPerson");
+        String nomPerson = request.getParameter("nomPerson");
+        String ApellidoUnoPeson = request.getParameter("ApellidoUnoPeson");
+        String ApellidodosPeson = request.getParameter("ApellidodosPeson");
+        String generoPerson = request.getParameter("generoPerson");
+        String EdadPerson = request.getParameter("EdadPerson");
+        String FechaNacimientoPerson = request.getParameter("FechaNacimientoPerson");
+        String TelefonoPerson = request.getParameter("TelefonoPerson");
+        String comunaPerson = request.getParameter("comunaPerson");
+        String direccionPerson = request.getParameter("direccionPerson");
+        String empresaPerson = request.getParameter("empresaPerson");
+        String cargoPerson = request.getParameter("cargoPerson");
+        String ExperienciaPerson = request.getParameter("ExperienciaPerson");
+        String fechaClinicaPerson = request.getParameter("fechaClinicaPerson");
+        String RecomendadoPerson = request.getParameter("RecomendadoPerson");
+
         Persona persona;
 
         Eps eps = new Eps(codigoEps);
@@ -85,7 +103,7 @@ public class PersonaServlet extends HttpServlet {
                 case "crear":
                     //Crear persona
                     persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
-                            empresa, añosExperiencia,cargo, fechaClinica, afp, arl, eps,telefono,empresaUsuaria,
+                            empresa, añosExperiencia, cargo, fechaClinica, afp, arl, eps, telefono, empresaUsuaria,
                             sectorEconomico, recomendado, "No");
                     try {
                         mensaje = jpaperson.crear(persona);
@@ -96,14 +114,14 @@ public class PersonaServlet extends HttpServlet {
                     PersonaDirreccion personDirreccion = new PersonaDirreccion(Integer.parseInt(cedula), direccion, comuna);
                     PersonaDirreccionJpaController jpaDir = new PersonaDirreccionJpaController(JPAFactory.getFACTORY());
                     try {
-                    jpaDir.create(personDirreccion);
+                        jpaDir.create(personDirreccion);
                     } catch (Exception e) {
-                         Logger.getLogger(PersonaServlet.class.getName()).log(Level.SEVERE, null, e);
+                        Logger.getLogger(PersonaServlet.class.getName()).log(Level.SEVERE, null, e);
                     }
                     listPersonas = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", listPersonas);
                     session.setAttribute("MensajePersona", mensaje);
-                    
+
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
                     break;
                 case "listar":
@@ -114,8 +132,8 @@ public class PersonaServlet extends HttpServlet {
                     break;
 
                 case "btnModificar":
-                     persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
-                            empresa, añosExperiencia,cargo, fechaClinica, afp, arl, eps,telefono,empresaUsuaria,
+                    persona = new Persona(cedula, nombre, apellidoUno, apellidoDos, genero, fechaCumpleaños, edad,
+                            empresa, añosExperiencia, cargo, fechaClinica, afp, arl, eps, telefono, empresaUsuaria,
                             sectorEconomico, recomendado, "Si");
 
                     try {
@@ -141,6 +159,18 @@ public class PersonaServlet extends HttpServlet {
         } else if (ver != null && !ver.equals("")) {
             session.setAttribute("cedula", ver);
             rd = request.getRequestDispatcher("/view/verPersona.jsp");
+        }
+
+        if (btnModificar != null && !btnModificar.equals("")) {
+
+            //Agregamos el contacto de la persona
+            PersonaDirreccion personDirreccion = new PersonaDirreccion(Integer.parseInt(cedulaPersona), direccionPerson, comunaPerson);
+            PersonaDirreccionJpaController jpaDir = new PersonaDirreccionJpaController(JPAFactory.getFACTORY());
+            try {
+                jpaDir.edit(personDirreccion);
+            } catch (Exception e) {
+                Logger.getLogger(PersonaServlet.class.getName()).log(Level.SEVERE, null, e);
+            }
         }
         rd.forward(request, response);
     }

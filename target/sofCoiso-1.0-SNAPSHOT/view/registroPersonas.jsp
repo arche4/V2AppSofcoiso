@@ -369,8 +369,8 @@
                                         <div class="modal-body" id="modInf">
                                         </div>
                                         <div class="modal-footer">
-                                            <button  type="submit" class="btn btn-primary btn-block" id="btnModificar">
-                                                Guardar
+                                            <button  type="submit" class="btn btn-primary btn-block" id="btnModificar" name="btnModificar">
+                                                Modificar
                                             </button>
                                             <button name="btnEliminar" valu="btnEliminar"  type="submit" class="btn btn-primary btn-block" id="btnEliminar">
                                                 Eliminar

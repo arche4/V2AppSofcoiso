@@ -76,7 +76,6 @@ $(document).ready(function () {
             data: 'btnEdtar=' + btnEdtar,
             success: function (data) {
                 var json_obj = $.parseJSON(data);
-                $(this).removeData('modalInf');
                 $('#modInf').html(' <div class="form-row">  <div class="form-group col-md-6">'
                         + '<label for="cedula">Codigo caso</label>'
                         + '<p></p>'
@@ -101,8 +100,40 @@ $(document).ready(function () {
             }
         });
     });
-});
+    
+    $(document).ready(function () {
+    var alt = $(document).height();
+    $('.modal-dialog').css('top', alt * 0.3);
+    $(window).resize(function () {
+        var alt2 = $(document).height();
+        $('.modal-dialog').css('top', alt2 * 0.3);
+    });
 
+       $("body").on("click", "#citaConsulta", function () {
+        var citaConsulta = $(this).val();
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "/sofCoiso/ConsultarModalServlet",
+            data: 'citaConsulta=' + citaConsulta,
+            success: function (data) {
+                var json_obj = $.parseJSON(data);
+                 $(this).removeData('modalCitasInf');
+                $('#infCitas').html(' <div class="form-row">  <div class="form-group col-md-6">'
+                        + '<label for="cedula">Codigo caso</label>'
+                        
+                        + '<input name="codigoEdit" id="codigoEdit"  class="form-control" value=' + json_obj.getFechaCita[0] + '> </div> </div>'
+                        + '<div class="form-row">  <div class="form-group col-md-6">'
+                        + '<label for="nombre">Estado</label>'
+                        + '<input name="creadoEdit" id="creadoEdit"  class="form-control" value=' + json_obj.getEstado[0] + '> </div> </div>'
+                        )
+
+                $('#modalCitasInf').modal('show');
+            }
+        });
+    });
+});
+});
 window.addEventListener("load", function () {
     // store tabs variable
     var myTabs = document.querySelectorAll("ul.nav-tabs > li");

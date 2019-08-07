@@ -179,7 +179,7 @@
                                             <span class="trigger-label">Asignar Usuario</span></a></div>
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
-                                           data-toggle="modal" data-target="#Asignar">
+                                           data-toggle="modal" data-target="#Citar">
                                             <span class="trigger-label">Citar</span></a></div>
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
@@ -342,73 +342,65 @@
                                                             <div class="issuePanelWrapper">
                                                                 <div class="issuePanelProgress"></div>
                                                                 <div class="issuePanelContainer" id="issue_actions_container">
+                                                                    <c:forEach var="flujoList" items="${sessionScope.flujoList}">
+                                                                        <c:choose>
+                                                                            <c:when test="${flujoList.getCodigocaso() == sessionScope.codigoCaso}">
+                                                                                <div class="issue-data-block" id="issuecreated-437666">
+                                                                                    <div class="actionContainer">
+                                                                                        <div class="action-details" id="issuecreateddetails-437666">
 
-                                                                    <div class="issue-data-block" id="issuecreated-437666">
-                                                                        <div class="actionContainer">
-                                                                            <div class="action-details" id="issuecreateddetails-437666">
+                                                                                            <span class="aui-avatar aui-avatar-xsmall">
+                                                                                                <c:out value='${sessionScope.CasoUnico.getCreado()}'/>
+                                                                                            </span>
+                                                                                            creó el caso  - <span><time class="livestamp"<c:out value='${flujoList.getFechaCreacion()}'/></time></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
 
-                                                                                <span class="aui-avatar aui-avatar-xsmall">
-                                                                                    <c:out value='${sessionScope.CasoUnico.getCreado()}'/>
-                                                                                </span>
-                                                                                creó el caso  - <span><time class="livestamp"<c:out value='${sessionScope.listFlujoCaso.getFechaCreacion()}'/></time></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                                <div class="issue-data-block" id="changehistory-3206744">
+                                                                                    <div class="actionContainer">
+                                                                                        <div class="action-details" id="changehistorydetails_3206744">
+                                                                                            Cambiado por         
+                                                                                            <a class="user-hover user-avatar" rel="afelipev" id="changehistoryauthor_3206744" href="/secure/ViewProfile.jspa?name=afelipev"><span class="aui-avatar aui-avatar-xsmall"><span class="aui-avatar-inner"><img src="http://ventanillaunicajira.ind.local/secure/useravatar?size=xsmall&amp;avatarId=10348" alt="afelipev"></span></span> Andres Felipe Velez</a>
+                                                                                            - <span class="date" title="Hace 2 días 9:51 PM"><time class="livestamp" datetime="2019-07-26T21:51:23+0200">Hace 2 días</time></span>
+                                                                                        </div>
 
-                                                                    <div class="issue-data-block" id="changehistory-3206744">
-                                                                        <div class="actionContainer">
-                                                                            <div class="action-details" id="changehistorydetails_3206744">
-
-
-                                                                                Cambiado por         
-
-                                                                                <a class="user-hover user-avatar" rel="afelipev" id="changehistoryauthor_3206744" href="/secure/ViewProfile.jspa?name=afelipev"><span class="aui-avatar aui-avatar-xsmall"><span class="aui-avatar-inner"><img src="http://ventanillaunicajira.ind.local/secure/useravatar?size=xsmall&amp;avatarId=10348" alt="afelipev"></span></span> Andres Felipe Velez</a>
-                                                                                - <span class="date" title="Hace 2 días 9:51 PM"><time class="livestamp" datetime="2019-07-26T21:51:23+0200">Hace 2 días</time></span>
-                                                                            </div>
-                                                                            <div class="changehistory action-body">
-                                                                                <table cellpadding="0" cellspacing="0" border="0" width="100%" id="changehistory_3206744">
-                                                                                    <tbody align="left">
-                                                                                        <tr id="changeitem5421084_WorklogId">
-                                                                                            <td width="20%" class="activity-name">
-                                                                                                Id de registro de trabajo
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-old-val">
-                                                                                                842443
-                                                                                                <span class="hist-value">[    842443
-                                                                                                    ]</span>
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-new-val">
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr id="changeitem5421083_timespent">
-                                                                                            <td width="20%" class="activity-name">
-                                                                                                Tiempo Consumido
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-old-val">
-                                                                                                80h
-                                                                                                <span class="hist-value">[    288000
-                                                                                                    ]</span>
-                                                                                            </td>
-                                                                                            <td width="40%" class="activity-new-val">
-                                                                                                85h
-                                                                                                <span class="hist-value">[    306000
-                                                                                                    ]</span>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </c:when>
+                                                                        </c:choose>         
+                                                                    </c:forEach> 
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div id="tab-3" class="tab-pane">
-                                                            <span class="glyphicon glyphicon-tint glyphicon--home--feature two columns text-center"></span>
-                                                            <span class="col-md-10">
-                                                                <h3>Feature 3</h3>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            </span>
+
+                                                            <table id="table_id"  class="table table-borderless table-striped table-earning">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Fecha</th>
+                                                                        <th scope="col">Estado</th>
+                                                                        <th scope="col">Ver</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <c:forEach var="listCita" items="${sessionScope.listCita}">
+                                                                        <c:choose>
+                                                                            <c:when test="${listCita.getCodigoCaso() == sessionScope.codigoCaso}">
+                                                                                <tr>
+
+                                                                                    <td><c:out value="${listCita.getFechaCita()}"/></td>
+                                                                                    <td><c:out value="${listCita.getEstado()}"/></td>
+                                                                                    <td> <button type="button" href="#modalCitasInf" id ="citaConsulta" 
+                                                                                         name="citaConsulta" class="btn btn-link" value="${listCita.getIdCita()}"><i class="material-icons">remove_red_eye</i> </button>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </c:when>
+                                                                        </c:choose>         
+                                                                    </c:forEach>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -637,7 +629,7 @@
                                         <label for="UsuarioCam">Asignar</label>
                                         <select name="UsuarioCam" id="UsuarioCam" class="form-control-sm form-control">
                                             <option value="">Asignar</option>
-                                            <c:forEach var="UsuarioCam" items="${sessionScope.Usuario}">
+                                            <c:forEach var="Usuario" items="${sessionScope.listUsuario}">
                                                 <option value="${Usuario.getCedulaUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
                                             </c:forEach>
                                         </select>
@@ -684,13 +676,35 @@
                                         <textarea class="form-control" rows="5" name="comentarioCita" id="comentarios"></textarea>
                                     </div>
                                     <div class="modal-footer">
-                                        <button name="btnCitar" value="btnCitar" type="submit" class="btn btn-success" onclick="return Citar()">Citar</button>
+                                        <button name="btnCitar" value="btnCitar" type="submit" class="btn btn-success" onclick="return citar()">Citar</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                     </div>
                                 </form>
                             </c:when>
                         </c:choose>
                     </c:forEach>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modalCitasInf">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:40px 50px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Citas</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form method="post" name="editarCitar" id="editarCitar" action="">
+
+                        <div class="modal-body" id="infCitas">
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="submit" class="btn btn-primary btn-block" name="btnModificarCita" value="btnModificarCita" id="btnModificarCita">
+                                Guardar
+                            </button>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -723,72 +737,72 @@
             <p class="name">{%=file.name%}</p>
             {% } %}
             <strong class="error text-danger"></strong>
-            </td>
-            <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-            </td>
-            <td>
-            {% if (!i && !o.options.autoUpload) { %}
-            <button class="btn btn-primary start" disabled>
+        </td>
+    <td>
+        <p class="size">Processing...</p>
+        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+    </td>
+    <td>
+        {% if (!i && !o.options.autoUpload) { %}
+        <button class="btn btn-primary start" disabled>
             <i class="glyphicon glyphicon-upload"></i>
             <span>Start</span>
-            </button>
-            {% } %}
-            {% if (!i) { %}
-            <button class="btn btn-warning cancel">
+        </button>
+        {% } %}
+        {% if (!i) { %}
+        <button class="btn btn-warning cancel">
             <i class="glyphicon glyphicon-ban-circle"></i>
             <span>Cancel</span>
-            </button>
-            {% } %}
-            </td>
-            </tr>
+        </button>
+        {% } %}
+    </td>
+</tr>
             {% } %}
         </script>
         <!-- The template to display files available for download -->
         <script id="template-download" type="text/x-tmpl">
             {% for (var i=0, file; file=o.files[i]; i++) { %}
-            <tr class="template-download fade">
-            <td>
-            <span class="preview">
+<tr class="template-download fade">
+    <td>
+        <span class="preview">
             {% if (file.thumbnailUrl) { %}
             <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
             {% } %}
-            </span>
-            </td>
-            <td>
-            {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
-            <p class="name">
+        </span>
+    </td>
+    <td>
+        {% if (window.innerWidth > 480 || !file.thumbnailUrl) { %}
+        <p class="name">
             {% if (file.url) { %}
             <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
             {% } else { %}
             <span>{%=file.name%}</span>
             {% } %}
-            </p>
-            {% } %}
-            {% if (file.error) { %}
-            <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}
-            </td>
-            <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-            </td>
-            <td>
-            {% if (file.deleteUrl) { %}
-            <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+        </p>
+        {% } %}
+        {% if (file.error) { %}
+        <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+        {% } %}
+    </td>
+    <td>
+        <span class="size">{%=o.formatFileSize(file.size)%}</span>
+    </td>
+    <td>
+        {% if (file.deleteUrl) { %}
+        <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
             <i class="glyphicon glyphicon-trash"></i>
             <span>Delete</span>
-            </button>
-            <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-            <button class="btn btn-warning cancel">
+        </button>
+        <input type="checkbox" name="delete" value="1" class="toggle">
+        {% } else { %}
+        <button class="btn btn-warning cancel">
             <i class="glyphicon glyphicon-ban-circle"></i>
             <span>Cancel</span>
-            </button>
-            {% } %}
-            </td>
-            </tr>
-            {% } %}
+        </button>
+        {% } %}
+    </td>
+</tr>
+{% } %}
         </script>
     </body>
 </html>

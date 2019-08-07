@@ -49,6 +49,12 @@ public class Cita implements Serializable {
 
     public Cita() {
     }
+    public Cita(String codigo, String fecha, String estado) {
+        this.idCita = idCita;
+        this.codigoCaso = codigo;
+        this.fechaCita = fecha;
+        this.estado = estado;
+    }
 
     public Cita(Integer idCita) {
         this.idCita = idCita;
