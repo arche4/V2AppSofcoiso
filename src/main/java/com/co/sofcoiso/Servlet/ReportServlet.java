@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -29,19 +32,36 @@ public class ReportServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(true);     //habilitar el uso de sesiones
-        ServletContext servletContext = getServletContext();
-        String contextPath = servletContext.getRealPath(File.separator);
-        String respuesta = null;
-        PrintWriter out = response.getWriter();
-        Operaciones ops = new Operaciones();
-        String tipo = "Personas";
         try {
-            respuesta = ops.getConsultas(tipo, contextPath);
-        } catch (SQLException ex) {
+            HttpSession session = request.getSession(true);     //habilitar el uso de sesiones
+            ServletContext servletContext = getServletContext();
+            String contextPath = servletContext.getRealPath(File.separator);
+            String respuesta = null;
+            PrintWriter out = response.getWriter();
+            Operaciones ops = new Operaciones();
+            String tCons = request.getParameter("tCons");
+            String fecha_i = request.getParameter("fecha_i");
+            String fecha_f = request.getParameter("fecha_f");
+            
+            
+            SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            Date date_i = dt.parse(fecha_i);
+            Date date_f = dt.parse(fecha_f);
+            
+            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha_ini = dt1.format(date_i);
+            String fecha_fin =  dt1.format(date_f);
+            
+            
+            try {
+                respuesta = ops.getConsultas(tCons, fecha_ini, fecha_fin, contextPath);
+            } catch (SQLException ex) {
+                Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            out.println(respuesta);
+        } catch (ParseException ex) {
             Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.println(respuesta);
     }
 
 

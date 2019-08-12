@@ -118,6 +118,11 @@ public class CasoServlet extends HttpServlet {
         String Fechacita = request.getParameter("cita");
         String comentarioCita = request.getParameter("comentarioCita");
         String btnCitar = request.getParameter("btnCitar");
+        
+        
+        //ver casos por una persona especifica
+        String verCasos = request.getParameter("verCasos");
+      
 
         Date date;
         EstadoCaso estadocaso;
@@ -128,6 +133,14 @@ public class CasoServlet extends HttpServlet {
                 case "crear":
                     //Creamos codigo del caso.
                     Integer codigoCaso = Integer.parseInt(persona);
+                    Caso buscarCodigo = jpaCaso.findCaso(codigoCaso+1);
+                    if(buscarCodigo.equals("") && buscarCodigo == null ){
+                        codigoCaso = +1;
+                    }else{
+                        Random r = new Random();
+                        int valorDado = r.nextInt(10)+1;
+                        codigoCaso = +valorDado;
+                    }
                     Persona per = new Persona(Integer.parseInt(persona));
 
                     //Por ser primera vez el Estado del caso sera Emitida
@@ -158,7 +171,7 @@ public class CasoServlet extends HttpServlet {
                         CambioCaso casoSeguimiento = new CambioCaso(codigoCaso.toString(), estadoCaso, creado, fecha_creacion);
                         seguimientoCaso.create(casoSeguimiento);
                         caso camEstdo = new caso();
-                        boolean respuesta = camEstdo.actualizaCasoAsociado(codigoCaso.toString(), "Si");
+                        boolean respuesta = camEstdo.actualizaCasoAsociado(codigoCaso.toString());
                     } catch (Exception ex) {
                         Logger.getLogger(CasoServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -207,6 +220,17 @@ public class CasoServlet extends HttpServlet {
             rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
         }
 
+        
+        if (verCasos != null && !verCasos.equals("")) {
+            caso casoXcaso = new caso();
+            Integer cedulaPersona = Integer.parseInt(verCasos);
+            Persona person = jpaperson.findPersona(cedulaPersona);
+            List<ReportCasos> personasxCaso = casoXcaso.listarCasoXPersona(cedulaPersona);
+            session.setAttribute("personasxCaso", personasxCaso);
+            session.setAttribute("person", person);
+            rd = request.getRequestDispatcher("/view/detallePersona.jsp");
+        }
+        
         if (btnAsignar != null && !btnAsignar.equals("")) {
             caso camEstdo = new caso();
             boolean respuesta;
@@ -381,7 +405,7 @@ public class CasoServlet extends HttpServlet {
         }
 
         if (btnCitar != null && !btnCitar.equals("")) {
-            Cita cita = new Cita(codigoCita, Fechacita, "Abierta");
+            Cita cita = new Cita(codigoCita, Fechacita, "Abierta",Integer.parseInt(codigoCita));
             {
                 try {
                     citaJpa.create(cita);

@@ -281,7 +281,7 @@ public class caso {
 
     }
     
-        public boolean actualizaCasoAsociado(String ceudla, String caso_asociado) {
+        public boolean actualizaCasoAsociado(String ceudla) {
         boolean resp = true;
         final StringBuilder respondo = new StringBuilder();
         final StringBuilder Query = new StringBuilder();
@@ -299,7 +299,7 @@ public class caso {
 
             //STRINGS DE LOS QUERYSTRY
             try {
-                Query.append(ActualizaCasoAsociado(caso_asociado, ceudla));
+                Query.append(ActualizaCasoAsociado(ceudla));
                 stmt.executeUpdate(Query.toString());
             } catch (Exception e) {
                 resp = false;
@@ -328,11 +328,67 @@ public class caso {
         return resp;
     }
 
-    private String ActualizaCasoAsociado(String caso_asociado, String cedula) {
+    private String ActualizaCasoAsociado(String cedula) {
         final StringBuilder retorno = new StringBuilder();
-        final String add = " UPDATE persona SET caso_asociado = '" + caso_asociado + "' WHERE codigocaso = '" + cedula + "'";
+        final String add = " UPDATE persona SET caso_asociado = 'Si' WHERE codigocaso = '" + cedula + "'";
         retorno.append(add);
         return retorno.toString();
+    }
+    
+      public List<ReportCasos> listarCasoXPersona(Integer cedula) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String data = "";
+        List<ReportCasos> datostabla = new ArrayList<ReportCasos>();
+
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conPostgreSQL;
+
+            final String sqlCasoList = "select c.codigocaso, c.persona_cedula, tc.tipo_caso, tc.nombre_tipo_caso, ec.nombre_estado " 
+                                       +  "from caso c "
+                                       +  "inner join  estado_caso ec on ec.codigoestado = c.estado_caso_codigoestado "
+                                       +  "inner join  tipo_caso tc  on tc.codigo_tipo_caso = c.tipo_caso_codigo_tipo_caso " 
+                                       +  "where c.persona_cedula  = ? ";
+
+            stmt = conn.prepareStatement(sqlCasoList);
+            stmt.setInt(1, cedula);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                ReportCasos estados = new ReportCasos();
+                estados.setCodigoCaso(rs.getString(1));
+                estados.setPersona_cedula(rs.getString(2));
+                estados.setTipo_caso(rs.getString(3));
+                estados.setNombre_tipo_caso(rs.getString(4));
+                estados.setNombre_estado(rs.getString(5));
+
+                datostabla.add(estados);
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            //Cerrando conexiones
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, e);
+
+            }
+        }
+
+        return datostabla;
+
     }
 
 }

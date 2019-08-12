@@ -7,6 +7,7 @@ import com.co.sofcoiso.controller.EstadoCasoJpaController;
 import com.co.sofcoiso.controller.FormacionJpaController;
 import com.co.sofcoiso.controller.PersonaDirreccionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
+import com.co.sofcoiso.controller.TipoCasoJpaController;
 import com.co.sofcoiso.controller.UsuarioJpaController;
 import com.co.sofcoiso.modelo.Caso;
 import com.co.sofcoiso.modelo.Cita;
@@ -15,7 +16,9 @@ import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Formacion;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.PersonaDirreccion;
+import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.modelo.Usuario;
+import com.co.sofcoiso.report.ReportCasos;
 import com.co.sofcoiso.report.ReportPersona;
 import com.co.sofcoiso.util.JPAFactory;
 import java.io.IOException;
@@ -59,6 +62,7 @@ public class ConsultarModalServlet extends HttpServlet {
         String estadoCaso = request.getParameter("estadoCasoConsulta");
         String cita = request.getParameter("citaConsulta");
         String casoEdit = request.getParameter("btnEdtar");
+        String casoCrear = request.getParameter("casoCrear");
 
         if (cedulaModal != null && !cedulaModal.equals("")) {
             PrintWriter out = response.getWriter();
@@ -92,15 +96,33 @@ public class ConsultarModalServlet extends HttpServlet {
             JSONObject json = getModalEdit(casoEdit);
             out.print(json);
         }
+
+        if (casoCrear != null && !casoCrear.equals("")) {
+            PrintWriter out = response.getWriter();
+            String data = "";
+            TipoCasoJpaController tiposjpa = new TipoCasoJpaController(JPAFactory.getFACTORY());
+            List<TipoCaso> listTipo = tiposjpa.findTipoCasoEntities();
+            JSONObject json = new JSONObject();
+            StringBuilder resp = new StringBuilder();
+            for (TipoCaso tipo : listTipo) {
+                TipoCaso tipoCaso = new TipoCaso();
+                tipoCaso = tipo;
+                resp.append("<option" + tipoCaso.getCodigoTipoCaso() + ">" + tipoCaso.getCodigoTipoCaso() + "</option>");
+                
+            }
+            resp.append("<input>"+casoEdit+"</input>");
+            data = resp.toString();
+            out.print(data);
+        }
     }
 
     public JSONObject getModalPersona(String cedula) {
         List<ReportPersona> listpersona = listarPersona(Integer.parseInt(cedula));
-       JSONObject json = new JSONObject();
+        JSONObject json = new JSONObject();
         for (ReportPersona person : listpersona) {
             ReportPersona persona = new ReportPersona();
             persona = person;
-          
+
             json.append("Cedula", persona.getCedula());
             json.append("Nombre", persona.getNombre());
             json.append("ApellidoUno", persona.getApellidoUno());
@@ -119,8 +141,7 @@ public class ConsultarModalServlet extends HttpServlet {
             json.append("Afp", persona.getAfp());
             json.append("Direccion", persona.getDireccion());
             json.append("Comuna", persona.getComuna());
-            
- 
+
         }
         return json;
     }
@@ -177,6 +198,8 @@ public class ConsultarModalServlet extends HttpServlet {
         return json;
 
     }
+
+    
 
     public JSONObject getModalEdit(String casoCodigo) {
         CasoJpaController jpaCaso = new CasoJpaController(JPAFactory.getFACTORY());
@@ -311,7 +334,5 @@ public class ConsultarModalServlet extends HttpServlet {
         return datostabla;
 
     }
-    
-    
-  
+
 }

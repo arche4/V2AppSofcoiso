@@ -5,6 +5,8 @@
  */
 package com.co.sofcoiso.ExcelReport;
 
+import com.co.sofcoiso.report.ReportCitas;
+import com.co.sofcoiso.report.ReportFormacion;
 import com.co.sofcoiso.report.ReportPersona;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -58,6 +60,9 @@ public class ExcelCreateReport {
         this.encabezado.add("Eps");
         this.encabezado.add("Afp");
         this.encabezado.add("Arl");
+        this.encabezado.add("Direccion");
+        this.encabezado.add("Comuna");
+        this.encabezado.add("Recomendado");
 
         boolean response = false;
         this.archivoExcel = new HSSFWorkbook();
@@ -98,6 +103,113 @@ public class ExcelCreateReport {
             filaInfoTabla.createCell(10).setCellValue(datoCell.getEps());
             filaInfoTabla.createCell(11).setCellValue(datoCell.getAfp());
             filaInfoTabla.createCell(12).setCellValue(datoCell.getArl());
+            filaInfoTabla.createCell(13).setCellValue(datoCell.getDireccion());
+            filaInfoTabla.createCell(14).setCellValue(datoCell.getComuna());
+            filaInfoTabla.createCell(15).setCellValue(datoCell.getRecomendado());
+            numFile++;
+        }
+        //Genero el archivo
+        try {
+            FileOutputStream file = new FileOutputStream(this.nombreArchivoExcel);
+            this.archivoExcel.write(file);
+            file.close();
+        } catch (Exception e) {
+            response = false;
+        }
+
+        return response;
+    }
+    
+       public boolean createFormacion(List<ReportFormacion> registrosReporte) {
+
+        this.encabezado.add("id_formacion");
+        this.encabezado.add("tipo_formacion");
+        this.encabezado.add("fecha_formacion");
+        this.encabezado.add("temas");
+        this.encabezado.add("numeroAsistentes");
+
+        boolean response = false;
+        this.archivoExcel = new HSSFWorkbook();
+        this.hojaArchivo = this.archivoExcel.createSheet();
+        this.archivoExcel.setSheetName(0, this.nombreHojaArchivo);
+        CellStyle estiloEncabezadoCeldas = archivoExcel.createCellStyle();
+        //Estilo Encabezado
+        Font tipoFuente = archivoExcel.createFont();
+        tipoFuente.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        estiloEncabezadoCeldas.setFont(tipoFuente);
+        //Estilo Informacion reporte
+        CellStyle estiloInfo = archivoExcel.createCellStyle();
+        estiloInfo.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        estiloInfo.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        //Creo fila del reporte 
+        HSSFRow filaEncabezadoArchivo = hojaArchivo.createRow(0);
+        int numCelEncabezado = 0;
+        for (String nomCellEncabe : this.encabezado) {
+            HSSFCell cellEncabezado = filaEncabezadoArchivo.createCell(numCelEncabezado);
+            cellEncabezado.setCellStyle(estiloEncabezadoCeldas);
+            cellEncabezado.setCellValue(nomCellEncabe);
+            numCelEncabezado++;
+        }
+        int numFile = 0;
+        for (ReportFormacion datoCell : registrosReporte) {
+            //Crea fila o row para celdas 
+            HSSFRow filaInfoTabla = hojaArchivo.createRow(numFile + 1);
+            filaInfoTabla.createCell(0).setCellValue(datoCell.getId_formacion());
+            filaInfoTabla.createCell(1).setCellValue(datoCell.getTipo_formacion());
+            filaInfoTabla.createCell(2).setCellValue(datoCell.getFecha_formacion());
+            filaInfoTabla.createCell(3).setCellValue(datoCell.getTemas());
+            filaInfoTabla.createCell(4).setCellValue(datoCell.getNumeroAsistentes());
+            numFile++;
+        }
+        //Genero el archivo
+        try {
+            FileOutputStream file = new FileOutputStream(this.nombreArchivoExcel);
+            this.archivoExcel.write(file);
+            file.close();
+        } catch (Exception e) {
+            response = false;
+        }
+
+        return response;
+    }
+       
+      public boolean createCita(List<ReportCitas> registrosReporte) {
+
+        this.encabezado.add("Cedula");
+        this.encabezado.add("Persona");
+        this.encabezado.add("Fecha");
+        this.encabezado.add("Estado");
+
+        boolean response = false;
+        this.archivoExcel = new HSSFWorkbook();
+        this.hojaArchivo = this.archivoExcel.createSheet();
+        this.archivoExcel.setSheetName(0, this.nombreHojaArchivo);
+        CellStyle estiloEncabezadoCeldas = archivoExcel.createCellStyle();
+        //Estilo Encabezado
+        Font tipoFuente = archivoExcel.createFont();
+        tipoFuente.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        estiloEncabezadoCeldas.setFont(tipoFuente);
+        //Estilo Informacion reporte
+        CellStyle estiloInfo = archivoExcel.createCellStyle();
+        estiloInfo.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        estiloInfo.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        //Creo fila del reporte 
+        HSSFRow filaEncabezadoArchivo = hojaArchivo.createRow(0);
+        int numCelEncabezado = 0;
+        for (String nomCellEncabe : this.encabezado) {
+            HSSFCell cellEncabezado = filaEncabezadoArchivo.createCell(numCelEncabezado);
+            cellEncabezado.setCellStyle(estiloEncabezadoCeldas);
+            cellEncabezado.setCellValue(nomCellEncabe);
+            numCelEncabezado++;
+        }
+        int numFile = 0;
+        for (ReportCitas datoCell : registrosReporte) {
+            //Crea fila o row para celdas 
+            HSSFRow filaInfoTabla = hojaArchivo.createRow(numFile + 1);
+            filaInfoTabla.createCell(0).setCellValue(datoCell.getCedula());
+            filaInfoTabla.createCell(1).setCellValue(datoCell.getPersona());
+            filaInfoTabla.createCell(2).setCellValue(datoCell.getFecha());
+            filaInfoTabla.createCell(3).setCellValue(datoCell.getEstado());
             numFile++;
         }
         //Genero el archivo

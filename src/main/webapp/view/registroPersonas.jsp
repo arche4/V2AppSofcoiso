@@ -5,8 +5,8 @@
 
     <head>
         <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
@@ -52,19 +52,12 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item  active">
+                        <li class="nav-item active">
                             <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">receipt</i>
-                                <p>Caso</p>
-                            </a>
-                        </li>
-
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
@@ -87,9 +80,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
                                         <i class="material-icons">calendar_today</i>
-                                        <p>Citas</p>
+                                        <p>Tipo de caso</p>
                                     </a>
                                 </li>
                             </c:when> 
@@ -167,52 +160,33 @@
                                                     <tr>
                                                         <th scope="col">Cedula</th>
                                                         <th scope="col">Nombre</th>
-                                                        <th scope="col">Apellidos</th>
-                                                        <th scope="col">Genero</th>
-                                                        <th scope="col">Edad</th>
-                                                        <th scope="col">Telefono</th>
                                                         <th scope="col">Fecha Clinica</th>
-                                                        <th scope="col">Recomendado</th>
                                                         <th scope="col">Caso</th>
-                                                            <c:choose>
-                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
-                                                                <th scope="col">Eliminar</th>
-                                                                </c:when> 
-                                                            </c:choose>
+                                                          
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach var="personas" items="${sessionScope.Persona}" varStatus="myIndex">
 
                                                         <tr>
-                                                            <td><button type="button" href="#modalInf" id ="selectConsulta" 
+                                                            <td><button href="#modalInf" id ="selectConsulta" 
                                                                         name="selectConsulta" class="btn btn-link" value="${personas.getCedula()}"><c:out value="${personas.getCedula()}"/></button></td>
-                                                            <td><c:out value="${personas.getNombre()}"/></td>
-                                                            <td><c:out value="${personas.getApellidoUno()}"/></td>
-                                                            <td><c:out value="${personas.getGenero()}"/></td>
-                                                            <td><c:out value="${personas.getEdad()}"/></td>
-                                                            <td><c:out value="${personas.getTelefono()}"/></td>
+                                                            <td><c:out value="${personas.getNombre()}"/> <c:out value="${personas.getApellidoUno()}"/></td>
                                                             <td><c:out value="${personas.getFechaClinica()}"/></td>
-                                                            <td><c:out value="${personas.getRecomendado()}"/></td>
                                                             <c:choose>
                                                                 <c:when test="${personas.getCasoAsociado() == sessionScope.TieneCaso}">  
                                                                     <td>
-                                                                        <button name="accion" value="crear" type="button" class="btn btn-link" data-toggle="modal" data-target="#crearCaso">
+                                                                        <button  href="#crearCaso" id ="casoCrear"  name="casoCrear"  class="btn btn-link" value="${personas.getCedula()}">
                                                                             Crear Caso
                                                                         </button>  </td>
                                                                     </c:when> 
                                                                     <c:otherwise>
                                                                     <td><form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
-                                                                            <button name="editar" value="${personas.getCedula()}" type="submit" class="btn btn-link">Ver Caso</button>
+                                                                            <button name="verCasos" value="${personas.getCedula()}" type="submit" class="btn btn-link">Ver detalles</button>
                                                                         </form> </td>
                                                                     </c:otherwise>
                                                                 </c:choose>
-                                                            <c:choose>
-                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
-                                                                    <td><button type="button" href="#modalDelete" id ="btnElimiar" 
-                                                                                name="btnElimiar" class="btn btn-link" value="${personas.getCedula()}"><i class="material-icons">highlight_off</i></button>   </td>
-                                                                    </c:when> 
-                                                                </c:choose>
+                                                            
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>

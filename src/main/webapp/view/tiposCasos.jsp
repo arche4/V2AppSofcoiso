@@ -5,8 +5,8 @@
 
     <head>
         <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
@@ -51,44 +51,56 @@
                         Menu
                     </a>
                 </div>
-                <div class="sidebar-wrapper">
+               <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item">
+                        <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listarPersonas" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
+                            <a class="nav-link" name="accion" value="listarEmpreC" href="${pageContext.servletContext.contextPath}/view/registroPersonas.jsp">
                                 <i class="material-icons">person</i>
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Casos</p>
+                        <li class="nav-item  ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
+                                <i class="material-icons">list_alt</i>
+                                <p>Fomarcion</p>
                             </a>
                         </li>
+                        <c:choose>
+                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
+                                        <i class="material-icons">person_pin</i>
+                                        <p>Usuarios</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Estado Casos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item active ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
+                                        <i class="material-icons">calendar_today</i>
+                                        <p>Tipo de caso</p>
+                                    </a>
+                                </li>
+                            </c:when> 
+                        </c:choose>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">library_books</i>
-                                <p>Tipo de Caso</p>
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                                <i class="material-icons">assessment</i>
+                                <p>Reportes</p>
                             </a>
                         </li>
-                        <li class="nav-item active ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
-                                <i class="material-icons">location_ons</i>
-                                <p>Usuarios</p>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/listadoFormaciones.jsp">
-                                <i class="material-icons">notifications</i>
-                                <p>Formaciones</p>
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>

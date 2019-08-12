@@ -16,9 +16,9 @@ import java.util.UUID;
  * @author manue
  */
 public class ReportPersona {
-    
+
     private static final long serialVersionUID = 1L;
-  
+
     private Integer cedula;
     private String nombre;
     private String apellidoUno;
@@ -37,52 +37,28 @@ public class ReportPersona {
     private String arl;
     private String afp;
     String direccion;
-    String  comuna;
+    String comuna;
 
-    public String getRecomendado() {
-        return recomendado;
-    }
+   
 
-    public void setRecomendado(String recomendado) {
-        this.recomendado = recomendado;
-    }
-    
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getComuna() {
-        return comuna;
-    }
-
-    public void setComuna(String comuna) {
-        this.comuna = comuna;
-    }
-
-    
-    
     private List<ReportPersona> bodyTable;
-    public static String sql = "SELECT  P.cedula, "
-            + "p.nombre || ' ' || p.apellido_uno || ' ' || p.apellido_dos as nombre, "
-            + "p.genero, p.fecha_nacimiento, p.edad, p.empresa,  p.antiguedad_empresa, p.cargo, p.fecha_clinica, "
-            + "p.telefono, eps.nombre as Eps, afp.nombre as Afp, arl.nombre as Arl "
-            + "FROM persona p INNER JOIN eps on p.codigoeps = eps.codigoeps  "
-            + "INNER JOIN afp on afp.codigoafp = p.codigoafp  INNER JOIN arl  on arl.codigoarl = p.codigoarl ";
+    public static String sql = "SELECT  P.cedula, p.nombre || ' ' || p.apellido_uno || ' ' || p.apellido_dos as nombre,  "
+            + "p.genero, p.fecha_nacimiento, p.edad, p.empresa,  p.antiguedad_empresa,  "
+            + "p.cargo, p.fecha_clinica, p.telefono, eps.nombre as Eps, afp.nombre as Afp, arl.nombre as Arl, "
+            + "pd.dirreccion, pd.comuna,  p.recomendado  "
+            + "FROM persona p INNER JOIN eps on p.codigoeps = eps.codigoeps "
+            + "INNER JOIN afp on afp.codigoafp = p.codigoafp   "
+            + "INNER JOIN arl  on arl.codigoarl = p.codigoarl "
+            + "INNER JOIN persona_dirreccion pd on p.cedula = pd.cedula_persona "
+            + "where p.fecha_clinica BETWEEN ? AND ? ";
 
-    
     public ReportPersona() {
         initHeader();
     }
-    
-    
+
     public ReportPersona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
             String fechaCumpleaños, String edad, String empresa, String eps, String arl, String codigoafp, String fechaClinica,
-            String antiguedad, String telefono, String cargo) {
+            String antiguedad, String telefono, String cargo, String recomendado, String comuna, String direccion) {
 
         this.cedula = Integer.parseInt(cedula);
         this.nombre = nombre;
@@ -99,6 +75,9 @@ public class ReportPersona {
         this.afp = codigoafp;
         this.cargo = cargo;
         this.fechaClinica = fechaClinica;
+        this.recomendado = recomendado;
+        this.comuna = comuna;
+        this.direccion = direccion;
         initHeader();
     }
 
@@ -229,6 +208,30 @@ public class ReportPersona {
     public void setAfp(String afp) {
         this.afp = afp;
     }
+    
+     public String getRecomendado() {
+        return recomendado;
+    }
+
+    public void setRecomendado(String recomendado) {
+        this.recomendado = recomendado;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getComuna() {
+        return comuna;
+    }
+
+    public void setComuna(String comuna) {
+        this.comuna = comuna;
+    }
 
     public List<ReportPersona> getBodyTable() {
         return bodyTable;
@@ -238,8 +241,8 @@ public class ReportPersona {
         this.bodyTable = bodyTable;
     }
     
-    
-     public void initHeader() {
+
+    public void initHeader() {
         header = new ArrayList<String>();
         header.add("cedula");
         header.add("nombre");
@@ -254,6 +257,9 @@ public class ReportPersona {
         header.add("Eps");
         header.add("Afp");
         header.add("Arl");
+        header.add("Recomendado");
+        header.add("Sector");
+        header.add("direccion");
 
     }
 
@@ -298,6 +304,9 @@ public class ReportPersona {
             body.append("<td>" + campo.getEps() + "</td>");
             body.append("<td>" + campo.getAfp() + "</td>");
             body.append("<td>" + campo.getArl() + "</td>");
+            body.append("<td>" + campo.getRecomendado()+ "</td>");
+            body.append("<td>" + campo.getComuna()+ "</td>");
+            body.append("<td>" + campo.getDireccion()+ "</td>");
             body.append("</tr>");
         }
         body.append("</tbody>");

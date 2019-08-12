@@ -122,16 +122,13 @@ public class usuarioLogin extends HttpServlet {
         session.setAttribute("Estado", ListEstado);
         List<TipoCaso> ListTipo = tipo.findTipoCasoEntities();
         session.setAttribute("Tipo", ListTipo);
-        List<Flujocaso> flujoList;
-        flujoList = jpaflujoCaso.findFlujocasoEntities();
+        List<Flujocaso> flujoList = jpaflujoCaso.findFlujocasoEntities();
         session.setAttribute("flujoList", flujoList);
-        List<Formacion> formacionlist;
-        formacionlist = formacionJpa.findFormacionEntities();
+        List<Formacion>  formacionlist = formacionJpa.findFormacionEntities();
         session.setAttribute("formacion", formacionlist);
-        List<Cita> citasList;
-        citasList = citaJpa.findCitaEntities();
+        List<Cita> citasList = citaJpa.findCitaEntities();
         session.setAttribute("Cita", citasList);
-        rd.forward(request, response);
+        
         List<ComunaMedellin> listComuna = comunajpa.findComunaMedellinEntities();
         session.setAttribute("listComuna", listComuna);
         String admin = "Administrador";
@@ -140,6 +137,7 @@ public class usuarioLogin extends HttpServlet {
         session.setAttribute("TieneCaso", si);
         List<Cita> listCita = citaJpa.findCitaEntities();
         session.setAttribute("listCita", listCita);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

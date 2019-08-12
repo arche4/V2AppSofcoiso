@@ -11,8 +11,8 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
             SofCoiso
@@ -54,13 +54,6 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">receipt</i>
-                                <p>Caso</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
                                 <p>Fomarcion</p>
@@ -79,12 +72,6 @@
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
                                         <i class="material-icons">autorenew</i>
                                         <p>Estado Casos</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item ">
-                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                        <i class="material-icons">calendar_today</i>
-                                        <p>Citas</p>
                                     </a>
                                 </li>
                                 <li class="nav-item ">

@@ -28,7 +28,8 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Cita.findByIdCita", query = "SELECT c FROM Cita c WHERE c.idCita = :idCita")
     , @NamedQuery(name = "Cita.findByCodigoCaso", query = "SELECT c FROM Cita c WHERE c.codigoCaso = :codigoCaso")
     , @NamedQuery(name = "Cita.findByFechaCita", query = "SELECT c FROM Cita c WHERE c.fechaCita = :fechaCita")
-    , @NamedQuery(name = "Cita.findByEstado", query = "SELECT c FROM Cita c WHERE c.estado = :estado")})
+    , @NamedQuery(name = "Cita.findByEstado", query = "SELECT c FROM Cita c WHERE c.estado = :estado")
+    , @NamedQuery(name = "Cita.findByCedula", query = "SELECT c FROM Cita c WHERE c.cedula = :cedula")})
 public class Cita implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,14 +47,18 @@ public class Cita implements Serializable {
     @Size(max = 20)
     @Column(name = "estado")
     private String estado;
+    @Column(name = "cedula")
+    private Integer cedula;
 
     public Cita() {
     }
-    public Cita(String codigo, String fecha, String estado) {
+    
+     public Cita(String codigo, String fecha, String estado, Integer cedula) {
         this.idCita = idCita;
         this.codigoCaso = codigo;
         this.fechaCita = fecha;
         this.estado = estado;
+        this.cedula = cedula;
     }
 
     public Cita(Integer idCita) {
@@ -90,6 +95,14 @@ public class Cita implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Integer getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(Integer cedula) {
+        this.cedula = cedula;
     }
 
     @Override

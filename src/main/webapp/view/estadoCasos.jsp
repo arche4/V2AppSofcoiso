@@ -58,12 +58,6 @@
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">receipt</i>
-                                <p>Caso</p>
-                            </a>
-                        </li>
                         <li class="nav-item  ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
@@ -79,16 +73,16 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item ">
+                                <li class="nav-item active">
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
                                         <i class="material-icons">autorenew</i>
                                         <p>Estado Casos</p>
                                     </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
                                         <i class="material-icons">calendar_today</i>
-                                        <p>Citas</p>
+                                        <p>Tipo de caso</p>
                                     </a>
                                 </li>
                             </c:when> 

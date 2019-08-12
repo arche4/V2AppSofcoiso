@@ -132,7 +132,6 @@ public class ReportCasos {
     }
     
     
-    
      public String getNombreEstado() {
         return nombreEstado;
     }

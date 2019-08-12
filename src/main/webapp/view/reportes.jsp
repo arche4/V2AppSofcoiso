@@ -6,6 +6,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <title>Reportes</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -60,13 +62,6 @@
                                 <p>Personas</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/casos.jsp">
-                                <i class="material-icons">receipt</i>
-                                <p>Caso</p>
-                            </a>
-                        </li>
-                        
                         <li class="nav-item  ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
@@ -79,7 +74,7 @@
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
                                         <i class="material-icons">person_pin</i>
                                         <p>Usuarios</p>
-                                    </a>t
+                                    </a>
                                 </li>
                           
                         <li class="nav-item ">
@@ -88,10 +83,10 @@
                                 <p>Estado Casos</p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                <i class="material-icons">calendar_today</i>
-                                <p>Citas</p>
+                         <li class="nav-item ">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
+                                <i class="material-icons">autorenew</i>
+                                <p>Tipo Casos</p>
                             </a>
                         </li>
                           </c:when> 
@@ -161,9 +156,10 @@
                                                 <div class="orm-group col-md-6">
                                                     <label>Tipo de consulta</label>
                                                     <select name="selectConsulta" id="selectConsulta" class="form-control" >
-                                                    <option value="Personas" selected>Reporte Personas</option>
-                                                    <option value="Citas" selected>Reporte Citas</option>
-                                                    <option value="Formaciones" selected>Reporte Formaciones</option>
+                                                    <option value="Personas" selected>Personas</option>
+                                                    <option value="Citas" selected>Citas</option>
+                                                    <option value="Formaciones" selected>Formaciones</option>
+                                                    <option value="Formaciones" selected>Caso</option>
                                                 </select>
                                                 </div>
                                            <div class="orm-group col-md-6">
@@ -230,10 +226,7 @@
         <!-- AdminLTE App -->
         <!-- Funcionalidad js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
--- Optionally, you can add Slimscroll and FastClick plugins.
-             Both of these plugins are recommended to enhance the
-             user experience. Slimscroll is required when using the
-             fixed layout. -->        
+      
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>

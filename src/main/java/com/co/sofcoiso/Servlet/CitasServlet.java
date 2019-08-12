@@ -59,7 +59,7 @@ public class CitasServlet extends HttpServlet {
         String btnCitar = request.getParameter("btnCitar");
         
          if (btnCitar != null && !btnCitar.equals("")) {
-             Cita cita = new Cita(codigoCita,Fechacita,"Abierta");
+             Cita cita = new Cita(codigoCita,Fechacita,"Abierta",Integer.parseInt(codigoCita));
             {
                 try {
                     citaJpa.create(cita);
