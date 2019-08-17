@@ -47,7 +47,7 @@
                   Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                    <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
                     </a>
                 </div>

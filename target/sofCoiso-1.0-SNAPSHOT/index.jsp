@@ -55,7 +55,7 @@
                 </div>   
                 <div class="col-xs-5 contRi">
                     <img src="images/Reporting.png" id="iconLog">
-                </div>
+                </div>        
             </div>
         </div>
 
