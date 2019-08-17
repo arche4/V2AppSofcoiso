@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="utf-8" />
-         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -162,7 +162,7 @@
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">Fecha Clinica</th>
                                                         <th scope="col">Caso</th>
-                                                          
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -186,7 +186,7 @@
                                                                         </form> </td>
                                                                     </c:otherwise>
                                                                 </c:choose>
-                                                            
+
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -378,7 +378,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="crearCaso">
+        <div class="modal" id="crearCaso">
             <div class="modal-dialog">
                 <div class="modal-content" style="padding:40px 50px; width: 750px;">
                     <!-- Modal Header -->
@@ -386,18 +386,10 @@
                         <h4 class="modal-title">Crear Caso</h4>
                         <button type="button" class="close" data-dismiss="modal">×</button>
                     </div>
-                    <form method="post" name="Caso" id="Caso" action="">
-
-                        <div class="form-group">
-                            <label for="persona">Persona</label>
-                            <select name="persona" id="persona" class="form-control-sm form-control">
-                                <option value="">Persona</option>
-                                <c:forEach var="persona" items="${sessionScope.Persona}">
-                                    <option value="${persona.getCedula()}"><c:out value="${persona.getNombre()}"/></option>
-                                </c:forEach>
-                            </select>
+                     <form method="post" name="Caso" id="Caso" action="">
+                        <div class="modal-body" id="crearCasoInf">
                         </div>
-                        <div class="form-group">
+                         <div class="form-group">
                             <label for="Tipo">Tipo de Caso</label>
                             <select name="Tipo" id="Tipo" class="form-control-sm form-control">
                                 <option value="">Tipo Caso </option>
@@ -408,11 +400,10 @@
                         </div>
                         <div class="form-group">
                             <label for="Tipo">Creado Por</label>
-                            <input  name="creado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                            <input  name="creado" id ="creado" lass="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
                             <input  name="" disabled  class="form-control" type="text" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
                         </div>
-
-                        <div class="form-group">
+                       <div class="form-group">
                             <label for="fechaAfectacion">Fecha  Afectacion</label>
                             <input type="date" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="MM/DD/YYY" id="example-month-input">
                         </div>
@@ -431,13 +422,13 @@
                         <div class="form-group">
                             <textarea name="textarea" id="textarea" class="form-control"  rows="10" cols="50">Descripcion del caso</textarea>
                         </div>
-
                         <div class="modal-footer">
-                            <button name="accion" value="crear" type="submit" class="btn btn-success" onclick="return validarCaso()">Guardar</button>
+                            <button  type="submit" class="btn btn-success" value="btnCrearCaso" id="btnCrearCaso" name="btnCrearCaso">
+                                                Crear Caso
+                               </button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

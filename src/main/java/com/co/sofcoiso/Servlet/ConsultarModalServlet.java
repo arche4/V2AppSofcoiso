@@ -99,20 +99,9 @@ public class ConsultarModalServlet extends HttpServlet {
 
         if (casoCrear != null && !casoCrear.equals("")) {
             PrintWriter out = response.getWriter();
-            String data = "";
-            TipoCasoJpaController tiposjpa = new TipoCasoJpaController(JPAFactory.getFACTORY());
-            List<TipoCaso> listTipo = tiposjpa.findTipoCasoEntities();
             JSONObject json = new JSONObject();
-            StringBuilder resp = new StringBuilder();
-            for (TipoCaso tipo : listTipo) {
-                TipoCaso tipoCaso = new TipoCaso();
-                tipoCaso = tipo;
-                resp.append("<option" + tipoCaso.getCodigoTipoCaso() + ">" + tipoCaso.getCodigoTipoCaso() + "</option>");
-                
-            }
-            resp.append("<input>"+casoEdit+"</input>");
-            data = resp.toString();
-            out.print(data);
+            json.append("Cedula", casoCrear);
+            out.print(json);
         }
     }
 
@@ -198,8 +187,6 @@ public class ConsultarModalServlet extends HttpServlet {
         return json;
 
     }
-
-    
 
     public JSONObject getModalEdit(String casoCodigo) {
         CasoJpaController jpaCaso = new CasoJpaController(JPAFactory.getFACTORY());
