@@ -110,7 +110,7 @@
                           </c:when> 
                         </c:choose>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/reportes.jsp">
                                 <i class="material-icons">assessment</i>
                                 <p>Reportes</p>
                             </a>

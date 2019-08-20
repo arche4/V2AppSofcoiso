@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.ExcelReport;
 
+import com.co.sofcoiso.report.ReportCasos;
 import com.co.sofcoiso.report.ReportCitas;
 import com.co.sofcoiso.report.ReportFormacion;
 import com.co.sofcoiso.report.ReportPersona;
@@ -119,8 +120,8 @@ public class ExcelCreateReport {
 
         return response;
     }
-    
-       public boolean createFormacion(List<ReportFormacion> registrosReporte) {
+
+    public boolean createFormacion(List<ReportFormacion> registrosReporte) {
 
         this.encabezado.add("id_formacion");
         this.encabezado.add("tipo_formacion");
@@ -172,8 +173,8 @@ public class ExcelCreateReport {
 
         return response;
     }
-       
-      public boolean createCita(List<ReportCitas> registrosReporte) {
+
+    public boolean createCita(List<ReportCitas> registrosReporte) {
 
         this.encabezado.add("Cedula");
         this.encabezado.add("Persona");
@@ -224,4 +225,76 @@ public class ExcelCreateReport {
         return response;
     }
 
+    public boolean createCaso(List<ReportCasos> registrosReporte) {
+
+        this.encabezado.add("Codigo");
+        this.encabezado.add("Cedula");
+        this.encabezado.add("Persona");
+        this.encabezado.add("Descripcion");
+        this.encabezado.add("Fecha Afectación");
+        this.encabezado.add("PCL");
+        this.encabezado.add("Parte Afectada");
+        this.encabezado.add("Tiempo Incapacidad");
+        this.encabezado.add("Creado");
+        this.encabezado.add("Asignado");
+        this.encabezado.add("Estado");
+        this.encabezado.add("Tipo");
+        this.encabezado.add("Nombre");
+        this.encabezado.add("Creada");
+        this.encabezado.add("Actualizada");
+
+        boolean response = false;
+        this.archivoExcel = new HSSFWorkbook();
+        this.hojaArchivo = this.archivoExcel.createSheet();
+        this.archivoExcel.setSheetName(0, this.nombreHojaArchivo);
+        CellStyle estiloEncabezadoCeldas = archivoExcel.createCellStyle();
+        //Estilo Encabezado
+        Font tipoFuente = archivoExcel.createFont();
+        tipoFuente.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        estiloEncabezadoCeldas.setFont(tipoFuente);
+        //Estilo Informacion reporte
+        CellStyle estiloInfo = archivoExcel.createCellStyle();
+        estiloInfo.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        estiloInfo.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        //Creo fila del reporte 
+        HSSFRow filaEncabezadoArchivo = hojaArchivo.createRow(0);
+        int numCelEncabezado = 0;
+        for (String nomCellEncabe : this.encabezado) {
+            HSSFCell cellEncabezado = filaEncabezadoArchivo.createCell(numCelEncabezado);
+            cellEncabezado.setCellStyle(estiloEncabezadoCeldas);
+            cellEncabezado.setCellValue(nomCellEncabe);
+            numCelEncabezado++;
+        }
+        int numFile = 0;
+        for (ReportCasos datoCell : registrosReporte) {
+            //Crea fila o row para celdas 
+            HSSFRow filaInfoTabla = hojaArchivo.createRow(numFile + 1);
+            filaInfoTabla.createCell(0).setCellValue(datoCell.getCodigoCaso());
+            filaInfoTabla.createCell(1).setCellValue(datoCell.getPersona_cedula());
+            filaInfoTabla.createCell(2).setCellValue(datoCell.getNombrePersona());
+            filaInfoTabla.createCell(3).setCellValue(datoCell.getDescripcion_caso());
+            filaInfoTabla.createCell(4).setCellValue(datoCell.getFecha_inicio_afectacion());
+            filaInfoTabla.createCell(5).setCellValue(datoCell.getPcl());
+            filaInfoTabla.createCell(6).setCellValue(datoCell.getParte_afectada());
+            filaInfoTabla.createCell(7).setCellValue(datoCell.getTiempo_incapacidad());
+            filaInfoTabla.createCell(8).setCellValue(datoCell.getCreado());
+            filaInfoTabla.createCell(9).setCellValue(datoCell.getAsignado());
+            filaInfoTabla.createCell(10).setCellValue(datoCell.getNombreEstado());
+            filaInfoTabla.createCell(11).setCellValue(datoCell.getTipo_caso());
+            filaInfoTabla.createCell(12).setCellValue(datoCell.getNombre_tipo_caso());
+            filaInfoTabla.createCell(13).setCellValue(datoCell.getFechaCreacion());
+            filaInfoTabla.createCell(14).setCellValue(datoCell.getFechaActualizacion());
+            numFile++;
+        }
+        //Genero el archivo
+        try {
+            FileOutputStream file = new FileOutputStream(this.nombreArchivoExcel);
+            this.archivoExcel.write(file);
+            file.close();
+        } catch (Exception e) {
+            response = false;
+        }
+
+        return response;
+    }
 }

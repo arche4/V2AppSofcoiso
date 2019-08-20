@@ -1,12 +1,12 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <title>Reportes</title>
         <!-- Tell the browser to be responsive to screen width -->
@@ -17,16 +17,16 @@
         <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
+
         <!-- Bootstrap 3.3.6 -->
         <!-- Ionicons -->
 
         <!-- Theme style -->
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/dist/css/AdminLTE.min.css">
         <!-- DataTables -->
-
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/plugins/datatables/dataTables.bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/plugins/datatables/extensions/Select/select.dataTables.min.css">
         <!-- Page style -->
-        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/dist/css/home.css">
-
         <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -44,11 +44,11 @@
                   Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                   <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
+                    <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
                     </a>
                 </div>
-             <div class="sidebar-wrapper">
+                <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
@@ -68,7 +68,7 @@
                                 <p>Fomarcion</p>
                             </a>
                         </li>
-                          <c:choose>
+                        <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                 <li class="nav-item ">
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
@@ -76,20 +76,20 @@
                                         <p>Usuarios</p>
                                     </a>
                                 </li>
-                          
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
-                                <i class="material-icons">autorenew</i>
-                                <p>Estado Casos</p>
-                            </a>
-                        </li>
-                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
-                                <i class="material-icons">autorenew</i>
-                                <p>Tipo Casos</p>
-                            </a>
-                        </li>
-                          </c:when> 
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Estado Casos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/tiposCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Tipo Casos</p>
+                                    </a>
+                                </li>
+                            </c:when> 
                         </c:choose>
                         <li class="nav-item active">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
@@ -153,16 +153,16 @@
                                 <div class="box box-primary">
                                     <div class="box-body">
                                         <div class="row">
-                                                <div class="orm-group col-md-6">
-                                                    <label>Tipo de consulta</label>
-                                                    <select name="selectConsulta" id="selectConsulta" class="form-control" >
+                                            <div class="orm-group col-md-6">
+                                                <label>Tipo de consulta</label>
+                                                <select name="selectConsulta" id="selectConsulta" class="form-control" >
                                                     <option value="Personas" selected>Personas</option>
                                                     <option value="Citas" selected>Citas</option>
                                                     <option value="Formaciones" selected>Formaciones</option>
                                                     <option value="Formaciones" selected>Caso</option>
                                                 </select>
-                                                </div>
-                                           <div class="orm-group col-md-6">
+                                            </div>
+                                            <div class="orm-group col-md-6">
                                                 <label>Fechas: Inicio - Fin</label>
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
@@ -197,7 +197,7 @@
                                     <div class="box-body">
                                         <div class="table-responsive table--no-card m-b-30">
                                             <div class="tabla1" id="miTabla">
-                                                <table id="table_id"  class="table table-borderless table-striped table-earning">
+                                                <table id="tabDat1" class="table table-bordered table-hover">
                                                 </table>
                                             </div>                                    
                                             <div class="box-footer">                                   
@@ -226,22 +226,39 @@
         <!-- AdminLTE App -->
         <!-- Funcionalidad js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-      
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
 
         <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/javaScript/home.js" type="text/javascript"></script>
-        <!-- Optionally, you can add Slimscroll and FastClick plugins.
-             Both of these plugins are recommended to enhance the
-             user experience. Slimscroll is required when using the
-             fixed layout. -->        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
 
 
+
+        <!-- DataTables -->
+        <script src="${pageContext.servletContext.contextPath}/plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/plugins/datatables/dataTables.bootstrap.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/plugins/datatables/extensions/Select/dataTables.select.min.js"></script>
+
+
+
+        <!-- Download to excel --> 
+        <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/dataTables.buttons.min.js"></script>        
+        <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.jqueryui.min.js"></script>
+
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 
 
         <script>

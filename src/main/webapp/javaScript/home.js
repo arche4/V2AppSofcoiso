@@ -21,7 +21,8 @@ $(document).ready(function () {
 
 
     $("#btnDescargar").click(function () {
-        location.href  = $(this).attr("urldescarga");
+        var url = 'C:\Users\manue\Documents\NetBeansProjects\sofCoiso\target\sofCoiso-1.0-SNAPSHOT\Personas.xls'
+           location.href  = $(this).attr("urldescarga");
     })
 
     //EL BOTON CONSULTAR EJECUTA  
@@ -45,7 +46,7 @@ $(document).ready(function () {
             }
         })).done(function (data) {
 
-            $("#btnDescargar").attr("C:\Users\manue\Documents\NetBeansProjects\sofCoiso\target\sofCoiso-1.0-SNAPSHOT", tCons + ".xls");
+            $("#btnDescargar").attr("urlDescarga",tCons+".xls");
             $("#btnDescargar").prop("disabled", false);
             $body.removeClass("loading");
 

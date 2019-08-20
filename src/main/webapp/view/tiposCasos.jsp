@@ -4,8 +4,7 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8" />
-         <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+       <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -16,25 +15,19 @@
         <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
-
-
-        <!-- Data table -->
-
-
         <title>Software de Gestión Coiso</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" >
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="${pageContext.servletContext.contextPath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        <script src="${pageContext.servletContext.contextPath}/javaScript/crearPersona.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-iso.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
-
+        <script src="${pageContext.servletContext.contextPath}/plugins/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/javaScript/estadoCasos.js" type="text/javascript"></script>
     </head>
 
 
@@ -47,11 +40,11 @@
                   Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                    <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
+                     <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
                     </a>
                 </div>
-               <div class="sidebar-wrapper">
+                <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
@@ -95,7 +88,7 @@
                             </c:when> 
                         </c:choose>
                         <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/reportes.jsp">
+                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/reportes.jsp">
                                 <i class="material-icons">assessment</i>
                                 <p>Reportes</p>
                             </a>
@@ -109,7 +102,7 @@
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="#pablo">Usuario</a>
+                            <a class="navbar-brand" href="#pablo">Estados</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
@@ -128,22 +121,7 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">notifications</i>
-                                        <span class="notification">5</span>
-                                        <p class="d-lg-none d-md-block">
-                                            Some Actions
-                                        </p>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                                        <a class="dropdown-item" href="#">Another Notification</a>
-                                        <a class="dropdown-item" href="#">Another One</a>
-                                    </div>
-                                </li>
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">person</i>
@@ -152,10 +130,9 @@
                                         </p>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/view/perfil.jsp">Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Log out</a>
+                                        <a class="dropdown-item" href="${pageContext.servletContext.contextPath}/index.jsp">Log out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -167,8 +144,8 @@
                     <div class="container-fluid">
 
                         <div class="col">
-                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearUsuario" style="background: #1c2165;">
-                                Crear Usuario
+                            <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearTipo" style="background: #1c2165;">
+                                Crear Tipo
                             </button>
                         </div>                        
                         <hr class="line-seprate">
@@ -180,25 +157,34 @@
                                             <table id="table_id"  class="table table-borderless table-striped table-earning">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">Accion</th>
-                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Codigo</th>
+                                                        <th scope="col">Tipo</th>
                                                         <th scope="col">Nombre</th>
-                                                        <th scope="col">Apellidos</th>
-                                                        <th scope="col">rol</th>
+                                                        <th scope="col">Descripcion</th>
+                                                        <th scope="col">Ver</th>
+                                                            <c:choose>
+                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                                                <th scope="col">Elimiar</th>
+                                                                </c:when> 
+                                                            </c:choose>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="usuario" items="${sessionScope.listUsuario}" varStatus="myIndex">
+                                                    <c:forEach var="Tipo" items="${sessionScope.Tipo}" varStatus="myIndex">
                                                         <tr>
-                                                            <td>
-                                                                <form  method="post" action="${pageContext.servletContext.contextPath}/UsuarioServlet">
-                                                                    <button name="ver" value="${personas.getCedulaUsuario()}" type="submit" class="btn btn-primary">Ver</button>
-                                                                </form>
-                                                            </td> 
-                                                            <td><c:out value="${usuario.getCedulaUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getNombreUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getApellidoUsuario()}"/></td>
-                                                            <td><c:out value="${usuario.getRol()}"/></td>
+                                                            <td><c:out value="${Tipo.getCodigoTipoCaso()}"/></td>
+                                                            <td><c:out value="${Tipo.getTipoCaso()}"/></td>
+                                                            <td><c:out value="${Tipo.getNombreTipoCaso()}"/></td>
+                                                             <td><c:out value="${Tipo.getDescripcionTipoCaso()}"/></td>
+                                                            <td> <button type="button" href="#modalInf" id ="estadoCasoConsulta" 
+                                                                         name="estadoCasoConsulta" class="btn btn-link" value="${estado.getCodigoestado()}"><i class="material-icons">remove_red_eye</i> </button>
+                                                            </td>
+                                                            <c:choose>
+                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                                                    <td><button type="button" href="#modalDelete" id ="btnElimiar" 
+                                                                                name="btnElimiar" class="btn btn-link" value="${estado.getCodigoestado()}"><i class="material-icons">highlight_off</i></button>   </td>
+                                                                    </c:when> 
+                                                                </c:choose>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -208,54 +194,37 @@
                                 </div>
                             </div>
                         </div>
-
                         <script>
                             $.noConflict();
                             jQuery(document).ready(function ($) {
                                 $('#table_id').DataTable();
                             });
                         </script>
-                        <div class="modal fade" id="crearUsuario">
+                        <div class="modal fade" id="crearTipo">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="padding:40px 50px;">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Crear Usuarios</h4>
+                                        <h4 class="modal-title">Crear Estado</h4>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
-                                    <form method="post" name="usuario" id="usuario"
-                                          action="">
+                                    <form method="post" name="estado" id="estado" action="">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="cedula" name="cedula"  placeholder="Cedula">
+                                                <input type="text" class="form-control" id="codigo" name="codigo"  placeholder="Codigo Estado">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                                                <input type="text" class="form-control" id="nombreEstado" name="nombreEstado" placeholder="Nombre">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="apellido" name="apellido"  placeholder="Apellidos">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <select name="rol" id="inputState" 
-                                                        class="form-control">
-                                                    <option value="Administrador" selected>Administrador</option>
-                                                    <option value="Coordinador" selected>Coordinador</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <input type="password" class="form-control" id="clave" name="clave" placeholder="Contraseña">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <input type="password" class="form-control" id="comfirmarClave" name="comfirmarClave" placeholder="Comfirmar Contraseña">
+                                                <textarea type="text" class="form-control" id="Descripcion" name="Descripcion"  placeholder="Descripcion"></textarea>
                                             </div>
                                         </div>
+                                        
                                         <div class="modal-footer">
-                                            <button name="accion" value="crear" type="submit" class="btn btn-success" onclick="return validar()">Crear</button>
+                                            <button name="crear" value="crear" type="submit" class="btn btn-success" onclick="return validarEstado()">Crear</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </form>
@@ -268,12 +237,74 @@
                 </div>
             </div>
         </div>
+        <div class="modal" id="modalInf">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:40px 50px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Estado</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form method="post" name="personaEdit" id="persona" action="">
+
+                        <div class="modal-body" id="modInf">
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="submit" class="btn btn-primary btn-block" name="btnModificar" value="btnModificar" id="btnModificar">
+                                Guardar
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modalDelete">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="icon-box">
+                            <i class="material-icons"></i>
+                        </div>				
+                        <h4 class="modal-title">¿Estás seguro?</h4>	
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Realmente quieres borrar estos registros? Este proceso no se puede deshacer.</p>
+                    </div>
+                    <form method="post" name="usuario" id="usuario"action="${pageContext.servletContext.contextPath}/EstadoCasoServlet">
+                        <div class="modal-body" id="inputUsuario">
+                        </div>
+                        <div class="modal-footer">
+                            <button name="eliminar" value="eliminar" id="eliminar" type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <script>
             $(document).ready(function () {
                 $('#myTable').DataTable();
             });
 
         </script>
+        <script src="${pageContext.servletContext.contextPath}/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <!-- AdminLTE App -->
+        <!-- Funcionalidad js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
+        <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
 
     </body>
 
