@@ -117,7 +117,7 @@ public class ConsultarModalServlet extends HttpServlet {
             json.append("ApellidoUno", persona.getApellidoUno());
             json.append("ApellidoDos", persona.getApellidoDos());
             json.append("Genero", persona.getGenero());
-            json.append("Edad", persona.getTelefono());
+            json.append("Edad", persona.getEdad());
             json.append("FechaNacimiento", persona.getFechaNacimiento());
             json.append("Telefono", persona.getTelefono());
             json.append("empresa", persona.getEmpresa());

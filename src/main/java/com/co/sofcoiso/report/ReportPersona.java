@@ -36,8 +36,17 @@ public class ReportPersona {
     private String eps;
     private String arl;
     private String afp;
+    private String  casosociado;
     String direccion;
     String comuna;
+
+    public String getCasosociado() {
+        return casosociado;
+    }
+
+    public void setCasosociado(String casosociado) {
+        this.casosociado = casosociado;
+    }
 
    
 

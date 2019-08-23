@@ -6,6 +6,7 @@
 package com.co.sofcoiso.Servlet;
 
 import com.co.sofcoiso.clases.Dashboard;
+import com.co.sofcoiso.clases.PersonaClass;
 import com.co.sofcoiso.controller.AfpJpaController;
 import com.co.sofcoiso.controller.ArlJpaController;
 import com.co.sofcoiso.controller.CasoJpaController;
@@ -33,6 +34,7 @@ import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.report.ReportCasos;
 import com.co.sofcoiso.report.ReportCitas;
+import com.co.sofcoiso.report.ReportPersona;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -95,6 +97,9 @@ public class usuarioLogin extends HttpServlet {
         Dashboard dashboard = new Dashboard();
         List<ReportCasos> listEstados = dashboard.countEstado();
         session.setAttribute("listEstados", listEstados);
+        PersonaClass person = new PersonaClass();
+        List<ReportPersona> listPersona = person.listarPersona();
+        session.setAttribute("listPersona", listPersona);
         List<ReportCitas> listCitas = dashboard.citasDeldia();
         session.setAttribute("listCitas", listCitas);
         session.setAttribute("USUARIO", usuario);

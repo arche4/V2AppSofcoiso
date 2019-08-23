@@ -48,8 +48,6 @@ function validarUsuario() {
 
     }
 
-
-
 }
 function deleteUser() {
     var cedulaUser = document.getElementById('cedulaUser').value;
@@ -96,7 +94,7 @@ $(document).ready(function () {
                         + '<input name="rolUser" id="rolUser" class="form-control" value=' + json_obj.rol[0] + '> </div> </div>'
                         + '<div class="form-row"> <div class="form-group col-md-6"> '
                         + '<label for="Clave">Clave</label>'
-                        + '<input name="ClaveUser" id="ClaveUser" class="form-control" value=' + json_obj.clave[0] + '> </div> </div>'
+                        + '<input type="password" name="ClaveUser" id="ClaveUser" class="form-control" value=' + json_obj.clave[0] + '> </div> </div>'
 
                         )
 

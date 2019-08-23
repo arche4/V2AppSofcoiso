@@ -233,7 +233,7 @@ public class caso {
                     + "from caso c "
                     + "inner join  estado_caso ec on ec.codigoestado = c.estado_caso_codigoestado "
                     + "inner join  tipo_caso tc  on tc.codigo_tipo_caso = c.tipo_caso_codigo_tipo_caso "
-                    + "inner join  persona p on p.cedula = c.codigocaso ";
+                    + "inner join  persona p on p.cedula = c.persona_cedula ";
 
             stmt = conn.prepareStatement(sqlCasoList);
             rs = stmt.executeQuery();
@@ -330,7 +330,7 @@ public class caso {
 
     private String ActualizaCasoAsociado(String cedula) {
         final StringBuilder retorno = new StringBuilder();
-        final String add = " UPDATE persona SET caso_asociado = 'Si' WHERE codigocaso = '" + cedula + "'";
+        final String add = " UPDATE persona SET caso_asociado = 'Si' WHERE cedula = '" + cedula + "'";
         retorno.append(add);
         return retorno.toString();
     }

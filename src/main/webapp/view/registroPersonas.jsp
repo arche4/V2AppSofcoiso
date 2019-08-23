@@ -166,15 +166,15 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="personas" items="${sessionScope.Persona}" varStatus="myIndex">
+                                                    <c:forEach var="personas" items="${sessionScope.listPersona}" varStatus="myIndex">
 
                                                         <tr>
                                                             <td><button href="#modalInf" id ="selectConsulta" 
                                                                         name="selectConsulta" class="btn btn-link" value="${personas.getCedula()}"><c:out value="${personas.getCedula()}"/></button></td>
-                                                            <td><c:out value="${personas.getNombre()}"/> <c:out value="${personas.getApellidoUno()}"/></td>
+                                                            <td><c:out value="${personas.getNombre()}"/> </td>
                                                             <td><c:out value="${personas.getFechaClinica()}"/></td>
                                                             <c:choose>
-                                                                <c:when test="${personas.getCasoAsociado() == sessionScope.TieneCaso}">  
+                                                                <c:when test="${personas.getCasosociado() == sessionScope.TieneCaso}">  
                                                                     <td>
                                                                         <button  href="#crearCaso" id ="casoCrear"  name="casoCrear"  class="btn btn-link" value="${personas.getCedula()}">
                                                                             Crear Caso
@@ -334,7 +334,7 @@
                                 <div class="modal-content" style="padding:40px 50px; width: 750px;">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Crear Persona</h4>
+                                        <h4 class="modal-title">Persona</h4>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
                                     <form method="post" name="personaEdit" id="persona" action="">
@@ -343,7 +343,7 @@
                                         <div class="modal-body" id="modInf">
                                         </div>
                                         <div class="modal-footer">
-                                            <button  type="submit" class="btn btn-primary btn-block" id="btnModificar" name="btnModificar">
+                                            <button  type="submit" class="btn btn-primary btn-block" value="btnModificar" id="btnModificar" name="btnModificar">
                                                 Modificar
                                             </button>
                                             <button name="btnEliminar" valu="btnEliminar"  type="submit" class="btn btn-primary btn-block" id="btnEliminar">

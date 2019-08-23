@@ -102,7 +102,7 @@
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="#pablo">Usuario</a>
+                            <a class="navbar-brand" href="#pablo">Formación</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
@@ -165,7 +165,7 @@
                                                         <th scope="col">Ver</th>
                                                             <c:choose>
                                                                 <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
-                                                                <th scope="col">Elimiar</th>
+                                                                <th scope="col">Eliminar</th>
                                                                 </c:when> 
                                                             </c:choose>
                                                     </tr>

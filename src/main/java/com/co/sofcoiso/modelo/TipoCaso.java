@@ -63,10 +63,11 @@ public class TipoCaso implements Serializable {
         this.codigoTipoCaso = codigoTipoCaso;
     }
 
-    public TipoCaso(String codigoTipoCaso, String tipoCaso, String nombreTipoCaso) {
+    public TipoCaso(String codigoTipoCaso, String tipoCaso, String nombreTipoCaso, String descripcion) {
         this.codigoTipoCaso = codigoTipoCaso;
         this.tipoCaso = tipoCaso;
         this.nombreTipoCaso = nombreTipoCaso;
+        this.descripcionTipoCaso = descripcion;
     }
 
     public String getCodigoTipoCaso() {

@@ -4,7 +4,7 @@
 <html lang="en">
 
     <head>
-       <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -27,7 +27,7 @@
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.servletContext.contextPath}/plugins/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
-        <script src="${pageContext.servletContext.contextPath}/javaScript/estadoCasos.js" type="text/javascript"></script>
+        <script src="${pageContext.servletContext.contextPath}/javaScript/Otros.js" type="text/javascript"></script>
     </head>
 
 
@@ -40,7 +40,7 @@
                   Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                     <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
+                    <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
                     </a>
                 </div>
@@ -164,7 +164,7 @@
                                                         <th scope="col">Ver</th>
                                                             <c:choose>
                                                                 <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
-                                                                <th scope="col">Elimiar</th>
+                                                                <th scope="col">Eliminar</th>
                                                                 </c:when> 
                                                             </c:choose>
                                                     </tr>
@@ -175,7 +175,7 @@
                                                             <td><c:out value="${Tipo.getCodigoTipoCaso()}"/></td>
                                                             <td><c:out value="${Tipo.getTipoCaso()}"/></td>
                                                             <td><c:out value="${Tipo.getNombreTipoCaso()}"/></td>
-                                                             <td><c:out value="${Tipo.getDescripcionTipoCaso()}"/></td>
+                                                            <td><c:out value="${Tipo.getDescripcionTipoCaso()}"/></td>
                                                             <td> <button type="button" href="#modalInf" id ="estadoCasoConsulta" 
                                                                          name="estadoCasoConsulta" class="btn btn-link" value="${estado.getCodigoestado()}"><i class="material-icons">remove_red_eye</i> </button>
                                                             </td>
@@ -205,26 +205,30 @@
                                 <div class="modal-content" style="padding:40px 50px;">
                                     <!-- Modal Header -->
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Crear Estado</h4>
+                                        <h4 class="modal-title">Crear Tipo</h4>
                                         <button type="button" class="close" data-dismiss="modal">×</button>
                                     </div>
                                     <form method="post" name="estado" id="estado" action="">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="codigo" name="codigo"  placeholder="Codigo Estado">
+                                                <input type="text" class="form-control" id="codigo" name="codigo"  placeholder="Codigo Tipo de Caso">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <input type="text" class="form-control" id="nombreEstado" name="nombreEstado" placeholder="Nombre">
+                                                <select name="tipo" id="tipo" class="form-control">
+                                                    <option value="Emfermedad General" selected>Emfermedad General</option>
+                                                    <option value="Emfermedad Laboral" selected>Emfermedad Laboral</option>
+                                                    <option value="Accidente Laboral" selected>Accidente laboral</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <textarea type="text" class="form-control" id="Descripcion" name="Descripcion"  placeholder="Descripcion"></textarea>
-                                            </div>
+                                            <input type="text" class="form-control" id="nombreTipo" name="nombreTipo" placeholder="Nombre">
                                         </div>
-                                        
+                                        <div class="form-row">
+                                            <textarea type="text" class="form-control" id="Descripcion" name="Descripcion"  placeholder="Descripcion"></textarea>
+                                        </div>
                                         <div class="modal-footer">
-                                            <button name="crear" value="crear" type="submit" class="btn btn-success" onclick="return validarEstado()">Crear</button>
+                                            <button name="crear" value="crear" type="submit" class="btn btn-success" onclick="return validarTipo()">Crear</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </form>

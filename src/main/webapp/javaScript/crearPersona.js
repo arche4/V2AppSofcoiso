@@ -103,7 +103,9 @@ $(document).ready(function () {
                 console.log(json_obj)
                 $('#modInf').html('<div class="form-row"><div class="form-group col-md-6">'
                         + '<label for="cedula">Cedula</label>'
-                        + '<input name="cedulaPerson" id="cedulaPerson" class="form-control" value=' + json_obj.Cedula[0] + '> </div>'
+                        + '<p></p>'
+                        + '<span>' + json_obj.Cedula[0] + '</span>'
+                        + '<input name="cedulaPerson" id="cedulaPerson" type="hidden" class="form-control" value=' + json_obj.Cedula[0] + '> </div>'
                         + '<div class="form-group col-md-6">'
                         + '<label for="nombre">Nombre</label>'
                         + '<input name="nomPerson" id="nomPerson" class="form-control" value=' + json_obj.Nombre[0] + '> </div> </div>'
@@ -121,7 +123,7 @@ $(document).ready(function () {
                         + '<input name="EdadPerson" id="EdadPerson" class="form-control" value=' + json_obj.Edad[0] + '> </div>'
                         + '<div class="form-group col-md-6"> '
                         + '<label for="Nacimiento">Fecha Nacimiento</label>'
-                        + '<input name="FechaNacimientoPerson" id="FechaNacimientoPerson" class="form-control" value=' + json_obj.FechaNacimiento[0] + '> </div> </div>'
+                        + '<input type="date" name="FechaNacimientoPerson" id="FechaNacimientoPerson" class="form-control" value=' + json_obj.FechaNacimiento[0] + '> </div> </div>'
                         + '<p></p> <h4>Contacto</h4>'
                         + ' <div class="form-row"> <div class="form-group col-md-6">'
                         + '<label for="Telefono">Telefono</label>'
@@ -144,7 +146,7 @@ $(document).ready(function () {
                         + '<input name="ExperienciaPerson" id="ExperienciaPerson" class="form-control" value=' + json_obj.Experiencia[0] + '> </div>'
                         + '<div class="form-group col-md-6">'
                         + '<label for="clinica">Fecha de la Clinica</label>'
-                        + '<input name="fechaClinicaPerson" id="fechaClinicaPerson" class="form-control" value=' + json_obj.fechaClinica[0] + '> </div>'
+                        + '<input type="date" name="fechaClinicaPerson" id="fechaClinicaPerson" class="form-control" value=' + json_obj.fechaClinica[0] + '> </div>'
                         + '<div class="form-group col-md-6"> '
                         + '<label for="recomendado">Recomendado por</label>'
                         + '<input name="RecomendadoPerson" id="RecomendadoPerson" class="form-control" value=' + json_obj.Recomendado[0] + '> </div> </div>'
@@ -199,39 +201,26 @@ $(document).ready(function () {
         });
     });
 
-    var cedulaPerson;
-    var nomPerson;
-    var ApellidoUnoPeson;
-    var ApellidodosPeson;
-    var generoPerson;
-    var EdadPerson;
-    var FechaNacimientoPerson;
-    var TelefonoPerson;
-    var comunaPerson;
-    var direccionPerson;
-    var empresaPerson;
-    var cargoPerson;
-    var ExperienciaPerson;
-    var fechaClinicaPerson;
-    var RecomendadoPerson;
+
 
     $("body").on("click", "#btnModificar", function () {
-        cedulaPerson = $('#cedulaPerson').val();
-        nomPerson = $('#nomPerson').val();
-        ApellidoUnoPeson = $('#ApellidoUnoPeson').val();
-        ApellidodosPeson = $('#ApellidodosPeson').val();
-        generoPerson = $('#generoPerson').val();
-        EdadPerson = $('#EdadPerson').val();
-        FechaNacimientoPerson = $('#FechaNacimientoPerson').val();
-        TelefonoPerson = $('#TelefonoPerson').val();
-        comunaPerson = $('#comunaPerson').val();
-        direccionPerson = $('#direccionPerson').val();
-        empresaPerson = $('#empresaPerson').val();
-        cargoPerson = $('#cargoPerson').val();
-        ExperienciaPerson = $('#ExperienciaPerson').val();
-        fechaClinicaPerson = $('#fechaClinicaPerson').val();
-        RecomendadoPerson = $('#RecomendadoPerson').val();
-        var btnModificar = $(this).val();
+        var btnModificar = $('#btnModificar').val();
+        var cedulaPerson = $('#cedulaPerson').val();
+        var nomPerson = $('#nomPerson').val();
+        var ApellidoUnoPeson = $('#ApellidoUnoPeson').val();
+        var ApellidodosPeson = $('#ApellidodosPeson').val();
+        var generoPerson = $('#generoPerson').val();
+        var EdadPerson = $('#EdadPerson').val();
+        var FechaNacimientoPerson = $('#FechaNacimientoPerson').val();
+        var TelefonoPerson = $('#TelefonoPerson').val();
+        var comunaPerson = $('#comunaPerson').val();
+        var direccionPerson = $('#direccionPerson').val();
+        var empresaPerson = $('#empresaPerson').val();
+        var cargoPerson = $('#cargoPerson').val();
+        var ExperienciaPerson = $('#ExperienciaPerson').val();
+        var fechaClinicaPerson = $('#fechaClinicaPerson').val();
+        var RecomendadoPerson = $('#RecomendadoPerson').val();
+        
         toastr.success("Persona Guardado Correctamente");
         $.ajax({
             async: false,

@@ -5,13 +5,23 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.controller.EstadoCasoJpaController;
+import com.co.sofcoiso.controller.TipoCasoJpaController;
+import com.co.sofcoiso.modelo.EstadoCaso;
+import com.co.sofcoiso.modelo.TipoCaso;
+import com.co.sofcoiso.util.JPAFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,19 +41,31 @@ public class tipoCasoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet tipoCasoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet tipoCasoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        RequestDispatcher rd = null;
+        TipoCasoJpaController jpaTipoCaso = new TipoCasoJpaController(JPAFactory.getFACTORY());
+        TipoCaso tipocaso;
+        
+        String codigo = request.getParameter("codigo");
+        String tipo = request.getParameter("tipo");
+        String nombreTipo = request.getParameter("nombreTipo");
+        String Descripcion = request.getParameter("Descripcion");
+        String crear = request.getParameter("crear");
+        
+         if (crear != null && !crear.equals("")) {
+             tipocaso = new TipoCaso(codigo, tipo, nombreTipo, Descripcion);
+            {
+                try {
+                    jpaTipoCaso.create(tipocaso);
+                } catch (Exception ex) {
+                    Logger.getLogger(EstadoCasoServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+             List<TipoCaso> listTipo = jpaTipoCaso.findTipoCasoEntities();
+            session.setAttribute("Tipo", listTipo);
+            rd = request.getRequestDispatcher("/view/tiposCasos.jsp");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

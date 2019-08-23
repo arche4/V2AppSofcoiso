@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.clases.ClasePersona;
 import com.co.sofcoiso.controller.PersonaDirreccionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.modelo.Afp;
@@ -171,6 +172,10 @@ public class PersonaServlet extends HttpServlet {
             } catch (Exception e) {
                 Logger.getLogger(PersonaServlet.class.getName()).log(Level.SEVERE, null, e);
             }
+             ClasePersona person = new ClasePersona();
+             person.actualizarPersona(Integer.parseInt(cedulaPersona), nomPerson, ApellidoUnoPeson, ApellidodosPeson, generoPerson, EdadPerson, FechaNacimientoPerson, TelefonoPerson, empresaPerson, cargoPerson, ExperienciaPerson, 
+                     fechaClinicaPerson, RecomendadoPerson);
+             
         }
         rd.forward(request, response);
     }

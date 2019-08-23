@@ -161,11 +161,11 @@
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">Descripcion</th>
                                                         <th scope="col">Ver</th>
-                                                            <c:choose>
-                                                                <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
-                                                                <th scope="col">Elimiar</th>
-                                                                </c:when> 
-                                                            </c:choose>
+                                                       <c:choose>
+                                                            <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
+                                                            <th scope="col">Eliminar</th>
+                                                            </c:when> 
+                                                        </c:choose>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
