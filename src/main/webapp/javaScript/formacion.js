@@ -67,7 +67,7 @@ $(document).ready(function () {
                         + '<input name="TipoFor" id="TipoFor" class="form-control" value=' + json_obj.Tipo[0] + '> </div> </div>'
                         + '<div class="form-row"> <div class="form-group col-md-6">'
                         + '<label for="apellido">Fecha Formación</label>'
-                        + '<input name="fehcaFormacionFor" id="fehcaFormacionFor" class="form-control" value=' + json_obj.fehcaFormacion[0] + '> </div>'
+                        + '<input type="date" name="fehcaFormacionFor" id="fehcaFormacionFor" class="form-control" value=' + json_obj.fehcaFormacion[0] + '> </div>'
                         + '<div class="form-group col-md-6">'
                         + '<label for="rol">Tema</label>'
                         + '<input name="temaForm" id="temaForm" class="form-control" value=' + json_obj.tema[0] + '> </div> </div>'

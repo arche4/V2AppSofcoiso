@@ -175,7 +175,45 @@ $(document).ready(function () {
         });
     });
 
+    $("body").on("click", "#btnEdtar", function () {
+        var btnEdtar = $(this).val();
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "/sofCoiso/ConsultarModalServlet",
+            data: 'btnEdtar=' + btnEdtar,
+            success: function (data) {
+                var json_obj = $.parseJSON(data);
+                $('#modInf').html(' <div class="form-group">'
+                        + '<label for="Tipo">Creado Por</label>'
+                        + '<input  name="creadoCase" id ="creado" lass="form-control"  type="hidden" value=' + json_obj.creado + '>'
+                        + '<input  name="" disabled  class="form-control" type="text"  value=' + json_obj.creado + '>'
+                        + '</div>'
+                        + '<div class="form-group">'
+                        + '  <label for="fechaAfectacion">Fecha  Afectacion</label>'
+                        + '<input type="date" class="form-control" id="fechaAfectacionCase" value=' + json_obj.fechaAfectacion + ' name="fechaAfectacion"  id="example-month-input">'
+                        + '</div>'
+                        + '<div class="form-group">'
+                        + '  <label for="Tipo">Parte Afectada</label>'
+                        + '   <input  name="parteAfectada" id="parteAfectadaCase" type="text" value=' + json_obj.parteAfectada + ' class="form-control" >'
+                        + '</div>'
+                        + '<div class="form-row">'
+                        + '<div class="form-group col-md-6">'
+                        + '    <input type="text" class="form-control" id="tiempoInca" name="tiempoIncaCase" value=' + json_obj.tiempoIncapacidad + '>'
+                        + ' </div>'
+                        + '  <div class="form-group col-md-6">'
+                        + '       <input type="text" class="form-control" id="pclCase" name="pcl" value=' + json_obj.pcl + '>'
+                        + '    </div>'
+                        + ' </div>'
+                        + ' <div class="form-group">'
+                        + '<textarea name="textarea" id="textareaCase" class="form-control" value=' + json_obj.DescripcionCaso[2] + ' rows="10" cols="50">' + json_obj.DescripcionCaso +'</textarea>'
+                        + '</div>'
+                        )
 
+                $('#modalCaso').modal('show');
+            }
+        });
+    });
 
     var cedulaCaso;
     $("body").on("click", "#btnCrearCaso", function () {
@@ -220,7 +258,7 @@ $(document).ready(function () {
         var ExperienciaPerson = $('#ExperienciaPerson').val();
         var fechaClinicaPerson = $('#fechaClinicaPerson').val();
         var RecomendadoPerson = $('#RecomendadoPerson').val();
-        
+
         toastr.success("Persona Guardado Correctamente");
         $.ajax({
             async: false,

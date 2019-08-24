@@ -113,7 +113,6 @@ public class ReportFormacion {
         header.add("id_formacion");
         header.add("tipo_formacion");
         header.add("fecha_formacion");
-        header.add("fecha_nacimiento");
         header.add("temas");
         header.add("numeroAsistentes");
 

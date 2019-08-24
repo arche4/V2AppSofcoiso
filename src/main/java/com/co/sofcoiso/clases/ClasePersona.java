@@ -139,5 +139,62 @@ public class ClasePersona {
         return datostabla;
 
     }
+    
+    public List<ReportPersona> datosPersona(Integer codigoCaso){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String data = "";
+        List<ReportPersona> datostabla = new ArrayList<ReportPersona>();
+
+        try {
+            Conexion objConn = new Conexion();
+            conn = objConn.conPostgreSQL;
+
+            final String sqlCasoList = "select p.cedula, p.genero, p.edad, p.cargo, p.empresa, p.fecha_clinica, p.telefono "
+                    + "from caso c "
+                    + "inner join persona p on p.cedula = c.persona_cedula  "
+                    + "where codigocaso = ? ";
+
+            stmt = conn.prepareStatement(sqlCasoList);
+            stmt.setInt(1, codigoCaso);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                ReportPersona persona = new ReportPersona();
+                persona.setCedula(rs.getInt(1));
+                persona.setGenero(rs.getString(2));
+                persona.setEdad(rs.getString(3));
+                persona.setCargo(rs.getString(4));
+                persona.setEmpresa(rs.getString(5));
+                persona.setFechaClinica(rs.getString(6));
+                persona.setTelefono(rs.getString(7));
+
+                datostabla.add(persona);
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            //Cerrando conexiones
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, e);
+
+            }
+        }
+
+        return datostabla;
+
+    }
 
 }

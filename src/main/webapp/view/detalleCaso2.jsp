@@ -158,11 +158,11 @@
                                             <c:out value='${caso.getPersona_cedula()}'/>  <c:out value='${caso.getNombrePersona()}' />
                                         </span></h3>
 
-                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                  <!--  <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a  id="comment-issue" href="#Asignar" id ="btnEdtar" 
                                             name="btnEdtar" class="btn btn-link" value="${caso.getCodigoCaso()}" 
                                             title="Comentar en este caso"  class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment">
-                                            <span class="trigger-label">Editar</span></a></div>
+                                            <span class="trigger-label">Editar</span></a></div>-->
                                     <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
                                            data-toggle="modal" data-target="#cambiarEstado">
@@ -175,10 +175,10 @@
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
                                            data-toggle="modal" data-target="#Citar">
                                             <span class="trigger-label">Citar</span></a></div>
-                                    <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
+                                   <!-- <div id="opsbar-comment-issue_container" class="aui-buttons pluggable-ops">
                                         <a id="comment-issue" title="Comentar en este caso" class="aui-button toolbar-trigger issueaction-comment-issue add-issue-comment inline-comment" 
                                            data-toggle="modal" data-target="#Cargar">
-                                            <span class="trigger-label">Subir archivos</span></a></div>
+                                            <span class="trigger-label">Subir archivos</span></a></div>-->
 
                                 </c:when>    
                             </c:choose>         
@@ -186,13 +186,68 @@
                         <div class="issue-body-content">
                             <div class="aui-group issue-body">
                                 <div class="aui-item issue-main-column">
+                                    <h4 class="toggle-title">Detalles Persona</h4>
+                                    <div class="mod-content">
+                                        <ul id="issuedetails" class="property-list two-cols">
+                                            <c:forEach var="casoXPersona" items="${sessionScope.casoXPersona}">
+                                            <li class="item">
+                                                <div class="wrap">
+                                                    <strong class="name">Genero: </strong>
+                                                    <span id="type-val" class="value">
+                                                        <c:out value='${casoXPersona.getGenero()}' />
+                                                    </span>
+                                                </div>
+                                            </li> 
+                                            <li class="item item-right">
+                                                <div class="wrap">
+                                                    <strong class="name">Edad:</strong>
+                                                    <span id="status-val" class="value">
+                                                        <c:out value='${casoXPersona.getEdad()}' />
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li class="item new">
+                                                <div class="wrap">
+                                                    <strong class="name">Cargo:</strong>
+                                                    <span>
+                                                        <c:out value='${casoXPersona.getCargo()}' />
+                                                    </span>
+                                                </div>
+                                            </li> 
+                                            <li class="item item-right">
+                                                <div class="wrap">
+                                                    <strong class="name">Telefono:</strong>
+                                                    <span id="status-val" class="value">
+                                                        <c:out value='${casoXPersona.getTelefono()}' />
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            <li class="item">
+                                                <div class="wrap">
+                                                    <strong class="name">Empresa:</strong>
+                                                    <span>
+                                                        <c:out value='${casoXPersona.getEmpresa()}' />
+                                                    </span>
+                                                </div>
+                                            </li> 
+                                            <li class="item full-width">
+                                                <div class="wrap">
+                                                    <strong class="name">Fecha Clinica:</strong>
+                                                    <span id="status-val" class="value">
+                                                        <c:out value='${casoXPersona.getFechaClinica()}'/>
+                                                    </span>
+                                                </div>
+                                            </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
                                     <c:forEach var="caso" items="${sessionScope.ListCaso}">
                                         <c:choose> 
                                             <c:when test="${caso.getCodigoCaso() == sessionScope.codigoCaso}">
                                                 <div id="details-module" class="module toggle-wrap">
                                                     <div id="details-module_heading" class="mod-header">
                                                         <ul class="ops"></ul>
-                                                        <h4 class="toggle-title">Detalles</h4>
+                                                        <h4 class="toggle-title">Detalles del Caso</h4>
                                                     </div>
                                                     <div class="mod-content">
                                                         <ul id="issuedetails" class="property-list two-cols">
@@ -624,7 +679,7 @@
                                         <select name="UsuarioCam" id="UsuarioCam" class="form-control-sm form-control">
                                             <option value="">Asignar</option>
                                             <c:forEach var="Usuario" items="${sessionScope.listUsuario}">
-                                                <option value="${Usuario.getCedulaUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
+                                                <option value="${Usuario.getNombreUsuario()} ${Usuario.getApellidoUsuario()}"><c:out value="${Usuario.getNombreUsuario()}"/> <c:out value="${Usuario.getApellidoUsuario()}"/></option>
                                             </c:forEach>
                                         </select>
                                     </div>

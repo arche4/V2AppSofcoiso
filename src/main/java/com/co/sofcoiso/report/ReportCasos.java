@@ -37,8 +37,17 @@ public class ReportCasos {
     private List<String> header;
 
     private List<ReportCasos> bodyTable;
-    public static String sql = "select cedula, nombre || ' ' || apellido_uno || ' ' || apellido_dos as nombre, \n" +
-"fecha_clinica, caso_asociado from persona ";
+    public static String sql = "select c.codigocaso as codigo, P.cedula, "
+            + "p.nombre || ' ' || p.apellido_uno || ' ' || p.apellido_dos as nombre, c.descripcion_caso as descripcion, "
+            + "c.fecha_inicio_afectacion, c.pcl, c.parte_afectada, c.tiempo_incapacidad, "
+            + "c.creado, c.asignado, es.nombre_estado as estado, tc.tipo_caso as tipo, tc.nombre_tipo_caso, "
+            + "fc.fecha_creacion, fc.fecha_actualizacion "
+            + "from caso c "
+            + "inner join estado_caso es on es.codigoestado = c.estado_caso_codigoestado "
+            + "inner join tipo_caso tc on tc.codigo_tipo_caso = c.tipo_caso_codigo_tipo_caso "
+            + "inner join persona p on p.cedula = c.persona_cedula "
+            + "inner join flujocaso fc on fc.codigocaso = c.codigocaso "
+            + "where fc.fecha_creacion BETWEEN ? AND ? ";
 
     public ReportCasos() {
         initHeader();

@@ -52,7 +52,6 @@ com\co\sofcoiso\clases\caso.class
 com\co\sofcoiso\report\ReportCitas.class
 com\co\sofcoiso\modelo\Formacion.class
 com\co\sofcoiso\modelo\Eps_.class
-com\co\sofcoiso\clases\Persona.class
 com\co\sofcoiso\conexion\Conexion.class
 com\co\sofcoiso\modelo\Personaasistente_.class
 com\co\sofcoiso\modelo\AccionesCaso_.class

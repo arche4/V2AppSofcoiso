@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.Servlet;
 
+import com.co.sofcoiso.clases.ClasePersona;
 import com.co.sofcoiso.clases.Dashboard;
 import com.co.sofcoiso.clases.PersonaClass;
 import com.co.sofcoiso.controller.FlujocasoJpaController;
@@ -27,6 +28,7 @@ import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
 import com.co.sofcoiso.modelo.Usuario;
 import com.co.sofcoiso.report.ReportCasos;
+import com.co.sofcoiso.report.ReportCitas;
 import com.co.sofcoiso.report.ReportPersona;
 import com.co.sofcoiso.util.JPAFactory;
 import java.io.IOException;
@@ -80,6 +82,7 @@ public class CasoServlet extends HttpServlet {
         CambioCasoJpaController seguimientoCaso = new CambioCasoJpaController(JPAFactory.getFACTORY());
         AccionesCasoJpaController accionesCasoJpa = new AccionesCasoJpaController(JPAFactory.getFACTORY());
         CitaJpaController citaJpa = new CitaJpaController(JPAFactory.getFACTORY());
+        ClasePersona clasePerson = new ClasePersona();
 
         String mensaje = "";
 
@@ -142,7 +145,7 @@ public class CasoServlet extends HttpServlet {
                         codigoCaso = codigoCaso + 1;
                     } else {
                         Random r = new Random();
-                        int valorDado = r.nextInt(10) + 1;
+                        int valorDado = r.nextInt(100) + 1;
                         codigoCaso = codigoCaso + valorDado;
                     }
                     Persona per = new Persona(Integer.parseInt(persona));
@@ -215,9 +218,8 @@ public class CasoServlet extends HttpServlet {
             //Creamos codigo del caso.
             Integer codigoCaso = Integer.parseInt(cedulaCaso);
             Caso buscarCodigo = jpaCaso.findCaso(codigoCaso);
-            if (buscarCodigo == null) {
-                codigoCaso = codigoCaso + 1;
-            } else {
+            if (buscarCodigo != null){
+             
                 Random r = new Random();
                 int valorDado = r.nextInt(10) + 1;
                 codigoCaso = codigoCaso + valorDado;
@@ -284,14 +286,16 @@ public class CasoServlet extends HttpServlet {
             session.setAttribute("listFlujoCaso", listFlujoCaso);
             cambioCasoList = seguimientoCaso.findCambioCasoEntities();
             session.setAttribute("cambioCasoList", cambioCasoList);
+            List<ReportPersona> casoXPersona = clasePerson.datosPersona(codigoCaso);
+            session.setAttribute("casoXPersona", casoXPersona);
 
             rd = request.getRequestDispatcher("/view/detalleCaso.jsp");
         }
 
         if (editar != null && !editar.equals("")) {
             session.setAttribute("codigoCaso", editar);
-            Persona personCaso = jpaperson.findPersona(Integer.parseInt(editar));
-            session.setAttribute("listPersonaCaso", personCaso);
+            List<ReportPersona> casoXPersona = clasePerson.datosPersona(Integer.parseInt(editar));
+            session.setAttribute("casoXPersona", casoXPersona);
             List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
             session.setAttribute("listAccionesCaso", listAccionesCaso);
             List<Flujocaso> flujoList = jpaflujoCaso.findFlujocasoEntities();
@@ -375,6 +379,8 @@ public class CasoServlet extends HttpServlet {
             List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
             session.setAttribute("listAccionesCaso", listAccionesCaso);
             session.setAttribute("codigoCaso", codigoAsingado);
+            List<ReportPersona> casoXPersona = clasePerson.datosPersona(Integer.parseInt(codigoAsingado));
+            session.setAttribute("casoXPersona", casoXPersona);
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
 
         }
@@ -448,6 +454,8 @@ public class CasoServlet extends HttpServlet {
             List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
             session.setAttribute("listAccionesCaso", listAccionesCaso);
             session.setAttribute("codigoCaso", casoCodigo);
+            List<ReportPersona> casoXPersona = clasePerson.datosPersona(Integer.parseInt(casoCodigo));
+            session.setAttribute("casoXPersona", casoXPersona);
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
         }
         if (comment != null && !comment.equals("")) {
@@ -479,7 +487,6 @@ public class CasoServlet extends HttpServlet {
             caso CasosList = new caso();
             List<ReportCasos> listCaso = CasosList.listarCaso();
             session.setAttribute("ListCaso", listCaso);
-
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
 
         }
@@ -524,6 +531,11 @@ public class CasoServlet extends HttpServlet {
             session.setAttribute("ListCaso", listCaso);
             List<AccionesCaso> listAccionesCaso = accionesCasoJpa.findAccionesCasoEntities();
             session.setAttribute("listAccionesCaso", listAccionesCaso);
+            List<ReportPersona> casoXPersona = clasePerson.datosPersona(Integer.parseInt(codigoCita));
+            session.setAttribute("casoXPersona", casoXPersona);
+            Dashboard dashboard = new Dashboard();
+            List<ReportCitas> listCitas = dashboard.citasDeldia();
+            session.setAttribute("listCitas", listCitas);
             rd = request.getRequestDispatcher("/view/detalleCaso2.jsp");
         }
 

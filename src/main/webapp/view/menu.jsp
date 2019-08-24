@@ -150,7 +150,7 @@
                                     <div class="card-footer">
                                         <div class="stats">
                                             <i class="material-icons">file_copy</i>
-                                            <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
+                                            <a href="${pageContext.servletContext.contextPath}/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                                     <div class="card-footer">
                                         <div class="stats">
                                             <i class="material-icons">file_copye</i> 
-                                            <a href="${pageContext.servletContext.contextPath}/view/ReporteCasos.jsp">Generar Reporte</a>
+                                            <a href="${pageContext.servletContext.contextPath}/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@
                                     <div class="card-footer">
                                         <div class="stats">
                                             <i class="material-icons">file_copye</i> 
-                                            <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
+                                            <a href="${pageContext.servletContext.contextPath}/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@
                                     <div class="card-footer">
                                         <div class="stats">
                                             <i class="material-icons">file_copye</i> 
-                                            <a href="${pageContext.servletContext.contextPath}/view/reportes.jsp">Generar Reporte</a>
+                                            <a href="${pageContext.servletContext.contextPath}/reportes.jsp">Generar Reporte</a>
                                         </div>
                                     </div>
                                 </div>

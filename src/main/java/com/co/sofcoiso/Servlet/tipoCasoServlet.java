@@ -65,6 +65,8 @@ public class tipoCasoServlet extends HttpServlet {
             session.setAttribute("Tipo", listTipo);
             rd = request.getRequestDispatcher("/view/tiposCasos.jsp");
         }
+         
+         rd.forward(request, response);
         
     }
 

@@ -58,7 +58,6 @@ function comment() {
 
 
 $body = $("body");
-
 $(document).ready(function () {
     var alt = $(document).height();
     $('.modal-dialog').css('top', alt * 0.3);
@@ -101,13 +100,7 @@ $(document).ready(function () {
         });
     });
     
-    $(document).ready(function () {
-    var alt = $(document).height();
-    $('.modal-dialog').css('top', alt * 0.3);
-    $(window).resize(function () {
-        var alt2 = $(document).height();
-        $('.modal-dialog').css('top', alt2 * 0.3);
-    });
+
 
        $("body").on("click", "#citaConsulta", function () {
         var citaConsulta = $(this).val();
@@ -121,19 +114,17 @@ $(document).ready(function () {
                  $(this).removeData('modalCitasInf');
                 $('#infCitas').html(' <div class="form-row">  <div class="form-group col-md-6">'
                         + '<label for="cedula">Codigo caso</label>'
-                        
                         + '<input name="codigoEdit" id="codigoEdit"  class="form-control" value=' + json_obj.getFechaCita[0] + '> </div> </div>'
                         + '<div class="form-row">  <div class="form-group col-md-6">'
                         + '<label for="nombre">Estado</label>'
                         + '<input name="creadoEdit" id="creadoEdit"  class="form-control" value=' + json_obj.getEstado[0] + '> </div> </div>'
                         )
-
                 $('#modalCitasInf').modal('show');
             }
         });
     });
 });
-});
+
 window.addEventListener("load", function () {
     // store tabs variable
     var myTabs = document.querySelectorAll("ul.nav-tabs > li");
@@ -157,3 +148,9 @@ window.addEventListener("load", function () {
         myTabs[i].addEventListener("click", myTabClicks)
     }
 });
+$(document).ajaxStart(function () {
+    $body.addClass("loading");
+});
+$(document).ajaxStop(function () {
+    $body.removeClass("loading");
+}); 

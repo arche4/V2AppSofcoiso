@@ -6,6 +6,7 @@
 package com.co.sofcoiso.Servlet;
 
 import com.co.sofcoiso.clases.ClasePersona;
+import com.co.sofcoiso.clases.PersonaClass;
 import com.co.sofcoiso.controller.PersonaDirreccionJpaController;
 import com.co.sofcoiso.controller.PersonaJpaController;
 import com.co.sofcoiso.modelo.Afp;
@@ -13,6 +14,7 @@ import com.co.sofcoiso.modelo.Arl;
 import com.co.sofcoiso.modelo.Eps;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.PersonaDirreccion;
+import com.co.sofcoiso.report.ReportPersona;
 import com.co.sofcoiso.util.JPAFactory;
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +51,7 @@ public class PersonaServlet extends HttpServlet {
         RequestDispatcher rd = null;
         PersonaJpaController jpaperson = new PersonaJpaController(JPAFactory.getFACTORY());
         String mensaje = "";
+        PersonaClass personList = new PersonaClass();
 
         String accion = request.getParameter("accion");
         String cedula = request.getParameter("cedula");
@@ -122,6 +125,8 @@ public class PersonaServlet extends HttpServlet {
                     listPersonas = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", listPersonas);
                     session.setAttribute("MensajePersona", mensaje);
+                    List<ReportPersona> listPersona = personList.listarPersona();
+                    session.setAttribute("listPersona", listPersona);
 
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
                     break;
@@ -145,6 +150,8 @@ public class PersonaServlet extends HttpServlet {
 
                     List<Persona> ListPersona = jpaperson.findPersonaEntities();
                     session.setAttribute("Persona", ListPersona);
+                    List<ReportPersona> personaListabla = personList.listarPersona();
+                    session.setAttribute("listPersona", personaListabla);
 
                     rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
                     break;
@@ -157,9 +164,6 @@ public class PersonaServlet extends HttpServlet {
                     break;
 
             }
-        } else if (ver != null && !ver.equals("")) {
-            session.setAttribute("cedula", ver);
-            rd = request.getRequestDispatcher("/view/verPersona.jsp");
         }
 
         if (btnModificar != null && !btnModificar.equals("")) {
@@ -172,11 +176,22 @@ public class PersonaServlet extends HttpServlet {
             } catch (Exception e) {
                 Logger.getLogger(PersonaServlet.class.getName()).log(Level.SEVERE, null, e);
             }
-             ClasePersona person = new ClasePersona();
-             person.actualizarPersona(Integer.parseInt(cedulaPersona), nomPerson, ApellidoUnoPeson, ApellidodosPeson, generoPerson, EdadPerson, FechaNacimientoPerson, TelefonoPerson, empresaPerson, cargoPerson, ExperienciaPerson, 
-                     fechaClinicaPerson, RecomendadoPerson);
-             
+            ClasePersona person = new ClasePersona();
+            person.actualizarPersona(Integer.parseInt(cedulaPersona), nomPerson, ApellidoUnoPeson, ApellidodosPeson, generoPerson, EdadPerson, FechaNacimientoPerson, TelefonoPerson, empresaPerson, cargoPerson, ExperienciaPerson,
+                    fechaClinicaPerson, RecomendadoPerson);
+            List<ReportPersona> listPersona = personList.listarPersona();
+            session.setAttribute("listPersona", listPersona);
+
         }
+        if (accion == null && btnModificar == null && btnModificar.equals("") && accion.equals("")) {
+            listPersonas = jpaperson.findPersonaEntities();
+            session.setAttribute("Persona", listPersonas);
+            session.setAttribute("MensajePersona", mensaje);
+            List<ReportPersona> listPersona = personList.listarPersona();
+            session.setAttribute("listPersona", listPersona);
+            rd = request.getRequestDispatcher("/view/registroPersonas.jsp");
+        }
+
         rd.forward(request, response);
     }
 

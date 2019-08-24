@@ -102,7 +102,7 @@
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
                         <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="#pablo">Estados</a>
+                            <a class="navbar-brand" href="#pablo">Tipos de Casos</a>
                         </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
@@ -162,11 +162,11 @@
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">Descripcion</th>
                                                         <th scope="col">Ver</th>
-                                                            <c:choose>
+                                                           <!-- <c:choose>
                                                                 <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                                                 <th scope="col">Eliminar</th>
                                                                 </c:when> 
-                                                            </c:choose>
+                                                            </c:choose>-->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -179,12 +179,12 @@
                                                             <td> <button type="button" href="#modalInf" id ="estadoCasoConsulta" 
                                                                          name="estadoCasoConsulta" class="btn btn-link" value="${estado.getCodigoestado()}"><i class="material-icons">remove_red_eye</i> </button>
                                                             </td>
-                                                            <c:choose>
+                                                            <!-- d<c:choose>
                                                                 <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                                                     <td><button type="button" href="#modalDelete" id ="btnElimiar" 
                                                                                 name="btnElimiar" class="btn btn-link" value="${estado.getCodigoestado()}"><i class="material-icons">highlight_off</i></button>   </td>
                                                                     </c:when> 
-                                                                </c:choose>
+                                                                </c:choose> -->
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>

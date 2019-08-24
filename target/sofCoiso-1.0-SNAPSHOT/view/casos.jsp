@@ -31,7 +31,7 @@
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
 
     </head>
-  
+
     <body class="">
         <div class="wrapper ">
             <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
@@ -41,11 +41,11 @@
                   Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                     <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
+                    <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
                     </a>
                 </div>
-                   <div class="sidebar-wrapper">
+                <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item   ">
                             <a class="nav-link" name="accion" value="ListarDashboard"  href="${pageContext.servletContext.contextPath}/view/menu.jsp">
@@ -65,14 +65,14 @@
                                 <p>Caso</p>
                             </a>
                         </li>
-                    
+
                         <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/formacion.jsp">
                                 <i class="material-icons">list_alt</i>
                                 <p>Fomarcion</p>
                             </a>
                         </li>
-                         <c:choose>
+                        <c:choose>
                             <c:when test="${sessionScope.USUARIO.getRol() == sessionScope.rol}">  
                                 <li class="nav-item ">
                                     <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/usuario.jsp">
@@ -80,28 +80,28 @@
                                         <p>Usuarios</p>
                                     </a>
                                 </li>
-                          
-                        <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
-                                <i class="material-icons">autorenew</i>
-                                <p>Estado Casos</p>
-                            </a>
-                        </li>
-                            <li class="nav-item ">
-                            <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
-                                <i class="material-icons">calendar_today</i>
-                                <p>Citas</p>
-                            </a>
-                        </li>
-                          </c:when> 
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/estadoCasos.jsp">
+                                        <i class="material-icons">autorenew</i>
+                                        <p>Estado Casos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/view/citas.jsp">
+                                        <i class="material-icons">calendar_today</i>
+                                        <p>Citas</p>
+                                    </a>
+                                </li>
+                            </c:when> 
                         </c:choose>
-                         <li class="nav-item ">
+                        <li class="nav-item ">
                             <a class="nav-link" name="accion" value="listar" href="${pageContext.servletContext.contextPath}/reportes.jsp">
                                 <i class="material-icons">assessment</i>
                                 <p>Reportes</p>
                             </a>
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>
@@ -129,7 +129,7 @@
                                         </p>
                                     </a>
                                 </li>
-                            
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#pablo" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="material-icons">person</i>
@@ -155,9 +155,9 @@
                             <button name="accion" value="crear" type="button" class="btn btn-info" data-toggle="modal" data-target="#crearCaso" style="background: #1c2165;">
                                 Crear Caso
                             </button>
-                              <li class="nav-item" style="border-left: 1px solid rgba(255, 255, 255, 0.102);">
-                <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/home.jsp">Generar Reporte</a>
-            </li>
+                            <li class="nav-item" style="border-left: 1px solid rgba(255, 255, 255, 0.102);">
+                                <a class="nav-link"  href="${pageContext.servletContext.contextPath}/view/home.jsp">Generar Reporte</a>
+                            </li>
                         </div>                        <hr class="line-seprate">
                         <div class="section__content section__content--p30">
                             <div class="container-fluid">
@@ -167,7 +167,7 @@
                                             <table id="table_id"  class="table table-borderless table-striped table-earning">
                                                 <thead>
                                                     <tr>
-                                                       
+
                                                         <th scope="col">Codigo Caso</th>
                                                         <th scope="col">Cedula</th>
                                                         <th scope="col">Nombre</th>
@@ -175,24 +175,27 @@
                                                         <th scope="col">Tipo</th>
                                                         <th scope="col">Estado</th>
                                                         <th scope="col">Ver</th>
-                                                      
+                                                        <th scope="col">Editar</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach var="Caso" items="${sessionScope.Caso}" varStatus="myIndex">
                                                         <tr>
-                                                            
+
                                                             <td><c:out value="${Caso.getCodigocaso()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getCedula()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getNombre()}"/></td>
                                                             <td><c:out value="${Caso.getPersonaCedula().getApellidoUno()}"/></td>
                                                             <td><c:out value="${Caso.getTipoCasoCodigoTipoCaso().getNombreTipoCaso()}"/></td>
                                                             <td><c:out value="${Caso.getEstadoCasoCodigoestado().getNombreEstado()}"/></td>
-                                                             <td> <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
+                                                            <td> <form  method="post" action="${pageContext.servletContext.contextPath}/CasoServlet">
                                                                     <button name="editar" value="${Caso.getCodigocaso()}" type="submit" class="btn btn-link"><i class="material-icons">remove_red_eye</i></button>
                                                                 </form>
-                                                               
+
                                                             </td>
+                                                            <td><button href="#modalInf" id ="btnEdtar" 
+                                                                        name="btnEdtar" class="btn btn-link" value="${Caso.getCodigocaso()}"><i class="material-icons">edit</i></button></td>
 
                                                         </tr>
                                                     </c:forEach>
@@ -238,17 +241,17 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
-                                         <div class="form-group">
+                                        <div class="form-group">
                                             <label for="Tipo">Creado Por</label>
-                                             <input  name="creado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
+                                            <input  name="creado" class="form-control"  type="hidden" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
                                             <input  name="" disabled  class="form-control" type="text" value="<c:out value="${sessionScope.USUARIO.getNombreUsuario()}"/> <c:out value="${sessionScope.USUARIO.getApellidoUsuario()}"/>">
                                         </div>
-                                       
+
                                         <div class="form-group">
                                             <label for="fechaAfectacion">Fecha  Afectacion</label>
                                             <input type="date" class="form-control" id="fechaAfectacion" name="fechaAfectacion" placeholder="MM/DD/YYY" id="example-month-input">
                                         </div>
-                                          <div class="form-group">
+                                        <div class="form-group">
                                             <label for="Tipo">Parte Afectada</label>
                                             <input  name="parteAfectada" id="parteAfectada" type="text" class="form-control" placeholder="Parte del cuerpo afectada">
                                         </div>
@@ -275,6 +278,29 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modalInf">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:40px 50px; width: 750px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Caso</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form method="post" name="casoEdit" id="persona" action="">
+                        <h4>Editar Caso</h4>
+
+                        <div class="modal-body" id="modInf">
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="submit" class="btn btn-primary btn-block" value="btnModificar" id="btnModificar" name="btnModificar">
+                                Modificar
+                            </button>
+                            
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

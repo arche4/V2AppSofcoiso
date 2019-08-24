@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
-        <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+         <meta charset="utf-8" />
+        <link rel="apple-touch-icon" sizes="76x76" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
+        <link rel="icon" type="image/png" href="${pageContext.servletContext.contextPath}/images/logo_S.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
         <!--     Fonts and icons     -->
@@ -15,13 +15,10 @@
         <link href="${pageContext.servletContext.contextPath}/dist/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="${pageContext.servletContext.contextPath}/dist/assets/demo/demo.css" rel="stylesheet" />
-        <script src="${pageContext.servletContext.contextPath}/javaScript/caso.js" type="text/javascript"></script>
-        <!-- Data table -->
         <title>Software de Gestión Coiso</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" >
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="${pageContext.servletContext.contextPath}/js/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -30,6 +27,9 @@
         <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
 
+        <script src="${pageContext.servletContext.contextPath}/plugins/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
+
+        <script src="${pageContext.servletContext.contextPath}/javaScript/crearPersona.js" type="text/javascript"></script>
     </head>
 
     <body class="">
@@ -41,7 +41,7 @@
                   Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="logo">
-                   <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
+                    <a href="${pageContext.servletContext.contextPath}/view/menu.jsp" class="simple-text logo-normal">
                         Menu
                     </a>
                 </div>
@@ -169,6 +169,7 @@
                                                         <th scope="col">Nombre</th>
                                                         <th scope="col">Estado</th>
                                                         <th scope="col">Ver</th>
+                                                        <th scope="col">Editar</th>
 
                                                     </tr>
                                                 </thead>
@@ -186,7 +187,8 @@
                                                                 </form>
 
                                                             </td>
-
+                                                            <td><button href="#modalCaso" id ="btnEdtar" 
+                                                                        name="btnEdtar" class="btn btn-link" value="${casos.getCodigoCaso()}"><i class="material-icons">edit</i></button></td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -271,12 +273,51 @@
                 </div>
             </div>
         </div>
+        <div class="modal" id="modalCaso">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:40px 50px; width: 750px;">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Caso</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <form method="post" name="casoEdit" id="persona" action="">
+
+                        <div class="modal-body" id="modInf">
+                        </div>
+                        <div class="modal-footer">
+                            <button  type="submit" class="btn btn-primary btn-block" value="btnModificar" id="btnModificar" name="btnModificar">
+                                Modificar
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <script>
             $(document).ready(function () {
                 $('#myTable').DataTable();
             });
 
         </script>
+    <script src="${pageContext.servletContext.contextPath}/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="${pageContext.servletContext.contextPath}/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <!-- AdminLTE App -->
+        <!-- Funcionalidad js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
+        <script src="${pageContext.servletContext.contextPath}/javaScript/app.min.js" type="text/javascript"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+        <link href="${pageContext.servletContext.contextPath}/css/bootstrap-datepicker3.css" rel="stylesheet" type="text/css"/>
+
 
     </body>
 </html>

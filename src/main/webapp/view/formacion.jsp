@@ -278,7 +278,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button name="crear" value="crear" type="submit" class="btn btn-success" onclick="return ValidarFormacion()">Guardar</button>
+                                            <button name="crear" value="crear" id="crear" type="submit" class="btn btn-success" onclick="return ValidarFormacion()">Guardar</button>
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </form>
