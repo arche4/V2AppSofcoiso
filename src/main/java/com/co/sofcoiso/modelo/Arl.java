@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
  * @author manue
  */
 @Entity
-@Table(name = "arl ")
+@Table(name = "arl")
 @NamedQueries({
     @NamedQuery(name = "Arl.findAll", query = "SELECT a FROM Arl a")
     , @NamedQuery(name = "Arl.findByCodigoarl", query = "SELECT a FROM Arl a WHERE a.codigoarl = :codigoarl")
@@ -43,7 +43,7 @@ public class Arl implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "arlCodigoarl")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoarl")
     private Collection<Persona> personaCollection;
 
     public Arl() {

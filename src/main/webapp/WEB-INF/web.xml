@@ -1,16 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	 version="3.1">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+ 
     <servlet>
         <servlet-name>usuarioLogin</servlet-name>
         <servlet-class>com.co.sofcoiso.Servlet.usuarioLogin</servlet-class>
     </servlet>
-        <servlet-mapping>
+    <servlet>
+        <servlet-name>PersonaServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.PersonaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CasoServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.CasoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.ReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>detalleServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.detalleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConsultarModalServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.ConsultarModalServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CitasServlet</servlet-name>
+        <servlet-class>com.co.sofcoiso.Servlet.CitasServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>usuarioLogin</servlet-name>
         <url-pattern>/usuarioLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PersonaServlet</servlet-name>
+        <url-pattern>/PersonaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CasoServlet</servlet-name>
+        <url-pattern>/CasoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/ReportServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>detalleServlet</servlet-name>
+        <url-pattern>/detalleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarModalServlet</servlet-name>
+        <url-pattern>/ConsultarModalServlet</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>CitasServlet</servlet-name>
+        <url-pattern>/CitasServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

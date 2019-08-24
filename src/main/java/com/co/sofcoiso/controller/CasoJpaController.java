@@ -5,7 +5,6 @@
  */
 package com.co.sofcoiso.controller;
 
-import com.co.sofcoiso.controller.exceptions.IllegalOrphanException;
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
 import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import com.co.sofcoiso.modelo.Caso;
@@ -14,12 +13,9 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.co.sofcoiso.modelo.CasoAcciones;
+import com.co.sofcoiso.modelo.EstadoCaso;
 import com.co.sofcoiso.modelo.Persona;
 import com.co.sofcoiso.modelo.TipoCaso;
-import java.util.ArrayList;
-import java.util.Collection;
-import com.co.sofcoiso.modelo.EstadoCaso;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,59 +36,37 @@ public class CasoJpaController implements Serializable {
     }
 
     public void create(Caso caso) throws PreexistingEntityException, Exception {
-        if (caso.getTipoCasoCollection() == null) {
-            caso.setTipoCasoCollection(new ArrayList<TipoCaso>());
-        }
-        if (caso.getEstadoCasoCollection() == null) {
-            caso.setEstadoCasoCollection(new ArrayList<EstadoCaso>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            CasoAcciones casoAcciones = caso.getCasoAcciones();
-            if (casoAcciones != null) {
-                casoAcciones = em.getReference(casoAcciones.getClass(), casoAcciones.getCasoCodigocaso());
-                caso.setCasoAcciones(casoAcciones);
+            EstadoCaso estadoCasoCodigoestado = caso.getEstadoCasoCodigoestado();
+            if (estadoCasoCodigoestado != null) {
+                estadoCasoCodigoestado = em.getReference(estadoCasoCodigoestado.getClass(), estadoCasoCodigoestado.getCodigoestado());
+                caso.setEstadoCasoCodigoestado(estadoCasoCodigoestado);
             }
             Persona personaCedula = caso.getPersonaCedula();
             if (personaCedula != null) {
                 personaCedula = em.getReference(personaCedula.getClass(), personaCedula.getCedula());
                 caso.setPersonaCedula(personaCedula);
             }
-            Collection<TipoCaso> attachedTipoCasoCollection = new ArrayList<TipoCaso>();
-            for (TipoCaso tipoCasoCollectionTipoCasoToAttach : caso.getTipoCasoCollection()) {
-                tipoCasoCollectionTipoCasoToAttach = em.getReference(tipoCasoCollectionTipoCasoToAttach.getClass(), tipoCasoCollectionTipoCasoToAttach.getCodigoTipoCaso());
-                attachedTipoCasoCollection.add(tipoCasoCollectionTipoCasoToAttach);
+            TipoCaso tipoCasoCodigoTipoCaso = caso.getTipoCasoCodigoTipoCaso();
+            if (tipoCasoCodigoTipoCaso != null) {
+                tipoCasoCodigoTipoCaso = em.getReference(tipoCasoCodigoTipoCaso.getClass(), tipoCasoCodigoTipoCaso.getCodigoTipoCaso());
+                caso.setTipoCasoCodigoTipoCaso(tipoCasoCodigoTipoCaso);
             }
-            caso.setTipoCasoCollection(attachedTipoCasoCollection);
-            Collection<EstadoCaso> attachedEstadoCasoCollection = new ArrayList<EstadoCaso>();
-            for (EstadoCaso estadoCasoCollectionEstadoCasoToAttach : caso.getEstadoCasoCollection()) {
-                estadoCasoCollectionEstadoCasoToAttach = em.getReference(estadoCasoCollectionEstadoCasoToAttach.getClass(), estadoCasoCollectionEstadoCasoToAttach.getCodigoestado());
-                attachedEstadoCasoCollection.add(estadoCasoCollectionEstadoCasoToAttach);
-            }
-            caso.setEstadoCasoCollection(attachedEstadoCasoCollection);
             em.persist(caso);
-            if (casoAcciones != null) {
-                Caso oldCasoOfCasoAcciones = casoAcciones.getCaso();
-                if (oldCasoOfCasoAcciones != null) {
-                    oldCasoOfCasoAcciones.setCasoAcciones(null);
-                    oldCasoOfCasoAcciones = em.merge(oldCasoOfCasoAcciones);
-                }
-                casoAcciones.setCaso(caso);
-                casoAcciones = em.merge(casoAcciones);
+            if (estadoCasoCodigoestado != null) {
+                estadoCasoCodigoestado.getCasoCollection().add(caso);
+                estadoCasoCodigoestado = em.merge(estadoCasoCodigoestado);
             }
             if (personaCedula != null) {
                 personaCedula.getCasoCollection().add(caso);
                 personaCedula = em.merge(personaCedula);
             }
-            for (TipoCaso tipoCasoCollectionTipoCaso : caso.getTipoCasoCollection()) {
-                tipoCasoCollectionTipoCaso.getCasoCollection().add(caso);
-                tipoCasoCollectionTipoCaso = em.merge(tipoCasoCollectionTipoCaso);
-            }
-            for (EstadoCaso estadoCasoCollectionEstadoCaso : caso.getEstadoCasoCollection()) {
-                estadoCasoCollectionEstadoCaso.getCasoCollection().add(caso);
-                estadoCasoCollectionEstadoCaso = em.merge(estadoCasoCollectionEstadoCaso);
+            if (tipoCasoCodigoTipoCaso != null) {
+                tipoCasoCodigoTipoCaso.getCasoCollection().add(caso);
+                tipoCasoCodigoTipoCaso = em.merge(tipoCasoCodigoTipoCaso);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -107,61 +81,38 @@ public class CasoJpaController implements Serializable {
         }
     }
 
-    public void edit(Caso caso) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Caso caso) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Caso persistentCaso = em.find(Caso.class, caso.getCodigocaso());
-            CasoAcciones casoAccionesOld = persistentCaso.getCasoAcciones();
-            CasoAcciones casoAccionesNew = caso.getCasoAcciones();
+            EstadoCaso estadoCasoCodigoestadoOld = persistentCaso.getEstadoCasoCodigoestado();
+            EstadoCaso estadoCasoCodigoestadoNew = caso.getEstadoCasoCodigoestado();
             Persona personaCedulaOld = persistentCaso.getPersonaCedula();
             Persona personaCedulaNew = caso.getPersonaCedula();
-            Collection<TipoCaso> tipoCasoCollectionOld = persistentCaso.getTipoCasoCollection();
-            Collection<TipoCaso> tipoCasoCollectionNew = caso.getTipoCasoCollection();
-            Collection<EstadoCaso> estadoCasoCollectionOld = persistentCaso.getEstadoCasoCollection();
-            Collection<EstadoCaso> estadoCasoCollectionNew = caso.getEstadoCasoCollection();
-            List<String> illegalOrphanMessages = null;
-            if (casoAccionesOld != null && !casoAccionesOld.equals(casoAccionesNew)) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("You must retain CasoAcciones " + casoAccionesOld + " since its caso field is not nullable.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            if (casoAccionesNew != null) {
-                casoAccionesNew = em.getReference(casoAccionesNew.getClass(), casoAccionesNew.getCasoCodigocaso());
-                caso.setCasoAcciones(casoAccionesNew);
+            TipoCaso tipoCasoCodigoTipoCasoOld = persistentCaso.getTipoCasoCodigoTipoCaso();
+            TipoCaso tipoCasoCodigoTipoCasoNew = caso.getTipoCasoCodigoTipoCaso();
+            if (estadoCasoCodigoestadoNew != null) {
+                estadoCasoCodigoestadoNew = em.getReference(estadoCasoCodigoestadoNew.getClass(), estadoCasoCodigoestadoNew.getCodigoestado());
+                caso.setEstadoCasoCodigoestado(estadoCasoCodigoestadoNew);
             }
             if (personaCedulaNew != null) {
                 personaCedulaNew = em.getReference(personaCedulaNew.getClass(), personaCedulaNew.getCedula());
                 caso.setPersonaCedula(personaCedulaNew);
             }
-            Collection<TipoCaso> attachedTipoCasoCollectionNew = new ArrayList<TipoCaso>();
-            for (TipoCaso tipoCasoCollectionNewTipoCasoToAttach : tipoCasoCollectionNew) {
-                tipoCasoCollectionNewTipoCasoToAttach = em.getReference(tipoCasoCollectionNewTipoCasoToAttach.getClass(), tipoCasoCollectionNewTipoCasoToAttach.getCodigoTipoCaso());
-                attachedTipoCasoCollectionNew.add(tipoCasoCollectionNewTipoCasoToAttach);
+            if (tipoCasoCodigoTipoCasoNew != null) {
+                tipoCasoCodigoTipoCasoNew = em.getReference(tipoCasoCodigoTipoCasoNew.getClass(), tipoCasoCodigoTipoCasoNew.getCodigoTipoCaso());
+                caso.setTipoCasoCodigoTipoCaso(tipoCasoCodigoTipoCasoNew);
             }
-            tipoCasoCollectionNew = attachedTipoCasoCollectionNew;
-            caso.setTipoCasoCollection(tipoCasoCollectionNew);
-            Collection<EstadoCaso> attachedEstadoCasoCollectionNew = new ArrayList<EstadoCaso>();
-            for (EstadoCaso estadoCasoCollectionNewEstadoCasoToAttach : estadoCasoCollectionNew) {
-                estadoCasoCollectionNewEstadoCasoToAttach = em.getReference(estadoCasoCollectionNewEstadoCasoToAttach.getClass(), estadoCasoCollectionNewEstadoCasoToAttach.getCodigoestado());
-                attachedEstadoCasoCollectionNew.add(estadoCasoCollectionNewEstadoCasoToAttach);
-            }
-            estadoCasoCollectionNew = attachedEstadoCasoCollectionNew;
-            caso.setEstadoCasoCollection(estadoCasoCollectionNew);
             caso = em.merge(caso);
-            if (casoAccionesNew != null && !casoAccionesNew.equals(casoAccionesOld)) {
-                Caso oldCasoOfCasoAcciones = casoAccionesNew.getCaso();
-                if (oldCasoOfCasoAcciones != null) {
-                    oldCasoOfCasoAcciones.setCasoAcciones(null);
-                    oldCasoOfCasoAcciones = em.merge(oldCasoOfCasoAcciones);
-                }
-                casoAccionesNew.setCaso(caso);
-                casoAccionesNew = em.merge(casoAccionesNew);
+            if (estadoCasoCodigoestadoOld != null && !estadoCasoCodigoestadoOld.equals(estadoCasoCodigoestadoNew)) {
+                estadoCasoCodigoestadoOld.getCasoCollection().remove(caso);
+                estadoCasoCodigoestadoOld = em.merge(estadoCasoCodigoestadoOld);
+            }
+            if (estadoCasoCodigoestadoNew != null && !estadoCasoCodigoestadoNew.equals(estadoCasoCodigoestadoOld)) {
+                estadoCasoCodigoestadoNew.getCasoCollection().add(caso);
+                estadoCasoCodigoestadoNew = em.merge(estadoCasoCodigoestadoNew);
             }
             if (personaCedulaOld != null && !personaCedulaOld.equals(personaCedulaNew)) {
                 personaCedulaOld.getCasoCollection().remove(caso);
@@ -171,29 +122,13 @@ public class CasoJpaController implements Serializable {
                 personaCedulaNew.getCasoCollection().add(caso);
                 personaCedulaNew = em.merge(personaCedulaNew);
             }
-            for (TipoCaso tipoCasoCollectionOldTipoCaso : tipoCasoCollectionOld) {
-                if (!tipoCasoCollectionNew.contains(tipoCasoCollectionOldTipoCaso)) {
-                    tipoCasoCollectionOldTipoCaso.getCasoCollection().remove(caso);
-                    tipoCasoCollectionOldTipoCaso = em.merge(tipoCasoCollectionOldTipoCaso);
-                }
+            if (tipoCasoCodigoTipoCasoOld != null && !tipoCasoCodigoTipoCasoOld.equals(tipoCasoCodigoTipoCasoNew)) {
+                tipoCasoCodigoTipoCasoOld.getCasoCollection().remove(caso);
+                tipoCasoCodigoTipoCasoOld = em.merge(tipoCasoCodigoTipoCasoOld);
             }
-            for (TipoCaso tipoCasoCollectionNewTipoCaso : tipoCasoCollectionNew) {
-                if (!tipoCasoCollectionOld.contains(tipoCasoCollectionNewTipoCaso)) {
-                    tipoCasoCollectionNewTipoCaso.getCasoCollection().add(caso);
-                    tipoCasoCollectionNewTipoCaso = em.merge(tipoCasoCollectionNewTipoCaso);
-                }
-            }
-            for (EstadoCaso estadoCasoCollectionOldEstadoCaso : estadoCasoCollectionOld) {
-                if (!estadoCasoCollectionNew.contains(estadoCasoCollectionOldEstadoCaso)) {
-                    estadoCasoCollectionOldEstadoCaso.getCasoCollection().remove(caso);
-                    estadoCasoCollectionOldEstadoCaso = em.merge(estadoCasoCollectionOldEstadoCaso);
-                }
-            }
-            for (EstadoCaso estadoCasoCollectionNewEstadoCaso : estadoCasoCollectionNew) {
-                if (!estadoCasoCollectionOld.contains(estadoCasoCollectionNewEstadoCaso)) {
-                    estadoCasoCollectionNewEstadoCaso.getCasoCollection().add(caso);
-                    estadoCasoCollectionNewEstadoCaso = em.merge(estadoCasoCollectionNewEstadoCaso);
-                }
+            if (tipoCasoCodigoTipoCasoNew != null && !tipoCasoCodigoTipoCasoNew.equals(tipoCasoCodigoTipoCasoOld)) {
+                tipoCasoCodigoTipoCasoNew.getCasoCollection().add(caso);
+                tipoCasoCodigoTipoCasoNew = em.merge(tipoCasoCodigoTipoCasoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -212,7 +147,7 @@ public class CasoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -224,31 +159,20 @@ public class CasoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The caso with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            CasoAcciones casoAccionesOrphanCheck = caso.getCasoAcciones();
-            if (casoAccionesOrphanCheck != null) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Caso (" + caso + ") cannot be destroyed since the CasoAcciones " + casoAccionesOrphanCheck + " in its casoAcciones field has a non-nullable caso field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            EstadoCaso estadoCasoCodigoestado = caso.getEstadoCasoCodigoestado();
+            if (estadoCasoCodigoestado != null) {
+                estadoCasoCodigoestado.getCasoCollection().remove(caso);
+                estadoCasoCodigoestado = em.merge(estadoCasoCodigoestado);
             }
             Persona personaCedula = caso.getPersonaCedula();
             if (personaCedula != null) {
                 personaCedula.getCasoCollection().remove(caso);
                 personaCedula = em.merge(personaCedula);
             }
-            Collection<TipoCaso> tipoCasoCollection = caso.getTipoCasoCollection();
-            for (TipoCaso tipoCasoCollectionTipoCaso : tipoCasoCollection) {
-                tipoCasoCollectionTipoCaso.getCasoCollection().remove(caso);
-                tipoCasoCollectionTipoCaso = em.merge(tipoCasoCollectionTipoCaso);
-            }
-            Collection<EstadoCaso> estadoCasoCollection = caso.getEstadoCasoCollection();
-            for (EstadoCaso estadoCasoCollectionEstadoCaso : estadoCasoCollection) {
-                estadoCasoCollectionEstadoCaso.getCasoCollection().remove(caso);
-                estadoCasoCollectionEstadoCaso = em.merge(estadoCasoCollectionEstadoCaso);
+            TipoCaso tipoCasoCodigoTipoCaso = caso.getTipoCasoCodigoTipoCaso();
+            if (tipoCasoCodigoTipoCaso != null) {
+                tipoCasoCodigoTipoCaso.getCasoCollection().remove(caso);
+                tipoCasoCodigoTipoCaso = em.merge(tipoCasoCodigoTipoCaso);
             }
             em.remove(caso);
             em.getTransaction().commit();
@@ -303,6 +227,53 @@ public class CasoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public String crear(Caso caso) {
+        String respuesta = null;
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(caso);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findCaso(caso.getCodigocaso()) != null) {
+                respuesta = "Caso ya existe";
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return respuesta;
+    }
+
+    
+    public String cambiarEstado(Caso caso)  {
+        EntityManager em = null;
+        String respuesta = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            caso = em.merge(caso);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = caso.getCodigocaso();
+                if (findCaso(id) == null) {
+                    respuesta = "Caso no existe";
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+          return respuesta;
     }
     
 }

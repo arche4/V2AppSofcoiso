@@ -1,0 +1,56 @@
+/* 
+    Document   : home
+    Created on : 4/05/2018, 02:42:42 PM
+    Author     : carlos.arbelaez
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.loadIc {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../img/loading.gif')
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loadIc {
+    display: block;
+}
+
+.dt-button {
+    btn: btn-primary btn-block;
+}
+
+.buttons-copy{
+    display: none !important; 
+}
+
+.buttons-print{
+    display: none !important; 
+}
+
+.dt-button ui-button ui-state-default ui-button-text-only{
+    
+    padding: 5px 5px;
+}
+

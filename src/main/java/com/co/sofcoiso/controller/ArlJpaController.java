@@ -52,12 +52,12 @@ public class ArlJpaController implements Serializable {
             arl.setPersonaCollection(attachedPersonaCollection);
             em.persist(arl);
             for (Persona personaCollectionPersona : arl.getPersonaCollection()) {
-                Arl oldArlCodigoarlOfPersonaCollectionPersona = personaCollectionPersona.getArlCodigoarl();
-                personaCollectionPersona.setArlCodigoarl(arl);
+                Arl oldCodigoarlOfPersonaCollectionPersona = personaCollectionPersona.getCodigoarl();
+                personaCollectionPersona.setCodigoarl(arl);
                 personaCollectionPersona = em.merge(personaCollectionPersona);
-                if (oldArlCodigoarlOfPersonaCollectionPersona != null) {
-                    oldArlCodigoarlOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
-                    oldArlCodigoarlOfPersonaCollectionPersona = em.merge(oldArlCodigoarlOfPersonaCollectionPersona);
+                if (oldCodigoarlOfPersonaCollectionPersona != null) {
+                    oldCodigoarlOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
+                    oldCodigoarlOfPersonaCollectionPersona = em.merge(oldCodigoarlOfPersonaCollectionPersona);
                 }
             }
             em.getTransaction().commit();
@@ -87,7 +87,7 @@ public class ArlJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Persona " + personaCollectionOldPersona + " since its arlCodigoarl field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Persona " + personaCollectionOldPersona + " since its codigoarl field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -103,12 +103,12 @@ public class ArlJpaController implements Serializable {
             arl = em.merge(arl);
             for (Persona personaCollectionNewPersona : personaCollectionNew) {
                 if (!personaCollectionOld.contains(personaCollectionNewPersona)) {
-                    Arl oldArlCodigoarlOfPersonaCollectionNewPersona = personaCollectionNewPersona.getArlCodigoarl();
-                    personaCollectionNewPersona.setArlCodigoarl(arl);
+                    Arl oldCodigoarlOfPersonaCollectionNewPersona = personaCollectionNewPersona.getCodigoarl();
+                    personaCollectionNewPersona.setCodigoarl(arl);
                     personaCollectionNewPersona = em.merge(personaCollectionNewPersona);
-                    if (oldArlCodigoarlOfPersonaCollectionNewPersona != null && !oldArlCodigoarlOfPersonaCollectionNewPersona.equals(arl)) {
-                        oldArlCodigoarlOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
-                        oldArlCodigoarlOfPersonaCollectionNewPersona = em.merge(oldArlCodigoarlOfPersonaCollectionNewPersona);
+                    if (oldCodigoarlOfPersonaCollectionNewPersona != null && !oldCodigoarlOfPersonaCollectionNewPersona.equals(arl)) {
+                        oldCodigoarlOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
+                        oldCodigoarlOfPersonaCollectionNewPersona = em.merge(oldCodigoarlOfPersonaCollectionNewPersona);
                     }
                 }
             }
@@ -147,7 +147,7 @@ public class ArlJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Arl (" + arl + ") cannot be destroyed since the Persona " + personaCollectionOrphanCheckPersona + " in its personaCollection field has a non-nullable arlCodigoarl field.");
+                illegalOrphanMessages.add("This Arl (" + arl + ") cannot be destroyed since the Persona " + personaCollectionOrphanCheckPersona + " in its personaCollection field has a non-nullable codigoarl field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

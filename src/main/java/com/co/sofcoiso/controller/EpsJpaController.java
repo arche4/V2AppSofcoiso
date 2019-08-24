@@ -52,12 +52,12 @@ public class EpsJpaController implements Serializable {
             eps.setPersonaCollection(attachedPersonaCollection);
             em.persist(eps);
             for (Persona personaCollectionPersona : eps.getPersonaCollection()) {
-                Eps oldEpsCodigoepsOfPersonaCollectionPersona = personaCollectionPersona.getEpsCodigoeps();
-                personaCollectionPersona.setEpsCodigoeps(eps);
+                Eps oldCodigoepsOfPersonaCollectionPersona = personaCollectionPersona.getCodigoeps();
+                personaCollectionPersona.setCodigoeps(eps);
                 personaCollectionPersona = em.merge(personaCollectionPersona);
-                if (oldEpsCodigoepsOfPersonaCollectionPersona != null) {
-                    oldEpsCodigoepsOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
-                    oldEpsCodigoepsOfPersonaCollectionPersona = em.merge(oldEpsCodigoepsOfPersonaCollectionPersona);
+                if (oldCodigoepsOfPersonaCollectionPersona != null) {
+                    oldCodigoepsOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
+                    oldCodigoepsOfPersonaCollectionPersona = em.merge(oldCodigoepsOfPersonaCollectionPersona);
                 }
             }
             em.getTransaction().commit();
@@ -87,7 +87,7 @@ public class EpsJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Persona " + personaCollectionOldPersona + " since its epsCodigoeps field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Persona " + personaCollectionOldPersona + " since its codigoeps field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -103,12 +103,12 @@ public class EpsJpaController implements Serializable {
             eps = em.merge(eps);
             for (Persona personaCollectionNewPersona : personaCollectionNew) {
                 if (!personaCollectionOld.contains(personaCollectionNewPersona)) {
-                    Eps oldEpsCodigoepsOfPersonaCollectionNewPersona = personaCollectionNewPersona.getEpsCodigoeps();
-                    personaCollectionNewPersona.setEpsCodigoeps(eps);
+                    Eps oldCodigoepsOfPersonaCollectionNewPersona = personaCollectionNewPersona.getCodigoeps();
+                    personaCollectionNewPersona.setCodigoeps(eps);
                     personaCollectionNewPersona = em.merge(personaCollectionNewPersona);
-                    if (oldEpsCodigoepsOfPersonaCollectionNewPersona != null && !oldEpsCodigoepsOfPersonaCollectionNewPersona.equals(eps)) {
-                        oldEpsCodigoepsOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
-                        oldEpsCodigoepsOfPersonaCollectionNewPersona = em.merge(oldEpsCodigoepsOfPersonaCollectionNewPersona);
+                    if (oldCodigoepsOfPersonaCollectionNewPersona != null && !oldCodigoepsOfPersonaCollectionNewPersona.equals(eps)) {
+                        oldCodigoepsOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
+                        oldCodigoepsOfPersonaCollectionNewPersona = em.merge(oldCodigoepsOfPersonaCollectionNewPersona);
                     }
                 }
             }
@@ -147,7 +147,7 @@ public class EpsJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Eps (" + eps + ") cannot be destroyed since the Persona " + personaCollectionOrphanCheckPersona + " in its personaCollection field has a non-nullable epsCodigoeps field.");
+                illegalOrphanMessages.add("This Eps (" + eps + ") cannot be destroyed since the Persona " + personaCollectionOrphanCheckPersona + " in its personaCollection field has a non-nullable codigoeps field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

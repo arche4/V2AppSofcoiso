@@ -5,13 +5,37 @@
  */
 package com.co.sofcoiso.Servlet;
 
-
-
+import com.co.sofcoiso.clases.Dashboard;
+import com.co.sofcoiso.clases.PersonaClass;
+import com.co.sofcoiso.controller.AfpJpaController;
+import com.co.sofcoiso.controller.ArlJpaController;
+import com.co.sofcoiso.controller.CasoJpaController;
+import com.co.sofcoiso.controller.CitaJpaController;
+import com.co.sofcoiso.controller.ComunaMedellinJpaController;
+import com.co.sofcoiso.controller.EpsJpaController;
+import com.co.sofcoiso.controller.EstadoCasoJpaController;
+import com.co.sofcoiso.controller.FlujocasoJpaController;
+import com.co.sofcoiso.controller.FormacionJpaController;
+import com.co.sofcoiso.controller.PersonaJpaController;
+import com.co.sofcoiso.controller.TipoCasoJpaController;
 import com.co.sofcoiso.modelo.Usuario;
 import com.co.sofcoiso.util.JPAFactory;
 import com.co.sofcoiso.controller.UsuarioJpaController;
+import com.co.sofcoiso.modelo.Afp;
+import com.co.sofcoiso.modelo.Arl;
+import com.co.sofcoiso.modelo.Caso;
+import com.co.sofcoiso.modelo.Cita;
+import com.co.sofcoiso.modelo.ComunaMedellin;
+import com.co.sofcoiso.modelo.Eps;
+import com.co.sofcoiso.modelo.EstadoCaso;
+import com.co.sofcoiso.modelo.Flujocaso;
+import com.co.sofcoiso.modelo.Formacion;
+import com.co.sofcoiso.modelo.Persona;
+import com.co.sofcoiso.modelo.TipoCaso;
+import com.co.sofcoiso.report.ReportCasos;
+import com.co.sofcoiso.report.ReportCitas;
+import com.co.sofcoiso.report.ReportPersona;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,9 +66,21 @@ public class usuarioLogin extends HttpServlet {
         RequestDispatcher rd = null;
         String cedula = request.getParameter("txtid");
         String clave = request.getParameter("txtclave");
-        
+
         UsuarioJpaController ujc = new UsuarioJpaController(JPAFactory.getFACTORY());
-   
+        EpsJpaController ejc = new EpsJpaController(JPAFactory.getFACTORY());
+        ArlJpaController arl = new ArlJpaController(JPAFactory.getFACTORY());
+        AfpJpaController afp = new AfpJpaController(JPAFactory.getFACTORY());
+        PersonaJpaController per = new PersonaJpaController(JPAFactory.getFACTORY());
+        CasoJpaController caso = new CasoJpaController(JPAFactory.getFACTORY());
+        EstadoCasoJpaController estado = new EstadoCasoJpaController(JPAFactory.getFACTORY());
+        TipoCasoJpaController tipo = new TipoCasoJpaController(JPAFactory.getFACTORY());
+        FlujocasoJpaController jpaflujoCaso = new FlujocasoJpaController(JPAFactory.getFACTORY());
+        UsuarioJpaController jpaUsuario = new UsuarioJpaController(JPAFactory.getFACTORY());
+        CitaJpaController citaJpa = new CitaJpaController(JPAFactory.getFACTORY());
+        FormacionJpaController formacionJpa = new FormacionJpaController(JPAFactory.getFACTORY());
+        ComunaMedellinJpaController comunajpa = new ComunaMedellinJpaController(JPAFactory.getFACTORY());
+        
         
         Usuario usuario = ujc.findUsuarioClave(cedula, clave);
         String Mensaje = "";
@@ -52,17 +88,61 @@ public class usuarioLogin extends HttpServlet {
             Mensaje = "Email o Clave no validos";
             session.setAttribute("MENSAJE", Mensaje);
             rd = request.getRequestDispatcher("index.jsp");
-            
-            
+
         } else {
             rd = request.getRequestDispatcher("view/menu.jsp");
             //Mensaje = "Email o Clave no validos";
         }
-       
-        session.setAttribute("USUARIO", usuario);
-     
-        rd.forward(request, response);
 
+        Dashboard dashboard = new Dashboard();
+        List<ReportCasos> listEstados = dashboard.countEstado();
+        session.setAttribute("listEstados", listEstados);
+        PersonaClass person = new PersonaClass();
+        List<ReportPersona> listPersona = person.listarPersona();
+        session.setAttribute("listPersona", listPersona);
+        List<ReportCitas> listCitas = dashboard.citasDeldia();
+        session.setAttribute("listCitas", listCitas);
+        session.setAttribute("USUARIO", usuario);
+        List<Usuario> listUsuario = jpaUsuario.findUsuarioEntities();
+        session.setAttribute("listUsuario", listUsuario);
+        List<Eps> listEps = ejc.findEpsEntities();
+        session.setAttribute("EPS", listEps);
+        List<Arl> ListArl = arl.findArlEntities();
+        session.setAttribute("ARL", ListArl);
+        List<Afp> ListAfp = afp.findAfpEntities();
+        session.setAttribute("AFP", ListAfp);
+        List<Persona> ListPersona = per.findPersonaEntities();
+        int countPersona = per.getPersonaCount();
+        session.setAttribute("Persona", ListPersona);
+        session.setAttribute("countPersona", countPersona);
+        List<Caso> listCaso = caso.findCasoEntities();
+        session.setAttribute("Caso", listCaso);
+        int countCaso = caso.getCasoCount();
+        session.setAttribute("countCaso", countCaso);
+        int countCitas = citaJpa.getCitaCount();
+        session.setAttribute("countCitas", countCitas);
+        int countFormaciones = formacionJpa.getFormacionCount();
+        session.setAttribute("countFormaciones", countFormaciones);
+        List<EstadoCaso> ListEstado = estado.findEstadoCasoEntities();
+        session.setAttribute("Estado", ListEstado);
+        List<TipoCaso> ListTipo = tipo.findTipoCasoEntities();
+        session.setAttribute("Tipo", ListTipo);
+        List<Flujocaso> flujoList = jpaflujoCaso.findFlujocasoEntities();
+        session.setAttribute("flujoList", flujoList);
+        List<Formacion>  formacionlist = formacionJpa.findFormacionEntities();
+        session.setAttribute("formacion", formacionlist);
+        List<Cita> citasList = citaJpa.findCitaEntities();
+        session.setAttribute("Cita", citasList);
+        
+        List<ComunaMedellin> listComuna = comunajpa.findComunaMedellinEntities();
+        session.setAttribute("listComuna", listComuna);
+        String admin = "Administrador";
+        String si = "No";
+        session.setAttribute("rol", admin);
+        session.setAttribute("TieneCaso", si);
+        List<Cita> listCita = citaJpa.findCitaEntities();
+        session.setAttribute("listCita", listCita);
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

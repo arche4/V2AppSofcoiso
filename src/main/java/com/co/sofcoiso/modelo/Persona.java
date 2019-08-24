@@ -40,7 +40,11 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Persona.findByAntiguedadEmpresa", query = "SELECT p FROM Persona p WHERE p.antiguedadEmpresa = :antiguedadEmpresa")
     , @NamedQuery(name = "Persona.findByCargo", query = "SELECT p FROM Persona p WHERE p.cargo = :cargo")
     , @NamedQuery(name = "Persona.findByFechaClinica", query = "SELECT p FROM Persona p WHERE p.fechaClinica = :fechaClinica")
-    , @NamedQuery(name = "Persona.findByRecomendado", query = "SELECT p FROM Persona p WHERE p.recomendado = :recomendado")})
+    , @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")
+    , @NamedQuery(name = "Persona.findByEmpresaUsuaria", query = "SELECT p FROM Persona p WHERE p.empresaUsuaria = :empresaUsuaria")
+    , @NamedQuery(name = "Persona.findBySectorEconomico", query = "SELECT p FROM Persona p WHERE p.sectorEconomico = :sectorEconomico")
+    , @NamedQuery(name = "Persona.findByRecomendado", query = "SELECT p FROM Persona p WHERE p.recomendado = :recomendado")
+    , @NamedQuery(name = "Persona.findByCasoAsociado", query = "SELECT p FROM Persona p WHERE p.casoAsociado = :casoAsociado")})
 public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +55,7 @@ public class Persona implements Serializable {
     private Integer cedula;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 30)
     @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
@@ -62,40 +66,51 @@ public class Persona implements Serializable {
     @Size(max = 15)
     @Column(name = "apellido_dos")
     private String apellidoDos;
-    @Size(max = 2)
+    @Size(max = 15)
     @Column(name = "genero")
     private String genero;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "fecha_nacimiento")
     private String fechaNacimiento;
-    @Size(max = 2)
+    @Size(max = 3)
     @Column(name = "edad")
     private String edad;
-    @Size(max = 30)
+    @Size(max = 50)
     @Column(name = "empresa")
     private String empresa;
-    @Size(max = 2)
+    @Size(max = 3)
     @Column(name = "antiguedad_empresa")
     private String antiguedadEmpresa;
-    @Size(max = 20)
+    @Size(max = 50)
     @Column(name = "cargo")
     private String cargo;
     @Size(max = 20)
     @Column(name = "fecha_clinica")
     private String fechaClinica;
+    @Size(max = 10)
+    @Column(name = "telefono")
+    private String telefono;
+    @Size(max = 500)
+    @Column(name = "empresa_usuaria")
+    private String empresaUsuaria;
+    @Size(max = 500)
+    @Column(name = "sector_economico")
+    private String sectorEconomico;
+    @Size(max = 40)
     @Column(name = "recomendado")
-    private Integer recomendado;
-    @JoinColumn(name = "afp _codigoafp", referencedColumnName = "codigoafp")
+    private String recomendado;
+    @Size(max = 2)
+    @Column(name = "caso_asociado")
+    private String casoAsociado;
+    @JoinColumn(name = "codigoafp", referencedColumnName = "codigoafp")
     @ManyToOne(optional = false)
-    private Afp afpCodigoafp;
-    @JoinColumn(name = "arl _codigoarl", referencedColumnName = "codigoarl")
+    private Afp codigoafp;
+    @JoinColumn(name = "codigoarl", referencedColumnName = "codigoarl")
     @ManyToOne(optional = false)
-    private Arl arlCodigoarl;
-    @JoinColumn(name = "eps_codigoeps", referencedColumnName = "codigoeps")
+    private Arl codigoarl;
+    @JoinColumn(name = "codigoeps", referencedColumnName = "codigoeps")
     @ManyToOne(optional = false)
-    private Eps epsCodigoeps;
+    private Eps codigoeps;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personaCedula")
     private Collection<Caso> casoCollection;
 
@@ -106,13 +121,38 @@ public class Persona implements Serializable {
         this.cedula = cedula;
     }
 
-    public Persona(Integer cedula, String nombre, String apellidoUno, String fechaNacimiento) {
+    public Persona(Integer cedula, String nombre, String apellidoUno) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellidoUno = apellidoUno;
-        this.fechaNacimiento = fechaNacimiento;
     }
+    
+    
+     public Persona(String cedula, String nombre, String apellidoUno, String apellidoDos, String genero,
+            String fechaCumpleaños, String edad, String empresa, String antiguedad, String cargo, String fechaClinica,
+            Afp codigoafp, Arl arl,Eps eps, String telefono, String empresaUsuaria, String sectorEconomico,
+             String recomendado,  String casoAsociado) {
 
+        this.cedula = Integer.parseInt(cedula);
+        this.nombre = nombre;
+        this.apellidoUno = apellidoUno;
+        this.apellidoDos = apellidoDos;
+        this.genero = genero;
+        this.fechaNacimiento = fechaCumpleaños;
+        this.edad = edad;
+        this.empresa = empresa;
+        this.antiguedadEmpresa = antiguedad;
+        this.cargo = cargo;
+        this.fechaClinica = fechaClinica;
+        this.codigoafp = codigoafp;
+        this.codigoarl = arl;
+        this.codigoeps = eps;
+        this.telefono = telefono;
+        this.empresaUsuaria = empresaUsuaria;
+        this.sectorEconomico  = sectorEconomico;
+        this.recomendado = recomendado;
+        this.casoAsociado = casoAsociado;
+    }
     public Integer getCedula() {
         return cedula;
     }
@@ -201,36 +241,68 @@ public class Persona implements Serializable {
         this.fechaClinica = fechaClinica;
     }
 
-    public Integer getRecomendado() {
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmpresaUsuaria() {
+        return empresaUsuaria;
+    }
+
+    public void setEmpresaUsuaria(String empresaUsuaria) {
+        this.empresaUsuaria = empresaUsuaria;
+    }
+
+    public String getSectorEconomico() {
+        return sectorEconomico;
+    }
+
+    public void setSectorEconomico(String sectorEconomico) {
+        this.sectorEconomico = sectorEconomico;
+    }
+
+    public String getRecomendado() {
         return recomendado;
     }
 
-    public void setRecomendado(Integer recomendado) {
+    public void setRecomendado(String recomendado) {
         this.recomendado = recomendado;
     }
 
-    public Afp getAfpCodigoafp() {
-        return afpCodigoafp;
+    public String getCasoAsociado() {
+        return casoAsociado;
     }
 
-    public void setAfpCodigoafp(Afp afpCodigoafp) {
-        this.afpCodigoafp = afpCodigoafp;
+    public void setCasoAsociado(String casoAsociado) {
+        this.casoAsociado = casoAsociado;
     }
 
-    public Arl getArlCodigoarl() {
-        return arlCodigoarl;
+    public Afp getCodigoafp() {
+        return codigoafp;
     }
 
-    public void setArlCodigoarl(Arl arlCodigoarl) {
-        this.arlCodigoarl = arlCodigoarl;
+    public void setCodigoafp(Afp codigoafp) {
+        this.codigoafp = codigoafp;
     }
 
-    public Eps getEpsCodigoeps() {
-        return epsCodigoeps;
+    public Arl getCodigoarl() {
+        return codigoarl;
     }
 
-    public void setEpsCodigoeps(Eps epsCodigoeps) {
-        this.epsCodigoeps = epsCodigoeps;
+    public void setCodigoarl(Arl codigoarl) {
+        this.codigoarl = codigoarl;
+    }
+
+    public Eps getCodigoeps() {
+        return codigoeps;
+    }
+
+    public void setCodigoeps(Eps codigoeps) {
+        this.codigoeps = codigoeps;
     }
 
     public Collection<Caso> getCasoCollection() {

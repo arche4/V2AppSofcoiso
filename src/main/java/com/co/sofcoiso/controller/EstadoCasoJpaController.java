@@ -5,6 +5,7 @@
  */
 package com.co.sofcoiso.controller;
 
+import com.co.sofcoiso.controller.exceptions.IllegalOrphanException;
 import com.co.sofcoiso.controller.exceptions.NonexistentEntityException;
 import com.co.sofcoiso.controller.exceptions.PreexistingEntityException;
 import java.io.Serializable;
@@ -51,8 +52,13 @@ public class EstadoCasoJpaController implements Serializable {
             estadoCaso.setCasoCollection(attachedCasoCollection);
             em.persist(estadoCaso);
             for (Caso casoCollectionCaso : estadoCaso.getCasoCollection()) {
-                casoCollectionCaso.getEstadoCasoCollection().add(estadoCaso);
+                EstadoCaso oldEstadoCasoCodigoestadoOfCasoCollectionCaso = casoCollectionCaso.getEstadoCasoCodigoestado();
+                casoCollectionCaso.setEstadoCasoCodigoestado(estadoCaso);
                 casoCollectionCaso = em.merge(casoCollectionCaso);
+                if (oldEstadoCasoCodigoestadoOfCasoCollectionCaso != null) {
+                    oldEstadoCasoCodigoestadoOfCasoCollectionCaso.getCasoCollection().remove(casoCollectionCaso);
+                    oldEstadoCasoCodigoestadoOfCasoCollectionCaso = em.merge(oldEstadoCasoCodigoestadoOfCasoCollectionCaso);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -67,7 +73,7 @@ public class EstadoCasoJpaController implements Serializable {
         }
     }
 
-    public void edit(EstadoCaso estadoCaso) throws NonexistentEntityException, Exception {
+    public void edit(EstadoCaso estadoCaso) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -75,6 +81,18 @@ public class EstadoCasoJpaController implements Serializable {
             EstadoCaso persistentEstadoCaso = em.find(EstadoCaso.class, estadoCaso.getCodigoestado());
             Collection<Caso> casoCollectionOld = persistentEstadoCaso.getCasoCollection();
             Collection<Caso> casoCollectionNew = estadoCaso.getCasoCollection();
+            List<String> illegalOrphanMessages = null;
+            for (Caso casoCollectionOldCaso : casoCollectionOld) {
+                if (!casoCollectionNew.contains(casoCollectionOldCaso)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Caso " + casoCollectionOldCaso + " since its estadoCasoCodigoestado field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             Collection<Caso> attachedCasoCollectionNew = new ArrayList<Caso>();
             for (Caso casoCollectionNewCasoToAttach : casoCollectionNew) {
                 casoCollectionNewCasoToAttach = em.getReference(casoCollectionNewCasoToAttach.getClass(), casoCollectionNewCasoToAttach.getCodigocaso());
@@ -83,16 +101,15 @@ public class EstadoCasoJpaController implements Serializable {
             casoCollectionNew = attachedCasoCollectionNew;
             estadoCaso.setCasoCollection(casoCollectionNew);
             estadoCaso = em.merge(estadoCaso);
-            for (Caso casoCollectionOldCaso : casoCollectionOld) {
-                if (!casoCollectionNew.contains(casoCollectionOldCaso)) {
-                    casoCollectionOldCaso.getEstadoCasoCollection().remove(estadoCaso);
-                    casoCollectionOldCaso = em.merge(casoCollectionOldCaso);
-                }
-            }
             for (Caso casoCollectionNewCaso : casoCollectionNew) {
                 if (!casoCollectionOld.contains(casoCollectionNewCaso)) {
-                    casoCollectionNewCaso.getEstadoCasoCollection().add(estadoCaso);
+                    EstadoCaso oldEstadoCasoCodigoestadoOfCasoCollectionNewCaso = casoCollectionNewCaso.getEstadoCasoCodigoestado();
+                    casoCollectionNewCaso.setEstadoCasoCodigoestado(estadoCaso);
                     casoCollectionNewCaso = em.merge(casoCollectionNewCaso);
+                    if (oldEstadoCasoCodigoestadoOfCasoCollectionNewCaso != null && !oldEstadoCasoCodigoestadoOfCasoCollectionNewCaso.equals(estadoCaso)) {
+                        oldEstadoCasoCodigoestadoOfCasoCollectionNewCaso.getCasoCollection().remove(casoCollectionNewCaso);
+                        oldEstadoCasoCodigoestadoOfCasoCollectionNewCaso = em.merge(oldEstadoCasoCodigoestadoOfCasoCollectionNewCaso);
+                    }
                 }
             }
             em.getTransaction().commit();
@@ -112,7 +129,7 @@ public class EstadoCasoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -124,10 +141,16 @@ public class EstadoCasoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The estadoCaso with id " + id + " no longer exists.", enfe);
             }
-            Collection<Caso> casoCollection = estadoCaso.getCasoCollection();
-            for (Caso casoCollectionCaso : casoCollection) {
-                casoCollectionCaso.getEstadoCasoCollection().remove(estadoCaso);
-                casoCollectionCaso = em.merge(casoCollectionCaso);
+            List<String> illegalOrphanMessages = null;
+            Collection<Caso> casoCollectionOrphanCheck = estadoCaso.getCasoCollection();
+            for (Caso casoCollectionOrphanCheckCaso : casoCollectionOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EstadoCaso (" + estadoCaso + ") cannot be destroyed since the Caso " + casoCollectionOrphanCheckCaso + " in its casoCollection field has a non-nullable estadoCasoCodigoestado field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(estadoCaso);
             em.getTransaction().commit();
@@ -183,5 +206,8 @@ public class EstadoCasoJpaController implements Serializable {
             em.close();
         }
     }
+    
+
+
     
 }

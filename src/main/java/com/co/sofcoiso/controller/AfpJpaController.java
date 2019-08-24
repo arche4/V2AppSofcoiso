@@ -52,12 +52,12 @@ public class AfpJpaController implements Serializable {
             afp.setPersonaCollection(attachedPersonaCollection);
             em.persist(afp);
             for (Persona personaCollectionPersona : afp.getPersonaCollection()) {
-                Afp oldAfpCodigoafpOfPersonaCollectionPersona = personaCollectionPersona.getAfpCodigoafp();
-                personaCollectionPersona.setAfpCodigoafp(afp);
+                Afp oldCodigoafpOfPersonaCollectionPersona = personaCollectionPersona.getCodigoafp();
+                personaCollectionPersona.setCodigoafp(afp);
                 personaCollectionPersona = em.merge(personaCollectionPersona);
-                if (oldAfpCodigoafpOfPersonaCollectionPersona != null) {
-                    oldAfpCodigoafpOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
-                    oldAfpCodigoafpOfPersonaCollectionPersona = em.merge(oldAfpCodigoafpOfPersonaCollectionPersona);
+                if (oldCodigoafpOfPersonaCollectionPersona != null) {
+                    oldCodigoafpOfPersonaCollectionPersona.getPersonaCollection().remove(personaCollectionPersona);
+                    oldCodigoafpOfPersonaCollectionPersona = em.merge(oldCodigoafpOfPersonaCollectionPersona);
                 }
             }
             em.getTransaction().commit();
@@ -87,7 +87,7 @@ public class AfpJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Persona " + personaCollectionOldPersona + " since its afpCodigoafp field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Persona " + personaCollectionOldPersona + " since its codigoafp field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -103,12 +103,12 @@ public class AfpJpaController implements Serializable {
             afp = em.merge(afp);
             for (Persona personaCollectionNewPersona : personaCollectionNew) {
                 if (!personaCollectionOld.contains(personaCollectionNewPersona)) {
-                    Afp oldAfpCodigoafpOfPersonaCollectionNewPersona = personaCollectionNewPersona.getAfpCodigoafp();
-                    personaCollectionNewPersona.setAfpCodigoafp(afp);
+                    Afp oldCodigoafpOfPersonaCollectionNewPersona = personaCollectionNewPersona.getCodigoafp();
+                    personaCollectionNewPersona.setCodigoafp(afp);
                     personaCollectionNewPersona = em.merge(personaCollectionNewPersona);
-                    if (oldAfpCodigoafpOfPersonaCollectionNewPersona != null && !oldAfpCodigoafpOfPersonaCollectionNewPersona.equals(afp)) {
-                        oldAfpCodigoafpOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
-                        oldAfpCodigoafpOfPersonaCollectionNewPersona = em.merge(oldAfpCodigoafpOfPersonaCollectionNewPersona);
+                    if (oldCodigoafpOfPersonaCollectionNewPersona != null && !oldCodigoafpOfPersonaCollectionNewPersona.equals(afp)) {
+                        oldCodigoafpOfPersonaCollectionNewPersona.getPersonaCollection().remove(personaCollectionNewPersona);
+                        oldCodigoafpOfPersonaCollectionNewPersona = em.merge(oldCodigoafpOfPersonaCollectionNewPersona);
                     }
                 }
             }
@@ -147,7 +147,7 @@ public class AfpJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Afp (" + afp + ") cannot be destroyed since the Persona " + personaCollectionOrphanCheckPersona + " in its personaCollection field has a non-nullable afpCodigoafp field.");
+                illegalOrphanMessages.add("This Afp (" + afp + ") cannot be destroyed since the Persona " + personaCollectionOrphanCheckPersona + " in its personaCollection field has a non-nullable codigoafp field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
